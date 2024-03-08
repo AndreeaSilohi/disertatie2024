@@ -2,7 +2,9 @@
 
 # dependencies
 .env
-/node_modules
+# Dependency directories
+node_modules/
+jspm_packages/
 /.pnp
 .pnp.js
 
