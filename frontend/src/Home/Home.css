@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Whisper&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@1,200&family=Pacifico&family=Whisper&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900');
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+
+.background-container {
+  position: relative;
+  z-index: 1; /* Ensure the background container is above other elements */
+}
+
+.h1-title {
+  margin-top:50%;
+  font-size: 2rem;
+  white-space: nowrap;
+}
+
+header {
+  background: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url(https://images.unsplash.com/photo-1586779161657-041097557546?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-size: cover;
+  height: 100vh;
+}
+
+.overlay-text {
+  margin-top: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.white-background {
+  padding-bottom: 20px;
+  background-color: #EEEBDD;
+  text-align: center;
+  font-family: "Catamaran", sans-serif !important;
+  font-size: 35px;
+  color: rgb(215, 126, 43);
+}
+.card-media {
+  height: 400px;
+  width: 400px;
+ } 
+
+.cards {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.about-products {
+  padding-bottom: 20px;
+  text-align: center;
+  font-family: "Whisper", cursive;
+  font-size: 40px;
+  color: rgb(215, 126, 43);
+  background-color: #FFF7EC;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+
+  padding: 10px;
+}
+.grid-item {
+  padding-left: 300px;
+  padding-right: 300px;
+  font-size: 30px;
+  text-align: center;
+  color: rgb(7, 7, 7);
+}
+.grid-container-img{
+  display:flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+.grid-item-img{
+  display: flex;
+  justify-content: center;
+  padding:40px;
+ 
+
+}
+.grid-item-text{
+  
+  color:black;
+  font-size: 30px;
+  padding: 150px;
+
+}
+.new-products{
+  padding-bottom: 20px;
+  text-align: center;
+  font-family: "Whisper", cursive;
+  font-size: 40px;
+  color: rgb(215, 126, 43);
+  background-color: rgba(250, 220, 192);
+}
+
+.text-new-product{
+  font-family: 'IBM Plex Serif', serif;
+}
+
+.photos{
+
+  display: flex;
+  width:120px;
+  height:120px;
+ 
+  padding-bottom: 20px;
+  padding-left: 40px;
+  padding-top: 40px;
+
+}
+.image:hover{
+  transform: scale(1.1);
+ 
+}
+.carousel{
+  margin-top: 40px;
+  background-color: rgb(245, 189, 137);
+}
+.text-photos{
+  padding-top: 20px;
+  padding-left: 20px;
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  
+}
+
+.MuiButton-outlinedPrimary{
+  color: rgb(148, 88, 88) !important;
+  
+}
+.MuiButton-root {
+  /* margin-left: 20px !important */
+}
+
+.container-home{
+  position: relative;
+}
+
+.navbarHome{
+  position: absolute;
+  top: 1%;
+  left: 2%;
+  width: 98%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

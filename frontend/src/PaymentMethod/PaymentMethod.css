@@ -1,0 +1,28 @@
+.form-content {
+  padding: 80px;
+  box-sizing: border-box; /* Include padding in the total width */
+  width: 900px;
+
+  /* Adjust the max-width as needed */
+  margin: auto; /* Center the form horizontally */
+}
+
+.form-payment-content {
+    padding: 80px;
+ 
+}
+/* .container-payment {
+  position: relative;
+} */
+
+.navbar-payment {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body {
+    background: #fafafa;
+  }

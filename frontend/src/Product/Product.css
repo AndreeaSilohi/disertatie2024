@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+
+.product-link {
+  text-decoration: none;
+}
+
+.card {
+  flex-basis: calc(33.33% - 20px);
+  margin-bottom: 20px;
+  background-color: #edcea8;
+  margin-right: 61px;
+  margin-left: 62px;
+}
+.card-content {
+  height: 400px;
+  width: 100%;
+  padding: 40px;
+}
+.typografy-name {
+  font-family: "Catamaran", sans-serif !important;
+  color:black;
+  font-weight: 300;
+  font-size: 16px;
+
+}
+
+.typografy-price {
+    font-family: "Catamaran", sans-serif !important;
+    color:black;
+    font-weight: 300;
+    font-size: 16px;
+  
+  }
+
+  .actions-card{
+    padding:20px
+  }

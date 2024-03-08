@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap');
+.navbar {
+  width: 98%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 900;
+  background-color:rgba(255, 255, 255, 0.9);
+  z-index: 99;
+  font-family: "Ubuntu Condensed", sans-serif;
+  font-weight: 600;
+    text-transform: uppercase;
+} 
+
+.nav-links {
+  width: 70%; /* Adjust the width to make space for profile-icons */
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.nav-links > a {
+  color:#4D4D4D;
+  text-decoration: none;
+
+
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.profile-icons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px; /* Adjust the gap as needed */
+  margin-right: 40px;
+  color: rgb(230, 230, 243);
+}
+
+.logo{
+  margin-left:10px;
+}
+
+.shopping-cart{
+  cursor: pointer;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+.cart-nav{
+  margin-right: 60px;
+}

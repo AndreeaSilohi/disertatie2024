@@ -1,0 +1,230 @@
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu+Condensed&display=swap");
+.cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 80%;
+  /* background-color: #ebe5dd; */
+}
+
+.order-details p {
+  font-family: "Catamaran", sans-serif !important;
+  padding: 20px;
+}
+.wrapper {
+  flex: 1;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background-color: #ffffff;
+  padding-top:40px;
+}
+
+.countHandler input {
+  width: 40px;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.cartTitle {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  margin-right: 80px;
+  font-size: 25px;
+  font-family: "Catamaran", sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 400px;
+}
+
+.table-header {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.118);
+  font-family: "Catamaran", sans-serif !important;
+  width: 60vw;
+  font-size: 18px;
+}
+.cart-table {
+  width: 60vw;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.118);
+}
+
+.table-header-1 {
+  width: 25vw;
+  display: flex;
+  justify-content: flex-start;
+  padding-left:80px;
+}
+
+.table-header-2 {
+  width: 10vw;
+  display: flex;
+  justify-content: center;
+}
+
+.table-header-3 {
+  width: 20vw;
+  display: flex;
+  justify-content: center;
+}
+
+.header-cart {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(https://i.postimg.cc/HxvBxChT/cart.jpg);
+  background-size: cover;
+  /* height:325px; */
+}
+
+.overlay-text-cart {
+  margin-top: 200px;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-family: "Catamaran", sans-serif !important;
+}
+
+.table-content {
+  display: flex;
+  margin-left: 0;
+  font-family: "Catamaran", sans-serif !important;
+  font-size: 20px;
+  width: 60vw;
+}
+
+.table-content-1 {
+  width: 25vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left:40px;
+}
+
+.table-content-2 {
+  width: 10vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-content-3 {
+  width: 20vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.table-content-4 {
+  width: 5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.table-content-3 input {
+  border: none;
+  font-size: 15px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+}
+.table-content-3 button {
+  height: 40px;
+  width: 40px;
+  border: none;
+  background-color: transparent;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.table-content-1 img {
+  width: 80px;
+  height: 80px;
+}
+
+.img {
+  display: flex;
+  align-items: center;
+}
+.subtotal {
+  padding: 60px;
+  font-size: 20px;
+}
+
+.big-cart {
+  width: 100vw;
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.empty-cart h1 {
+  text-align: center;
+}
+
+.empty-cart-1-div {
+  width: 60%;
+  border: 1px solid rgba(0, 0, 0, 0.118);
+  padding: 50px;
+  font-family: "Catamaran", sans-serif !important;
+}
+.empty-cart-2-div {
+  width: 800px;
+  padding: 50px;
+  font-family: "Catamaran", sans-serif !important;
+}
+
+.empty-cart-button {
+  width: 200px;
+  height: 50px;
+  background-color: rgb(19, 19, 19);
+  color: white;
+  border: none;
+  margin: 10px;
+  font-family: "Catamaran", sans-serif !important;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.buttons-subtotal {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.button-subtotal {
+  width: 150px;
+  background-color: rgb(19, 19, 19);
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 60px;
+  color: white;
+  margin: 10px;
+}
+
+.order-details {
+  /* width n are trebui sa fie 100vh */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  height: 50%;
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  /* border: 1px solid rgba(0, 0, 0, 0.118); */
+}
+
+

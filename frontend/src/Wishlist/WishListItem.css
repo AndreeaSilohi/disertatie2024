@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu+Condensed&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap');
+.wishlist-content {
+  display: flex;
+  margin-left: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+.wishlist-content-name-img {
+  width: 900px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 18px;
+}
+
+.wishlist-price {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.wishlist {
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.118);
+  margin-top: 100px;
+}
+
+.wishlist-content-name-img img {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.wishlist-stock {
+  width: 150px;
+  display: flex;
+  font-family: "Catamaran", sans-serif;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-to-cart {
+  cursor: pointer;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Catamaran", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}

@@ -1,0 +1,45 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+.wishList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f3f4ec;
+  position: relative;
+  
+}
+.wrapper-wishlist {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.countHandler input {
+  width: 40px;
+  text-align: center;
+  font-weight: bolder;
+}
+
+
+.background-wishlist {
+  width: 100%;
+  display: block;
+}
+
+.container-wishlist {
+  position: relative;
+  text-align: center;
+  color: white;
+  width: 100%;
+}
+
+.centered {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  font-family: "Catamaran", sans-serif;
+  font-size: 50px;
+} */

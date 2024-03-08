@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+.background-container {
+  position: relative;
+  z-index: 1;
+}
+.container-form {
+  position: relative;
+  display: flex;
+  /* justify-content: space-evenly; */
+  margin-bottom: 40px;
+  background-color:#EEEBDD;
+}
+
+.contact-image {
+  margin-top: 20px;
+}
+
+.contact-image {
+  height: 800px;
+  margin-left: 40px;
+}
+
+.contact-image:hover {
+  transform: scale(1.05);
+}
+.grid-txt {
+  color: black;
+  font-size: 20px;
+  padding-left: 250px;
+  padding-right: 250px;
+  font-family: "Quicksand", sans-serif;
+}
+.grid-image {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+.button-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 20px 20px 10px;
+}
