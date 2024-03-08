@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import Navbar from "../navbar/Navbar";
 import axios from "axios";
-import logger from "use-reducer-logger";
+
 import Product from "../Product/Product";
 import LoadingBox from "../LoadingBox";
 import MessageBox from "../MessageBox";
@@ -21,7 +21,7 @@ const reducer = (state, action) => {
 };
 
 function Shop() {
-  const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
+  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     products: [],
     loading: true,
     error: "",

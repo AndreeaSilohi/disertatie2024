@@ -28,9 +28,7 @@
     "react-slick": "^0.29.0",
     "react-toastify": "^10.0.4",
     "slick-carousel": "^1.8.1",
-    "stripe": "^14.19.0",
-    "use-reducer-logger": "^1.0.2",
-    "web-vitals": "^2.1.4"
+    "stripe": "^14.19.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -54,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "web-vitals": "^3.5.2"
   }
 }
