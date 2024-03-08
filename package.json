@@ -1,0 +1,20 @@
+{
+  "name": "disertatie2024",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreeaSilohi/disertatie2024.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreeaSilohi/disertatie2024/issues"
+  },
+  "homepage": "https://github.com/AndreeaSilohi/disertatie2024#readme"
+}
