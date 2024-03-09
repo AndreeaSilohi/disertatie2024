@@ -39,7 +39,6 @@ function Shop() {
     fetchData();
   }, []);
 
-  console.log(products);
 
   return (
     <div>

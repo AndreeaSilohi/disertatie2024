@@ -1,34 +1,66 @@
 import * as React from "react";
-import { useContext } from "react";
-import { NavLink } from "react-router-dom";
-import { ShoppingCart, User, SignOut, HeartStraight } from "phosphor-react";
+import { useContext, useState, useEffect } from "react";
+import { NavLink, Link } from "react-router-dom";
+import { ShoppingCart, HeartStraight, List } from "phosphor-react";
 import "./Navbar.css";
 import logo from "../assets/logo.png";
 import Badge from "@mui/material/Badge";
 import { Store } from "../Store";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { Link } from "react-router-dom";
-import { InputLabel } from "@mui/material";
-import Divider from "@mui/material/Divider";
+import {
+  InputLabel,
+  Divider,
+  Drawer,
+  List as MuiList,
+  ListItem,
+  ListItemText,
+  Typography,
+} from "@mui/material";
+import { getError } from "../utils";
+import axios from "axios";
 function Navbar() {
-  const [stateCart, setstateCart] = React.useState({
-    right: false,
-  });
-
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get(`/api/products/categories`);
+        console.log(data); // Log the data received from the API
+        setCategories(data);
+      } catch (err) {
+        window.alert(getError(err));
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const signoutHandler = () => {
     ctxDispatch({ type: "USER_SIGNOUT" });
-    localStorage.removeItem('userInfo');
-    localStorage.removeItem('shippingAddress');
-    localStorage.removeItem('paymentMethod');
-    window.location.href='/signin';
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("shippingAddress");
+    localStorage.removeItem("paymentMethod");
+    window.location.href = "/signin";
   };
+
+
+
+  console.log(categories)
+  const toggleSidebar = () => {
+    setSidebarIsOpen(!sidebarIsOpen);
+  };
+
   return (
-    <div className="navbar">
-      <img className="logo" src={logo}></img>
+    <div className={sidebarIsOpen ? "navbar active-cont" : "navbar"}>
+      <div className="burger-menu" onClick={toggleSidebar}>
+        <List size={28} />
+      </div>
+
+      <img className="logo" src={logo} alt="Logo" />
+
       <ul className="nav-links">
         <NavLink
           to="/"
@@ -94,6 +126,8 @@ function Navbar() {
               <ShoppingCart size={28} />
             </Badge>
           </div>
+          </div>
+      </NavLink>
           {userInfo ? (
             <div>
               <InputLabel>{userInfo.name}</InputLabel>
@@ -116,21 +150,29 @@ function Navbar() {
           ) : (
             <Link to="/signin">Sign In</Link>
           )}
-        </div>
-      </NavLink>
-      {/* <div className="profile-icons">
-        <NavLink to="/profile">
-          <User size={28} />
-        </NavLink>
-        <SignOut size={28} onClick={handleLogout} />
-      </div> */}
+ 
+
+      {/* Sidebar */}
+      <Drawer anchor="left" open={sidebarIsOpen} onClose={toggleSidebar}>
+        <MuiList className="sidebar-list">
+          {categories.map((category) => (
+            <ListItem
+              key={category}
+              component={Link}
+              to={`/search?category=${category}`}
+              onClick={() => setSidebarIsOpen(false)}
+            >
+              {/* Displaying category text */}
+              <ListItemText>
+                <Typography variant="body1">{category}</Typography>
+              </ListItemText>
+              {/* Add an icon if needed */}
+            </ListItem>
+          ))}
+        </MuiList>
+      </Drawer>
     </div>
   );
-}
-
-function handleLogout() {
-  // Implement your logout logic here
-  console.log("Logout clicked");
 }
 
 export default Navbar;

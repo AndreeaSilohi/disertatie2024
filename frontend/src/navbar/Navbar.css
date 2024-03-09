@@ -54,3 +54,46 @@
 .cart-nav{
   margin-right: 60px;
 }
+
+/* .side-navbar{
+  width:240px;
+  height:100%;
+  position:absolute;
+  left:-300px;
+  background-color: aqua;
+  transition: 0.5s;
+} */
+
+
+
+.site-container{
+  transition: 0.4s;
+}
+.active-cont{
+  margin-left:240px;
+}
+
+.active-nac{
+  left:0;
+}
+
+.cart-nav{
+  cursor: pointer;
+}
+
+.sidebar-list {
+  width: 240px; /* Set the width of the sidebar */
+}
+
+.sidebar-list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s;
+}
+
+.sidebar-list-item:hover {
+  background-color: #eee; /* Adjust the hover background color */
+}
