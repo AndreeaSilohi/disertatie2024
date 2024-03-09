@@ -1,4 +1,4 @@
-export const productsData = [
+export const productsDataNew = [
   {
     //_id: "1",
     name: "Miere de tei",
@@ -53,12 +53,36 @@ export const productsData = [
     //_id:"5",
     name: "Miere cu fagure",
     slug: "5",
-
     image: "https://i.postimg.cc/nLKDwD1W/mierecufagure.png",
     description: "acest produs este ",
     additional: "Este fabricata in romania",
     price: 40,
     stoc: 0,
+    rating: 4.5,
+    numReviews: 20,
+  },
+
+  {
+    //_id:"5",
+    name: "Miere noua",
+    slug: "6",
+    image: "https://i.postimg.cc/nLKDwD1W/mierecufagure.png",
+    description: "acest produs este ",
+    additional: "Este fabricata in romania",
+    price: 40,
+    stoc: 0,
+    rating: 4.5,
+    numReviews: 20,
+  },
+  {
+    //_id:"5",
+    name: "Miere",
+    slug: "7",
+    image: "https://i.postimg.cc/nLKDwD1W/mierecufagure.png",
+    description: "acest produs este ",
+    additional: "Este fabricata in romania",
+    price: 40,
+    stoc: 10,
     rating: 4.5,
     numReviews: 20,
   },

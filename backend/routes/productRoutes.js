@@ -1,15 +1,15 @@
 import express from "express";
-import Prod from "../modelss/productModel.js";
+import Product from "../modelss/productModel.js";
 
 const productRouter = express.Router();
 
 productRouter.get("/", async (req, res) => {
-  const products = await Prod.find();
+  const products = await Product.find();
   res.send(products);
 });
 
 productRouter.get("/slug/:slug", async (req, res) => {
-  const product = await Prod.findOne({ slug: req.params.slug });
+  const product = await Product.findOne({ slug: req.params.slug });
 
   if (product) {
     res.send(product);
@@ -19,7 +19,7 @@ productRouter.get("/slug/:slug", async (req, res) => {
 });
 
 productRouter.get("/:id", async (req, res) => {
-  const product = await Prod.findById(req.params.id);
+  const product = await Product.findById(req.params.id);
 
   if (product) {
     res.send(product);

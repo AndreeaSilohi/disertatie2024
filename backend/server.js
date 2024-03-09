@@ -1,5 +1,5 @@
 import express from "express";
-import { productsData } from "./Products.js";
+// import { productsData } from "./Products.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import seedRouter from "./routes/seedRoutes.js";
