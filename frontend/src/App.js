@@ -23,6 +23,7 @@ import PlaceOrder from "./PlaceOrder/PlaceOrder";
 import OrderScreen from "./orderScreen/OrderScreen";
 import OrderHistory from "./OrderHistory/OrderHistory";
 import ProfileScreen from "./Profile/ProfileScreen";
+import SearchScreen from "./SearchScreen/SearchScreen";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
               <Route path="/placeorder" element={<PlaceOrder />} />
               <Route path="/order/:id" element={<OrderScreen />} />
               <Route path="/orderhistory" element={<OrderHistory />} />
+              <Route path="/search" element={<SearchScreen />} />
             </Routes>
           </div>
           <div>

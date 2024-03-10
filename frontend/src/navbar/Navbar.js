@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import { getError } from "../utils";
 import axios from "axios";
+import SearchBox from "../SearchBox";
 function Navbar() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
@@ -29,7 +30,6 @@ function Navbar() {
     const fetchCategories = async () => {
       try {
         const { data } = await axios.get(`/api/products/categories`);
-        console.log(data); // Log the data received from the API
         setCategories(data);
       } catch (err) {
         window.alert(getError(err));
@@ -46,9 +46,6 @@ function Navbar() {
     window.location.href = "/signin";
   };
 
-
-
-  console.log(categories)
   const toggleSidebar = () => {
     setSidebarIsOpen(!sidebarIsOpen);
   };
@@ -60,7 +57,7 @@ function Navbar() {
       </div>
 
       <img className="logo" src={logo} alt="Logo" />
-
+      <SearchBox/>
       <ul className="nav-links">
         <NavLink
           to="/"
@@ -126,31 +123,30 @@ function Navbar() {
               <ShoppingCart size={28} />
             </Badge>
           </div>
-          </div>
+        </div>
       </NavLink>
-          {userInfo ? (
-            <div>
-              <InputLabel>{userInfo.name}</InputLabel>
-              <Select>
-                <MenuItem value={0} disabled>
-                  {/* Placeholder */}
-                </MenuItem>
-                <MenuItem value={1} component={Link} to="/profile">
-                  Profile
-                </MenuItem>
-                <MenuItem value={2} component={Link} to="/orderhistory">
-                  Order History
-                </MenuItem>
-                <Divider />
-                <Link to="#signout" onClick={signoutHandler}>
-                  Sign out
-                </Link>
-              </Select>
-            </div>
-          ) : (
-            <Link to="/signin">Sign In</Link>
-          )}
- 
+      {userInfo ? (
+        <div>
+          <InputLabel>{userInfo.name}</InputLabel>
+          <Select>
+            <MenuItem value={0} disabled>
+              {/* Placeholder */}
+            </MenuItem>
+            <MenuItem value={1} component={Link} to="/profile">
+              Profile
+            </MenuItem>
+            <MenuItem value={2} component={Link} to="/orderhistory">
+              Order History
+            </MenuItem>
+            <Divider />
+            <Link to="#signout" onClick={signoutHandler}>
+              Sign out
+            </Link>
+          </Select>
+        </div>
+      ) : (
+        <Link to="/signin">Sign In</Link>
+      )}
 
       {/* Sidebar */}
       <Drawer anchor="left" open={sidebarIsOpen} onClose={toggleSidebar}>
