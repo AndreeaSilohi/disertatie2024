@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { MagnifyingGlass } from "phosphor-react";
+import "./SearchBox.css";
 
 export default function SearchBox() {
   const navigate = useNavigate();
@@ -16,25 +17,25 @@ export default function SearchBox() {
 
   return (
     <form onSubmit={submitHandler}>
-      <div
-        className="form-group"
-        style={{ display: "flex", alignItems: "center" }}
-      >
+      <div className="form-group">
         <TextField
-          style={{ width: "100px", height: "50px" }}
-          label="q"
-          id="q"
+          className="text-field"
           placeholder="Search products"
           onChange={(e) => setQuery(e.target.value)}
+          style={{
+            color: "red", // Set your desired text color
+          }}
         />
         <Button
           type="submit"
           style={{
             width: "20px",
-            borderRadius: "0",
+            
           }}
         >
-          <MagnifyingGlass size={28} />
+          <MagnifyingGlass 
+          size={28} 
+          color="#D18C16"/>
         </Button>
       </div>
     </form>

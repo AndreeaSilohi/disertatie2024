@@ -7,6 +7,8 @@ import LoadingBox from "../LoadingBox";
 import MessageBox from "../MessageBox";
 import "./OurShop.css";
 
+import SearchBox from "../SearchBox/SearchBox";
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_REQUEST":
@@ -39,7 +41,6 @@ function Shop() {
     fetchData();
   }, []);
 
-
   return (
     <div>
       <div className="navbar">
@@ -53,6 +54,7 @@ function Shop() {
         </div>
       </header>
       <div className="shop">
+      <SearchBox />
         <div className="cards-shop">
           {loading ? (
             <LoadingBox />

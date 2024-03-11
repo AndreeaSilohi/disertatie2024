@@ -1,0 +1,12 @@
+.form-group {
+  display: flex;
+  align-items: center;
+  padding:40px
+}
+
+.text-field {
+  width: 150px;
+  padding: 8px;
+  font-size: 14px;
+
+}
