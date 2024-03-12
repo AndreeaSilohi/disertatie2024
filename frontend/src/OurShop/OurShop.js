@@ -6,7 +6,7 @@ import Product from "../Product/Product";
 import LoadingBox from "../LoadingBox";
 import MessageBox from "../MessageBox";
 import "./OurShop.css";
-
+import Animation from "../Animation/Animation";
 import SearchBox from "../SearchBox/SearchBox";
 
 const reducer = (state, action) => {
@@ -53,8 +53,11 @@ function Shop() {
           </div>
         </div>
       </header>
+      <Animation/>
       <div className="shop">
+  
       <SearchBox />
+     
         <div className="cards-shop">
           {loading ? (
             <LoadingBox />

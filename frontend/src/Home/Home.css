@@ -22,6 +22,20 @@ header {
   height: 100vh;
 }
 
+.container-home {
+  position: relative;
+}
+
+.navbarHome {
+  position: absolute;
+  top: 1%;
+  left: 2%;
+  right: 2%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
 .overlay-text {
   margin-top: 200px;
   position: absolute;
@@ -33,32 +47,32 @@ header {
   font-family: "Source Sans Pro", sans-serif;
 }
 
-.white-background {
+/* .white-background {
   padding-bottom: 20px;
   background-color: #eeebdd;
   text-align: center;
   font-family: "Catamaran", sans-serif !important;
   font-size: 35px;
   color: rgb(215, 126, 43);
-}
+} */
 .card-media {
   height: 400px;
   width: 400px;
 }
 
-.cards {
+/* .cards {
   display: flex;
   justify-content: space-between;
   padding-top: 20px;
-}
+} */
 
 .about-products {
   padding-bottom: 20px;
   text-align: center;
-  font-family: "Whisper", cursive;
-  font-size: 40px;
+  font-family: "Catamaran", sans-serif !important;
+  font-size: 35px;
   color: rgb(215, 126, 43);
-  background-color: #fff7ec;
+ 
 }
 
 .grid-container {
@@ -92,52 +106,41 @@ header {
 .new-products {
   padding-bottom: 20px;
   text-align: center;
-  font-family: "Whisper", cursive;
+  font-family: "Catamaran", sans-serif !important;
   font-size: 40px;
   color: rgb(215, 126, 43);
-  background-color: rgba(250, 220, 192);
+  /* background-color: rgb(193, 192, 250); */
 }
 
 .text-new-product {
-  font-family: "IBM Plex Serif", serif;
+  font-family: "Catamaran", sans-serif !important;
 }
 
 .photos {
   display: flex;
-  width: 120px;
-  height: 120px;
-  padding-bottom: 20px;
-  padding-left: 40px;
-  padding-top: 40px;
+  height: 140px;
+  padding: 30px;
+  justify-content: center;
+  width: 100%;
 }
 .image:hover {
   transform: scale(1.1);
 }
 .carousel {
   margin-top: 40px;
-  background-color: rgb(245, 189, 137);
+  background-color: #fff7ec;
+  width: 100%;
 }
 .text-photos {
   padding-top: 20px;
   padding-left: 20px;
   text-align: center;
-  font-family: "Quicksand", sans-serif;
+  font-family: "Catamaran", sans-serif !important;
 }
 
-.MuiButton-outlinedPrimary {
+.contact {
+  font-family: "Catamaran", sans-serif !important;
+}
+/* .MuiButton-outlinedPrimary {
   color: rgb(148, 88, 88) !important;
-}
-
-.container-home {
-  position: relative;
-}
-
-.navbarHome {
-  position: absolute;
-  top: 1%;
-  left: 2%;
-  right: 2%;
-  height: 100px;
-  display: flex;
-  align-items: center;
-}
+} */

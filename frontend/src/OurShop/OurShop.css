@@ -9,6 +9,7 @@
   color: white;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .header-shop{
@@ -16,6 +17,7 @@
     url(https://images.unsplash.com/photo-1495298975657-492a1d068595?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
   background-size: cover;
   height: 100vh;
+
 }
 
 .h1-title-shop {
@@ -53,7 +55,12 @@
   gap: 20px;
 }
 
-.ourshop-navbar{
-  
-  width:100%
-}
+/* .ourshop-navbar{
+  background-color: blue;
+  position: fixed;
+  left: 2%;
+  right: 2%;
+  display: flex;
+  align-items: center;
+ 
+} */

@@ -9,6 +9,7 @@ import {
   User,
   ListBullets,
   SignOut,
+  SignIn
 } from "phosphor-react";
 import "./Navbar.css";
 import logo from "../assets/logo.png";
@@ -193,7 +194,9 @@ function Navbar() {
             </Menu>
           </div>
         ) : (
-          <Link to="/signin">Sign In</Link>
+          <Link to="/signin">
+            <SignIn size={32} style={{ display: "flex", alignItems: "center" ,marginRight: "2px" ,color:"black"}} />
+          </Link>
         )}
       </div>
       {/* Sidebar */}

@@ -6,9 +6,20 @@ import Navbar from "../navbar/Navbar";
 import axios from "axios";
 import { XCircle } from "phosphor-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-
 import { Button, Grid, Typography, Select, MenuItem } from "@mui/material";
 import Product from "../Product/Product";
+
+import "./SearchScreen.css";
+
+const styles = {
+  navbarShipping: "navbar-shipping",
+  title: "title",
+  departmentContainer: "department-container",
+  priceContainer: "price-container",
+  reviewContainer: "review-container",
+  productGrid: "product-grid",
+  pagination: "pagination",
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -128,15 +139,17 @@ export default function SearchScreen() {
   };
   return (
     <div>
-      <div className="navbar-shipping">
+      <div className={styles.navbarShipping}>
         <Navbar />
       </div>
-      <title>Search Products</title>
+      <title className={styles.title}>Search Products</title>
 
-      <Grid container spacing={3}>
-        <Grid item md={3}>
-          <Typography variant="h5">Department</Typography>
-          <ul>
+      <Grid container spacing={3} className="grid1">
+        <Grid item md={3} className="gridD">
+          <Typography variant="h5" className={styles.title}>
+            Department
+          </Typography>
+          <ul className={styles.departmentContainer}>
             <li>
               <Link
                 className={"all" === category ? "text-bold" : ""}
@@ -156,8 +169,10 @@ export default function SearchScreen() {
               </li>
             ))}
           </ul>
-          <Typography variant="h5">Price</Typography>
-          <ul>
+          <Typography variant="h5" className={styles.title}>
+            Price
+          </Typography>
+          <ul className={styles.priceContainer}>
             <li>
               <Link
                 className={"all" === price ? "text-bold" : ""}
@@ -178,8 +193,10 @@ export default function SearchScreen() {
               </li>
             ))}
           </ul>
-          <Typography variant="h5">Avg. Customer Review</Typography>
-          <ul>
+          <Typography variant="h5" className={styles.title}>
+            Avg. Customer Review
+          </Typography>
+          <ul className={styles.reviewContainer}>
             {ratings.map((r) => (
               <li key={r.name}>
                 <Link
@@ -248,15 +265,15 @@ export default function SearchScreen() {
                 <MessageBox>No Product Found</MessageBox>
               )}
 
-              <Grid container>
+              <Grid container className={styles.productGrid} >
                 {products.map((product) => (
-                  <Grid item sm={6} lg={4} className="mb-3" key={product._id}>
+                  <Grid item sm={6} lg={6} key={product._id}>
                     <Product product={product}></Product>
                   </Grid>
                 ))}
               </Grid>
 
-              <div>
+              <div className={styles.pagination}>
                 {[...Array(pages).keys()].map((x) => (
                   <Link
                     key={x + 1}

@@ -1,26 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
 
+/* .navbar-shipping {
 
-
-.navbar-shipping {
-  width: 100%;
   height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
+  background-color: blue;
+} */
 
 .form-shipping {
   padding: 60px;
-  box-sizing: border-box; 
-  width: 85%; 
-  margin: auto; 
-  
-
+  box-sizing: border-box;
+  width: 85%;
+  margin: auto;
 }
 
 .form-shipping-content {
   padding: 60px;
+  position: relative; /* Add this line */
 }
 
 .form-shipping-fields {
@@ -34,7 +32,8 @@
   display: flex;
   justify-content: flex-start;
 }
-.text-center{
+
+.text-center {
   font-family: "Catamaran", sans-serif !important;
   font-size: 35px;
   border: 1px solid rgba(0, 0, 0, 0.118);
@@ -44,34 +43,50 @@
   justify-content: center;
 }
 
-/* .checkout{
-  display:flex;
-  justify-content: space-between;
-  width:100%;
-} */
-
-.button-continue{
+.button-continue {
   font-family: "Catamaran", sans-serif !important;
 }
 
-.background-picture{
- 
-
- 
-}
-
-.container-shipping{
-  /* background: url('https://i.postimg.cc/wMfC8PXc/output-onlinepngtools-3.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center; */
-}
-
-.frame{
+.frame {
   display: flex;
+}
+
+/* .left-border,
+.right-border {
+  position: absolute;
+  top: 0;
+  height: 100%;
 
 }
 
-svg {
-  transform: rotate(270);
+.left-border {
+  left: -206px;
+  background-image: url("https://images.unsplash.com/photo-1589526261866-ab0d34f8dc19?q=80&w=1889&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+
+ 
 }
+
+.right-border { 
+ 
+    right:-206px;
+    background-image: url("https://images.unsplash.com/photo-1589526261866-ab0d34f8dc19?q=80&w=1889&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    background-position: right top;
+    width:20%
+  }
+   */
+
+
+   .button-continue {
+    width: 200px;
+    font-size: 20px;
+    background-color: #f08000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    height: 60px;
+    color: white;
+    margin: 10px;
+
+  }

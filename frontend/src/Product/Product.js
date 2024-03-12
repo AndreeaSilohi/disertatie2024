@@ -84,7 +84,7 @@ function Product(props) {
               alt={product.name}
  
             />
-            <CardContent>
+            <CardContent className="text-card">
               <Typography className="typografy-name"gutterBottom variant="h5" component="div">
                 {product.name}
               </Typography>

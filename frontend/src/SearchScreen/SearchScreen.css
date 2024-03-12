@@ -1,0 +1,134 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+.navbar-shipping {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.department-container {
+  margin-bottom: 20px;
+}
+
+.department-container h5 {
+  margin-bottom: 10px;
+}
+
+.department-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.department-container li {
+  margin-bottom: 5px;
+}
+
+.department-container a {
+  text-decoration: none;
+  color: #333;
+}
+
+.department-container .text-bold {
+  font-weight: bold;
+}
+
+.price-container {
+  margin-bottom: 20px;
+}
+
+.price-container h5 {
+  margin-bottom: 10px;
+}
+
+.price-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.price-container li {
+  margin-bottom: 5px;
+}
+
+.price-container a {
+  text-decoration: none;
+  color: #333;
+}
+
+.price-container .text-bold {
+  font-weight: bold;
+}
+
+.review-container {
+  margin-bottom: 20px;
+}
+
+.review-container h5 {
+  margin-bottom: 10px;
+}
+
+.review-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.review-container li {
+  margin-bottom: 5px;
+}
+
+.review-container a {
+  text-decoration: none;
+  color: #333;
+}
+
+.review-container .text-bold {
+  font-weight: bold;
+}
+
+/* .product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+} */
+
+.pagination {
+  margin-top: 20px;
+}
+
+.pagination a {
+  text-decoration: none;
+  color: #333;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.pagination .text-bold {
+  font-weight: bold;
+  font-family: "Catamaran", sans-serif !important;
+}
+
+.pagination a:hover,
+.pagination .text-bold {
+
+  font-family: "Catamaran", sans-serif !important;
+}
+
+.grid1 {
+    font-family: "Catamaran", sans-serif !important;
+  padding: 80px;
+  /* background-color: aqua; */
+}
+
+.gridD{
+    font-family: "Catamaran", sans-serif !important;
+  width: 60%;
+  height: 100%;
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px; 
+}
