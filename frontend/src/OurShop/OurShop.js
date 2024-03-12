@@ -43,7 +43,7 @@ function Shop() {
 
   return (
     <div>
-      <div className="navbar">
+      <div className="ourshop-navbar">
         <Navbar />
       </div>
       <header className="header-shop">

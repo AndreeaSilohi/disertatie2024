@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Whisper&display=swap");
-
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@1,200&family=Pacifico&family=Whisper&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900");
@@ -137,7 +136,7 @@ header {
   position: absolute;
   top: 1%;
   left: 2%;
-  width: 98%;
+  right: 2%;
   height: 100px;
   display: flex;
   align-items: center;

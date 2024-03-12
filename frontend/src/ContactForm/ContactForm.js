@@ -13,7 +13,7 @@ function ContactForm() {
   };
   return (
     <div>
-      <div className="navbar">
+      <div className="contact-form-navbar">
         <Navbar />
       </div>
       <div className="container-form">

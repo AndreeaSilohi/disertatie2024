@@ -19,7 +19,7 @@ const CarouselComponent = () => {
 
   return (
     <div className="curiosities-container">
-      <div>
+      <div className="curiosities-navbar">
         <Navbar />
       </div>
       <div className="carusel">

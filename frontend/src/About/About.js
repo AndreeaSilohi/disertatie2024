@@ -21,7 +21,7 @@ function About() {
 
   return (
     <div className="container-about">
-      <div>
+      <div className="about-navbar">
         <Navbar />
       </div>
       <div className="div-photo">
