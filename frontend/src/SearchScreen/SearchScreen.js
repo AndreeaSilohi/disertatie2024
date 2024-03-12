@@ -8,6 +8,7 @@ import { XCircle } from "phosphor-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button, Grid, Typography, Select, MenuItem } from "@mui/material";
 import Product from "../Product/Product";
+import SearchBox from "../SearchBox/SearchBox";
 
 import "./SearchScreen.css";
 
@@ -43,15 +44,15 @@ const reducer = (state, action) => {
 
 const prices = [
   {
-    name: "$1 to $50",
+    name: "1 leu - 50 lei",
     value: "1-50",
   },
   {
-    name: "$51 to $200",
+    name: "51 lei - 200lei",
     value: "51-200",
   },
   {
-    name: "$201 to $1000",
+    name: "201 lei - 1000 lei",
     value: "201-1000",
   },
 ];
@@ -142,12 +143,18 @@ export default function SearchScreen() {
       <div className={styles.navbarShipping}>
         <Navbar />
       </div>
-      <title className={styles.title}>Search Products</title>
-
+      <header className="header-shop">
+        <div className="background-container-shop">
+          <div className="overlay-text-shop">
+            <h1 className="h1-title-shop">OUR SHOP</h1>
+          </div>
+        </div>
+      </header>
+      <SearchBox/>
       <Grid container spacing={3} className="grid1">
         <Grid item md={3} className="gridD">
           <Typography variant="h5" className={styles.title}>
-            Department
+            Categorii
           </Typography>
           <ul className={styles.departmentContainer}>
             <li>
@@ -155,7 +162,7 @@ export default function SearchScreen() {
                 className={"all" === category ? "text-bold" : ""}
                 to={getFilterUrl({ category: "all" })}
               >
-                Any
+                Toate
               </Link>
             </li>
             {categories.map((c) => (
@@ -170,7 +177,7 @@ export default function SearchScreen() {
             ))}
           </ul>
           <Typography variant="h5" className={styles.title}>
-            Price
+           Pret
           </Typography>
           <ul className={styles.priceContainer}>
             <li>
@@ -178,7 +185,7 @@ export default function SearchScreen() {
                 className={"all" === price ? "text-bold" : ""}
                 to={getFilterUrl({ price: "all" })}
               >
-                Any
+                Toate
               </Link>
             </li>
 
