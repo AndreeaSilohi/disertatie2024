@@ -4,12 +4,12 @@ import LoadingBox from "../LoadingBox";
 import MessageBox from "../MessageBox";
 import Navbar from "../navbar/Navbar";
 import axios from "axios";
-import { XCircle } from "phosphor-react";
+import { XCircle, Warning } from "phosphor-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button, Grid, Typography, Select, MenuItem } from "@mui/material";
 import Product from "../Product/Product";
 import SearchBox from "../SearchBox/SearchBox";
-
+import Divider from "@mui/material/Divider";
 import "./SearchScreen.css";
 
 const styles = {
@@ -150,7 +150,53 @@ export default function SearchScreen() {
           </div>
         </div>
       </header>
-      <SearchBox/>
+      <div className="sort-grid">
+        <div>
+          <SearchBox />
+        </div>
+        <div className="sort-select">
+          <Grid item className="text-end">
+            Sort by{" "}
+            <Select
+              sx={{ fontFamily: "Catamaran, sans-serif", fontSize: "17px" }}
+              value={order}
+              onChange={(e) => {
+                navigate(getFilterUrl({ order: e.target.value }));
+              }}
+            >
+              <MenuItem
+                sx={{ fontFamily: "Catamaran, sans-serif", fontSize: "17px" }}
+                className="sort-select"
+                value="newest"
+              >
+                Newest Arrivals
+              </MenuItem>
+              <MenuItem
+                sx={{ fontFamily: "Catamaran, sans-serif", fontSize: "17px" }}
+                className="sort-select"
+                value="lowest"
+              >
+                Price: Low to High
+              </MenuItem>
+              <MenuItem
+                sx={{ fontFamily: "Catamaran, sans-serif", fontSize: "17px" }}
+                className="sort-select"
+                value="highest"
+              >
+                Price: High to Low
+              </MenuItem>
+              <MenuItem
+                sx={{ fontFamily: "Catamaran, sans-serif", fontSize: "17px" }}
+                className="sort-select"
+                value="toprated"
+              >
+                Avg. Customer Reviews
+              </MenuItem>
+            </Select>
+          </Grid>
+        </div>
+      </div>
+
       <Grid container spacing={3} className="grid1">
         <Grid item md={3} className="gridD">
           <Typography variant="h5" className={styles.title}>
@@ -176,8 +222,9 @@ export default function SearchScreen() {
               </li>
             ))}
           </ul>
+          <Divider />
           <Typography variant="h5" className={styles.title}>
-           Pret
+            Pret
           </Typography>
           <ul className={styles.priceContainer}>
             <li>
@@ -200,6 +247,7 @@ export default function SearchScreen() {
               </li>
             ))}
           </ul>
+          <Divider />
           <Typography variant="h5" className={styles.title}>
             Avg. Customer Review
           </Typography>
@@ -233,46 +281,39 @@ export default function SearchScreen() {
           ) : (
             <>
               <Grid container justifyContent="space-between" mb={3}>
-                <Grid item md={6}>
-                  <div>
-                    {countProducts === 0 ? "No" : countProducts} Results
-                    {query !== "all" && " : " + query}
-                    {category !== "all" && " : " + category}
-                    {price !== "all" && " : Price " + price}
-                    {rating !== "all" && " : Rating " + rating + " & up"}
-                    {query !== "all" ||
-                    category !== "all" ||
-                    rating !== "all" ||
-                    price !== "all" ? (
-                      <Button
-                        variant="light"
-                        onClick={() => navigate("/search")}
-                      >
-                        <XCircle size={28} />
-                      </Button>
-                    ) : null}
+                <Grid item md={12}>
+                  <div className="results">
+                    <div className="results-content">
+                      {countProducts === 0 ? "No" : countProducts} Results
+                      {query !== "all" && " : " + query}
+                      {category !== "all" && " : " + category}
+                      {price !== "all" && " : Price " + price}
+                      {rating !== "all" && " : Rating " + rating + " & up"}
+                      {query !== "all" ||
+                      category !== "all" ||
+                      rating !== "all" ||
+                      price !== "all" ? (
+                        <Button
+                          variant="light"
+                          onClick={() => navigate("/search")}
+                        >
+                          <XCircle size={28} />
+                        </Button>
+                      ) : null}
+                    </div>
                   </div>
-                </Grid>
-                <Grid item className="text-end">
-                  Sort by{" "}
-                  <Select
-                    value={order}
-                    onChange={(e) => {
-                      navigate(getFilterUrl({ order: e.target.value }));
-                    }}
-                  >
-                    <MenuItem value="newest">Newest Arrivals</MenuItem>
-                    <MenuItem value="lowest">Price: Low to High</MenuItem>
-                    <MenuItem value="highest">Price: High to Low</MenuItem>
-                    <MenuItem value="toprated">Avg. Customer Reviews</MenuItem>
-                  </Select>
                 </Grid>
               </Grid>
               {products.length === 0 && (
-                <MessageBox>No Product Found</MessageBox>
+                <div className="empty-product">
+                  <div className="empty-product-content">
+                    <Warning size={32} />
+                    <h1>NO PRODUCTS FOUND</h1>
+                  </div>
+                </div>
               )}
 
-              <Grid container className={styles.productGrid} >
+              <Grid container className={styles.productGrid}>
                 {products.map((product) => (
                   <Grid item sm={6} lg={6} key={product._id}>
                     <Product product={product}></Product>
@@ -285,10 +326,7 @@ export default function SearchScreen() {
                   <Link
                     key={x + 1}
                     className="mx-1"
-                    to={{
-                      pathname: "/search",
-                      search: getFilterUrl({ page: x + 1 }, true),
-                    }}
+                    to={getFilterUrl({ page: x + 1 })}
                   >
                     <Button
                       className={Number(page) === x + 1 ? "text-bold" : ""}

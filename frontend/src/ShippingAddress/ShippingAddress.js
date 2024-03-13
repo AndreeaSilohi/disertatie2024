@@ -60,70 +60,73 @@ export default function ShippingAddress() {
 
   return (
     <div className="container-shipping">
-      <div className="navbar-shipping">
-        <Navbar />
-      </div>
-      <div className="form-shipping">
-        <form onSubmit={submitHandler}>
-          <div className="background-picture">
-            <div className="form-shipping-content">
-              <h1 className="text-center">Shipping Address</h1>
-              <div className="left-border"></div>
-              <div className="checkout">
-                <CheckoutSteps step1 step2></CheckoutSteps>
-              </div>
-              <div className="form-shipping-fields">
-                <TextField
-                  style={{ marginBottom: "35px", width: "70%" }}
-                  label="Full name"
-                  variant="standard"
-                  fullWidth
-                  required
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
+      <div className="image-background">
+        <div className="navbar-shipping">
+          <Navbar />
+        </div>
+        <div className="form-shipping">
+          <form onSubmit={submitHandler}>
+            <div className="background-picture">
+              <div className="form-shipping-content">
+                <h1 className="text-center">
+                  <p>Shipping Address</p>
+                </h1>
+                <div className="left-border"></div>
+                <div className="checkout">
+                  <CheckoutSteps step1 step2></CheckoutSteps>
+                </div>
+                <div className="form-shipping-fields">
+                  <TextField
+                    style={{ marginBottom: "35px", width: "70%" }}
+                    label="Full name"
+                    variant="standard"
+                    fullWidth
+                    required
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                  />
 
-                <TextField
-                  style={{ marginBottom: "35px", width: "70%" }}
-                  label="Address"
-                  variant="standard"
-                  fullWidth
-                  required
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
+                  <TextField
+                    style={{ marginBottom: "35px", width: "70%" }}
+                    label="Address"
+                    variant="standard"
+                    fullWidth
+                    required
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
 
-                <TextField
-                  style={{ marginBottom: "35px", width: "70%" }}
-                  label="City"
-                  variant="standard"
-                  fullWidth
-                  required
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                />
+                  <TextField
+                    style={{ marginBottom: "35px", width: "70%" }}
+                    label="City"
+                    variant="standard"
+                    fullWidth
+                    required
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                  />
 
-                <TextField
-                  style={{ marginBottom: "35px", width: "70%" }}
-                  label="Postal code"
-                  variant="standard"
-                  fullWidth
-                  required
-                  value={postalCode}
-                  onChange={(e) => setPostalCode(e.target.value)}
-                />
+                  <TextField
+                    style={{ marginBottom: "35px", width: "70%" }}
+                    label="Postal code"
+                    variant="standard"
+                    fullWidth
+                    required
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+                  />
 
-                <TextField
-                  style={{ marginBottom: "35px", width: "70%" }}
-                  label="Country"
-                  variant="standard"
-                  fullWidth
-                  required
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                />
+                  <TextField
+                    style={{ marginBottom: "35px", width: "70%" }}
+                    label="Country"
+                    variant="standard"
+                    fullWidth
+                    required
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                  />
 
-                {/* <div className="form-shipping-content-button">
+                  {/* <div className="form-shipping-content-button">
                   <Button
                    className="button-subtotal"
                     variant="contained"
@@ -139,12 +142,13 @@ export default function ShippingAddress() {
                     Continue
                   </Button>
                 </div> */}
-                <button className="button-continue">Continue</button>
+                  <button className="button-continue">Continue</button>
+                </div>
+                <div className="right-border"></div>
               </div>
-              <div className="right-border"></div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
