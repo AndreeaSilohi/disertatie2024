@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { WishlistContext } from "../WishListContextProvider";
 import "./Wishlist.css";
 
 import { ShopContext } from "../ShopContextProvider";

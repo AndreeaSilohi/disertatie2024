@@ -1,16 +1,22 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { productsData } from "../Products";
-import { WishlistContext } from "../WishListContextProvider";
+
 import Navbar from "../navbar/Navbar";
-import "./WishListItem.css";
-import { WishListItem } from "./WishListItem";
 import React, { useState, useEffect } from "react";
 import wishlistimg from "../assets/wishlistimg.jpg";
-function WishList() {
-  const { wishListItems, wishlist } = useContext(WishlistContext);
-  const navigate = useNavigate();
+import { Wishlist } from "../W";
+import { Trash } from "phosphor-react";
 
+function WishList() {
+  const navigate = useNavigate();
+  const { stateW, dispatch: ctxDispatch } = useContext(Wishlist);
+  const {
+    wishlist: { wishlistItems },
+  } = stateW;
+
+  const removeItemHandler = (item) => {
+    ctxDispatch({ type: "WISHLIST_REMOVE_ITEM", payload: item });
+  };
   const [scrollOpacity, setScrollOpacity] = useState(1);
 
   const handleScroll = () => {
@@ -27,6 +33,8 @@ function WishList() {
     };
   }, []);
 
+
+  console.log(wishlistItems)
   return (
     <div className="wrapper-wishlist">
       <div className="wishList">
@@ -45,12 +53,31 @@ function WishList() {
           <div className="centered">Your Wishlist Items</div>
         </div>
         <div className="cartItems">
-          {productsData.map((product) => {
-            if (wishListItems[product.id] !== 0) {
-              return <WishListItem data={product} />;
-            }
-          })}
-        </div>
+              {wishlistItems.map((product) => (
+                <div className="cart-table">
+                  <div className="table-content">
+                    <div className="table-content-1">
+                      <div className="img">
+                        <img src={product.image} alt={product.name}></img>{" "}
+                        <div
+                          onClick={() => navigate(`/product/${product.slug}`)}
+                        >
+                          {product.name}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="table-content-2">{product.price}</div>
+
+                    <div
+                      className="table-content-4"
+                      onClick={() => removeItemHandler(product)}
+                    >
+                      <Trash size={28} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
       </div>
     </div>
   );

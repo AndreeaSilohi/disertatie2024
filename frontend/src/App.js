@@ -13,7 +13,7 @@ import ProductDetails from "./ProductDetails/ProductDetails";
 import Curiosities from "./Curiosities/Curiosities";
 import Cart from "./Cart/Cart";
 import { StoreProvider } from "./Store";
-import { WishlistProvider } from "./WishListContextProvider";
+import { WishlistProvider } from "./W";
 import WishList from "./Wishlist/Wishlist";
 import Drawer from "./Drawer/Drawer";
 import ShippingAddress from "./ShippingAddress/ShippingAddress";

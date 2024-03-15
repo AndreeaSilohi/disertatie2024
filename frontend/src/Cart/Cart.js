@@ -40,6 +40,8 @@ function Cart() {
   const checkoutHandler = () => {
     navigate("/signin?redirect=/shipping");
   };
+
+  console.log(cartItems)
   return (
     <div>
       <div className="navbar">

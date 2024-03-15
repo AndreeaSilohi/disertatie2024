@@ -7,15 +7,21 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
-import { WishlistContext } from "../WishListContextProvider";
+
 import ProductDetails from "../ProductDetails/ProductDetails";
 import { ShoppingCartSimple } from "phosphor-react";
 import { Store } from "../Store";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import "./Product.css";
+import { Wishlist } from "../W";
 function Product(props) {
   const { product } = props;
+
+  const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
+  const {
+    wishlist: { wishlistItems },
+  } = stateW;
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
@@ -45,21 +51,23 @@ function Product(props) {
     }, 3000);
   };
 
-  const { wishListItems, addToWishlist } = useContext(WishlistContext);
-  const [notification, setNotification] = useState(null);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const handleAddToWishlist = (productId, event) => {
+  const addToWishlist = async (item, event) => {
     event.preventDefault();
     event.stopPropagation();
-    if (!wishListItems[productId]) {
-      addToWishlist(productId);
-      setNotification(`${productId} a fost adaugat in wishlist`);
-      setTimeout(() => {
-        setNotification(null);
-      }, 3000);
-    }
+
+    ctxDispatchW({
+      type: "WISHLIST_ADD_ITEM",
+      payload: { ...item },
+    });
+
+    setNotification(`${item.name} a fost adaugat in wishlist`);
+    setTimeout(() => {
+      setNotification(null);
+    }, 3000);
   };
+
+  const [notification, setNotification] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleCardClick = (product) => {
     setSelectedProduct(product);
@@ -67,7 +75,11 @@ function Product(props) {
 
   return (
     <div>
-      <Link className="product-link" to={`/product/${product.slug}`} key={product.name}>
+      <Link
+        className="product-link"
+        to={`/product/${product.slug}`}
+        key={product.name}
+      >
         <div
           className="card"
           style={{
@@ -76,30 +88,33 @@ function Product(props) {
           }}
           onClick={() => handleCardClick(product)}
         >
-          
-            <CardMedia
-              className="card-content"
-              component="img"
-              image={product.image}
-              alt={product.name}
- 
-            />
-            <CardContent className="text-card">
-              <Typography className="typografy-name"gutterBottom variant="h5" component="div">
-                {product.name}
-              </Typography>
-              <Typography  className="typografy-price"  color="text.secondary">
-                Pret: {product.price} de lei
-              </Typography>
-            </CardContent>
-         
-          <div className="actions-card">
-            <IconButton
-              onClick={(event) => handleAddToWishlist(product._id, event)}
-              aria-label="Add to Wishlist"
-              color={wishListItems[product._id] ? "secondary" : "default"}
-              sx={{ marginRight: "8px" }}
+          <CardMedia
+            className="card-content"
+            component="img"
+            image={product.image}
+            alt={product.name}
+          />
+          <CardContent className="text-card">
+            <Typography
+              className="typografy-name"
+              gutterBottom
+              variant="h5"
+              component="div"
             >
+              {product.name}
+            </Typography>
+            <Typography className="typografy-price" color="text.secondary">
+              Pret: {product.price} de lei
+            </Typography>
+          </CardContent>
+
+          <div className="actions-card">
+          <IconButton
+            onClick={(event) => addToWishlist(product, event)} // Pass entire product object
+            aria-label="Add to Wishlist"
+            color={wishlistItems.some((item) => item._id === product._id) ? "secondary" : "default"} // Check if product exists in wishlistItems
+            sx={{ marginRight: "8px" }}
+          >
               <FavoriteIcon />
             </IconButton>
             {product.stoc === 0 ? (
