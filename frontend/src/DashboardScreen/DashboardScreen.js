@@ -13,7 +13,7 @@ import {
   IconButton,
 } from "@mui/material"; // Assuming you're using Material-UI components
 
-import Chart from 'react-google-charts';
+import Chart from "react-google-charts";
 import "./DashboardScreen.css";
 
 const reducer = (state, action) => {
@@ -112,16 +112,38 @@ export default function DashboardScreen() {
           </div>
           <div className="charts">
             <h2>Sales chart</h2>
-            {
-                summary.dailyOrders.length === 0 ?(
-                    <MessageBox> No sale</MessageBox>
-                )
-                :
-                (
-                    <Chart></Chart>
-                )
-               
-            }
+            {summary.dailyOrders.length === 0 ? (
+              <MessageBox> No sale</MessageBox>
+            ) : (
+              <Chart
+                width="100%"
+                height="400px"
+                chartType="AreaChart"
+                loader={<div>Loading chart...</div>}
+                data={[
+                  ["Date", "Sales"],
+                  ...summary.dailyOrders.map((x) => [x._id, x.sales]),
+                ]}
+              ></Chart>
+            )}
+          </div>
+
+          <div className="charts">
+            <h2>Categories</h2>
+            {summary.productCategories.length === 0 ? (
+              <MessageBox> No category</MessageBox>
+            ) : (
+              <Chart
+                width="100%"
+                height="400px"
+                chartType="PieChart"
+                loader={<div>Loading chart...</div>}
+                data={[
+                  ["Category", "Products"],
+                  ...summary.productCategories.map((x) => [x._id, x.count]),
+                ]}
+              ></Chart>
+            )}
           </div>
         </>
       )}
