@@ -10,7 +10,7 @@ import { Store } from "../Store";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
 import "./PaymentMethod.css";
-
+import miere from "../assets/miere.png";
 export default function PaymentMethod() {
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -40,49 +40,49 @@ export default function PaymentMethod() {
   };
   return (
     <div className="container-payment">
-      <div className="navbar-payment">
-        <Navbar />
-      </div>
-      <div className="form-content">
-        <form className="mat-form" onSubmit={submitHandler}>
-          <h1 className="text-center">Payment Method</h1>
-          <div className="checkout">
-            <CheckoutSteps step1 step2 step3></CheckoutSteps>
+      <div className="img-background">
+        <div className="navbar-payment">
+          <Navbar />
+        </div>
+        <div className="total">
+          <div className="left">
+            <img className="left-img" src={miere}></img>
           </div>
-          <FormControl>
-            <FormLabel id="demo-controlled-radio-buttons-group">
-              Payment Method
-            </FormLabel>
-            <RadioGroup
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              value={paymentMethodName}
-              onChange={handleChange}
-            >
-              <FormControlLabel
-                value="paypal"
-                control={<Radio />}
-                label="PayPal"
-              />
-              <FormControlLabel
-                value="stripe"
-                control={<Radio />}
-                label="Stripe"
-              />
-            </RadioGroup>
-          </FormControl>
+          <div className="form-content">
+            <form className="mat-form" onSubmit={submitHandler}>
+              <h1 className="text-center">Payment Method</h1>
+              <div className="checkout">
+                <CheckoutSteps step1 step2 step3></CheckoutSteps>
+              </div>
+              <div className="form-payment-fields">
+                <FormControl>
+                  <FormLabel id="demo-controlled-radio-buttons-group">
+                    Payment Method
+                  </FormLabel>
 
-          <div style={{ padding: "20px" }}>
-            <Button
-              variant="contained"
-              className="continue"
-              type="submit"
-              style={{ backgroundColor: "#D77E2B" }}
-            >
-              Continue
-            </Button>
+                  <RadioGroup
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={paymentMethodName}
+                    onChange={handleChange}
+                  >
+                    <FormControlLabel
+                      value="paypal"
+                      control={<Radio />}
+                      label="PayPal"
+                    />
+                    <FormControlLabel
+                      value="stripe"
+                      control={<Radio />}
+                      label="Stripe"
+                    />
+                  </RadioGroup>
+                  <button className="button-continue">Continue</button>
+                </FormControl>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

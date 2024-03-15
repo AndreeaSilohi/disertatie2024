@@ -24,6 +24,9 @@ import OrderScreen from "./orderScreen/OrderScreen";
 import OrderHistory from "./OrderHistory/OrderHistory";
 import ProfileScreen from "./Profile/ProfileScreen";
 import SearchScreen from "./SearchScreen/SearchScreen";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import DashboardScreen from "./DashboardScreen/DashboardScreen";
+import AdminRoute from "./AdminRoute/AdminRoute";
 
 function App() {
   return (
@@ -49,15 +52,47 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/signin" element={<Profile />} />
               <Route path="/signup" element={<SignUp />} />
-              <Route path="/profile" element={<ProfileScreen />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <ProfileScreen />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/wishlist" element={<WishList />} />
               <Route path="/drawer" element={<Drawer />} />
               <Route path="/shipping" element={<ShippingAddress />} />
               <Route path="/payment" element={<PaymentMethod />} />
               <Route path="/placeorder" element={<PlaceOrder />} />
-              <Route path="/order/:id" element={<OrderScreen />} />
-              <Route path="/orderhistory" element={<OrderHistory />} />
+              <Route
+                path="/order/:id"
+                element={
+                  <ProtectedRoute>
+                    <OrderScreen />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/orderhistory"
+                element={
+                  <ProtectedRoute>
+                    <OrderHistory />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/search" element={<SearchScreen />} />
+
+              {/*Admin Routes */}
+
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <AdminRoute>
+                    <DashboardScreen />
+                  </AdminRoute>
+                }
+              ></Route>
             </Routes>
           </div>
           <div>

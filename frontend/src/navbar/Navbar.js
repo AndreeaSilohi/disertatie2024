@@ -9,7 +9,7 @@ import {
   User,
   ListBullets,
   SignOut,
-  SignIn
+  SignIn,
 } from "phosphor-react";
 import "./Navbar.css";
 import logo from "../assets/logo.png";
@@ -162,7 +162,7 @@ function Navbar() {
               onClose={handleMenuClose}
             >
               <MenuItem
-              style={{ display: "flex", alignItems: "center" }}
+                style={{ display: "flex", alignItems: "center" }}
                 value={1}
                 component={Link}
                 to="/profile"
@@ -195,8 +195,67 @@ function Navbar() {
           </div>
         ) : (
           <Link to="/signin">
-            <SignIn size={32} style={{ display: "flex", alignItems: "center" ,marginRight: "2px" ,color:"black"}} />
+            <SignIn
+              size={32}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginRight: "2px",
+                color: "black",
+              }}
+            />
           </Link>
+        )}
+        {userInfo && userInfo.isAdmin && (
+          <Menu
+            id="user-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem
+              style={{ display: "flex", alignItems: "center" }}
+              value={1}
+              component={Link}
+              to="/admin/dashboard"
+              onClick={handleMenuClose}
+            >
+              <User size={20} style={{ marginRight: "2px" }} />
+              <span style={{ marginLeft: "4px" }}>Dashboard</span>
+            </MenuItem>
+            <Divider />
+            <MenuItem
+              style={{ display: "flex", alignItems: "center" }}
+              value={2}
+              component={Link}
+              to="/admin/productlist"
+              onClick={handleMenuClose}
+            >
+              <ListBullets size={20} style={{ marginRight: "2px" }} />
+              <span style={{ marginLeft: "4px" }}>Products</span>
+            </MenuItem>
+
+            <Divider />
+            <MenuItem
+              onClick={signoutHandler}
+              style={{ display: "flex", alignItems: "center" }}
+              to="/admin/orderlist"
+            >
+              <SignOut size={20} style={{ marginRight: "2px" }} />
+              <span style={{ marginLeft: "4px" }}>Orders</span>
+            </MenuItem>
+
+            <Divider />
+            <MenuItem
+              to="/admin/userlist"
+              onClick={signoutHandler}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <SignOut size={20} style={{ marginRight: "2px" }} />
+              <span style={{ marginLeft: "4px" }}>Users</span>
+            </MenuItem>
+          </Menu>
         )}
       </div>
       {/* Sidebar */}

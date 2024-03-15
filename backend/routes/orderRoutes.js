@@ -1,7 +1,9 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import { isAuth } from "../utils.js";
+import { isAuth, isAdmin } from "../utils.js";
 import Order from "../modelss/orderModel.js";
+import User from "../modelss/userModel.js";
+
 
 const orderRouter = express.Router();
 orderRouter.post(
@@ -23,6 +25,33 @@ orderRouter.post(
   })
 );
 
+orderRouter.get(
+  "/summary",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.aggregate([
+      //define an object that is a pipeline
+      {
+        $group: {
+          _id: null,
+          numOrders: { $sum: 1 },
+          totalSales: { $sum: "$totalPrice" },
+        },
+      },
+    ]);
+
+    const users = await User.aggregate([
+      {
+        $group: {
+          _id: null,
+          numUsers: { $sum: 1 },
+        },
+      },
+    ]);
+    res.send({ users, orders });
+  })
+);
 orderRouter.get(
   "/mine",
   isAuth,

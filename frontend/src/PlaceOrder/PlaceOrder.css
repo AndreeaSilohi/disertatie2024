@@ -1,11 +1,46 @@
-
-.container-place-order{
-    position: relative;
+.container-place-order {
+  background: rgb(238, 220, 130);
+  background: linear-gradient(
+    90deg,
+    rgba(238, 220, 130, 1) 8%,
+    rgba(170, 170, 170, 1) 100%
+  );
 }
 
-.place-order-content{
-    padding: 80px;
-    box-sizing: border-box; /* Include padding in the total width */
-    width: 90%; /* Adjust the max-width as needed */
-    margin: auto; /* Center the form horizontally */
+.place-order-content {
+  /* padding: 80px;
+  box-sizing: border-box; 
+  width: 90%; 
+  margin: auto;  */
+
+  padding: 16px 32px;
+  border-radius: 8px;
+  width: 74%;
+  display: flex;
+}
+
+.image-background {
+  background: repeat center url("../assets/opacity4.png");
+  background-position: center center;
+  background-size: cover;
+  opacity: 0.8;
+}
+
+.header-center {
+  font-family: "Catamaran", sans-serif !important;
+  font-size: 32px;
+  font-weight: 500;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.checkout-steps{
+  
+
+}
+
+.center-all{
+    /* display: flex;
+    align-items: center; */
 }
