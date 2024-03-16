@@ -18,18 +18,18 @@ import { Wishlist } from "../W";
 
 
 
+
 function Product(props) {
   const { product } = props;
 
   const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
   const {
     wishlist: { wishlistItems },
+    userInfo,
   } = stateW;
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {
-    cart: { cartItems },
-  } = state;
+  const { cart: { cartItems }, } = state;
 
   const addToCartHandler = async (item, event) => {
     event.preventDefault();
@@ -54,20 +54,63 @@ function Product(props) {
     }, 3000);
   };
 
+  // const addToWishlist = async (item, event) => {
+  //   event.preventDefault();
+  //   event.stopPropagation();
+
+  //   ctxDispatchW({
+  //     type: "WISHLIST_ADD_ITEM",
+  //     payload: { ...item },
+  //   });
+
+  //   setNotification(`${item.name} a fost adaugat in wishlist`);
+  //   setTimeout(() => {
+  //     setNotification(null);
+  //   }, 3000);
+
+    
+  // };
+
+
   const addToWishlist = async (item, event) => {
     event.preventDefault();
     event.stopPropagation();
-
-    ctxDispatchW({
-      type: "WISHLIST_ADD_ITEM",
-      payload: { ...item },
-    });
-
-    setNotification(`${item.name} a fost adaugat in wishlist`);
-    setTimeout(() => {
-      setNotification(null);
-    }, 3000);
+  
+    try {
+      ctxDispatchW({ type: "CREATE_REQUEST" });
+  
+      const { data } = await axios.post(
+        "/api/wishlist",
+        {
+          wishlistItems: [{
+            slug: item.slug,
+            name: item.name,
+            quantity: 1, // You might adjust quantity as needed
+            image: item.image,
+            price: item.price,
+            product: item._id,
+          }],
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+  
+      ctxDispatchW({ type: "CREATE_SUCCESS" });
+      setNotification(`${item.name} was added to the wishlist`);
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+    } catch (err) {
+      ctxDispatchW({ type: "CREATE_FAIL" });
+      console.error("Error adding to wishlist:", err);
+      window.alert("Failed to add to wishlist. Please try again later.");
+    }
   };
+  
+  
 
   const [notification, setNotification] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);

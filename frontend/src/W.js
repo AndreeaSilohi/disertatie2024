@@ -44,6 +44,15 @@ function reducer(stateW, action) {
           wishlistItems,
         },
       };
+    case "WISHLIST_SET_ITEMS":
+      localStorage.setItem("wishlistItems", JSON.stringify(action.payload));
+      return {
+        ...stateW,
+        wishlist: {
+          ...stateW.wishlist,
+          wishlistItems: action.payload,
+        },
+      };
     case "WISHLIST_REMOVE_ITEM": {
       const wishlistItems = stateW.wishlist.wishlistItems.filter(
         (item) => item._id !== action.payload._id
@@ -53,7 +62,7 @@ function reducer(stateW, action) {
     }
     case "WISHLIST_CLEAR":
       return { ...stateW, wishlist: { ...stateW.wishlist, wishlistItems: [] } };
-      
+
     case "USER_SIGNIN":
       return { ...stateW, userInfo: action.payload };
     case "USER_SIGNOUT":

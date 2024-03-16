@@ -1,7 +1,7 @@
 import express from "express";
 import Product from "../modelss/productModel.js";
 import expressAsyncHandler from "express-async-handler";
-import {isAuth,isAdmin} from '../utils.js'
+import { isAuth, isAdmin } from "../utils.js";
 
 const productRouter = express.Router();
 
@@ -13,7 +13,7 @@ productRouter.get("/", async (req, res) => {
 const PAGE_SIZE = 4;
 
 productRouter.get(
-  '/admin',
+  "/admin",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {

@@ -41,7 +41,6 @@ function Cart() {
     navigate("/signin?redirect=/shipping");
   };
 
-  console.log(cartItems)
   return (
     <div>
       <div className="navbar">
