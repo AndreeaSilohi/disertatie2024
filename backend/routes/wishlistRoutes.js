@@ -66,8 +66,17 @@ wishlistRouter.get(
   "/",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const wishlistItems = await WishlistItem.find({ user: req.user._id });
-    res.status(200).send(wishlistItems);
+    try {
+      const userWishlist = await WishlistItem.findOne({ user: req.user._id });
+      if (!userWishlist) {
+        // If user doesn't have a wishlist, return an empty array
+        return res.status(200).send({ wishlistItems: [] });
+      }
+      res.status(200).send({ wishlistItems: userWishlist.wishlistItems });
+    } catch (error) {
+      console.error("Error fetching wishlist items:", error);
+      res.status(500).send({ message: "Internal Server Error" });
+    }
   })
 );
 

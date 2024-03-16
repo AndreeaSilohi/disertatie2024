@@ -31,6 +31,7 @@ function Profile() {
     } catch (err) {
       alert("Invalid email or password");
     }
+    window.location.reload();
   };
 
   useEffect(() => {

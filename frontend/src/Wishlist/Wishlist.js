@@ -17,12 +17,20 @@ function WishList() {
   useEffect(() => {
     const fetchWishlistItems = async () => {
       try {
+        if (!userInfo || !userInfo.token) {
+          // If userInfo or token is not available, return early
+          return;
+        }
         const { data } = await axios.get("/api/wishlist", {
           headers: {
             Authorization: `Bearer ${userInfo.token}`,
           },
         });
-        ctxDispatch({ type: "WISHLIST_SET_ITEMS", payload: data });
+        console.log(data);
+        ctxDispatch({
+          type: "WISHLIST_SET_ITEMS",
+          payload: data.wishlistItems,
+        });
       } catch (error) {
         console.error("Error fetching wishlist items:", error);
         // Handle error
@@ -30,12 +38,14 @@ function WishList() {
     };
 
     fetchWishlistItems();
-  }, [ctxDispatch, userInfo.token]);
+  }, [ctxDispatch, userInfo, wishlistItems]);
 
-
-  console.log(wishlistItems[0].user)
   const removeItemHandler = async (item) => {
     try {
+      if (!userInfo || !userInfo.token) {
+        // If userInfo or token is not available, return early
+        return;
+      }
       await axios.delete(`/api/wishlist/${item._id}`, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -65,8 +75,8 @@ function WishList() {
         </div>
 
         <div className="cartItems">
-          {wishlistItems.map((wishlistItem) => (
-            <div key={wishlistItem._id} className="cart-table">
+          {wishlistItems.map((wishlistItem, index) => (
+            <div key={index} className="cart-table">
               <div className="table-content">
                 <div className="table-content-1">
                   <div className="img">

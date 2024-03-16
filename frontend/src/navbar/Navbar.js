@@ -255,6 +255,15 @@ function Navbar() {
               <SignOut size={20} style={{ marginRight: "2px" }} />
               <span style={{ marginLeft: "4px" }}>Users</span>
             </MenuItem>
+
+            <Divider />
+            <MenuItem
+                onClick={signoutHandler}
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <SignOut size={20} style={{ marginRight: "2px" }} />
+                <span style={{ marginLeft: "4px" }}>Sign out</span>
+              </MenuItem>
           </Menu>
         )}
       </div>

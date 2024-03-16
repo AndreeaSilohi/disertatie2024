@@ -9,12 +9,7 @@ const initialstateW = {
     : null,
 
   wishlist: {
-    shippingAddress: localStorage.getItem("shippingAddress")
-      ? JSON.parse(localStorage.getItem("shippingAddress"))
-      : {},
-    paymentMethod: localStorage.getItem("paymentMethod")
-      ? localStorage.getItem("paymentMethod")
-      : "",
+  
     wishlistItems: localStorage.getItem("wishlistItems")
       ? JSON.parse(localStorage.getItem("wishlistItems"))
       : [],
@@ -23,6 +18,25 @@ const initialstateW = {
 
 function reducer(stateW, action) {
   switch (action.type) {
+    case "CREATE_REQUEST":
+      // Set loading or any other appropriate flag
+      return { ...stateW, loading: true };
+    case "USER_SIGNIN":
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
+      return { ...stateW, userInfo: action.payload };
+
+    case "USER_SIGNOUT":
+      localStorage.removeItem("userInfo");
+      return {
+        ...stateW,
+        userInfo: null,
+        wishlist: {
+          wishlistItems: [],
+          shippingAddress: {},
+          paymentMethod: "",
+        },
+      };
+
     case "WISHLIST_ADD_ITEM":
       //add to wishlist
       const newItem = action.payload;
@@ -63,19 +77,6 @@ function reducer(stateW, action) {
     case "WISHLIST_CLEAR":
       return { ...stateW, wishlist: { ...stateW.wishlist, wishlistItems: [] } };
 
-    case "USER_SIGNIN":
-      return { ...stateW, userInfo: action.payload };
-    case "USER_SIGNOUT":
-      return {
-        ...stateW,
-        userInfo: null,
-        wishlist: {
-          wishlistItems: [],
-          shippingAddress: {},
-          paymentMethod: "",
-        },
-      };
-
     case "SAVE_SHIPPING_ADDRESS":
       return {
         ...stateW,
@@ -97,6 +98,8 @@ function reducer(stateW, action) {
       return stateW;
   }
 }
+
+
 
 export function WishlistProvider(props) {
   const [stateW, dispatch] = useReducer(reducer, initialstateW);

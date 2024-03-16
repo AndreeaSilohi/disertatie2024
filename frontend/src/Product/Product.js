@@ -16,9 +16,6 @@ import axios from "axios";
 import "./Product.css";
 import { Wishlist } from "../W";
 
-
-
-
 function Product(props) {
   const { product } = props;
 
@@ -29,7 +26,9 @@ function Product(props) {
   } = stateW;
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { cart: { cartItems }, } = state;
+  const {
+    cart: { cartItems },
+  } = state;
 
   const addToCartHandler = async (item, event) => {
     event.preventDefault();
@@ -68,28 +67,29 @@ function Product(props) {
   //     setNotification(null);
   //   }, 3000);
 
-    
   // };
-
 
   const addToWishlist = async (item, event) => {
     event.preventDefault();
     event.stopPropagation();
-  
+
     try {
       ctxDispatchW({ type: "CREATE_REQUEST" });
-  
+      const user = userInfo ? userInfo.user : null;
       const { data } = await axios.post(
         "/api/wishlist",
         {
-          wishlistItems: [{
-            slug: item.slug,
-            name: item.name,
-            quantity: 1, // You might adjust quantity as needed
-            image: item.image,
-            price: item.price,
-            product: item._id,
-          }],
+          wishlistItems: [
+            {
+              slug: item.slug,
+              name: item.name,
+              quantity: 1, // You might adjust quantity as needed
+              image: item.image,
+              price: item.price,
+              product: item._id,
+            },
+          ],
+     
         },
         {
           headers: {
@@ -97,7 +97,7 @@ function Product(props) {
           },
         }
       );
-  
+
       ctxDispatchW({ type: "CREATE_SUCCESS" });
       setNotification(`${item.name} was added to the wishlist`);
       setTimeout(() => {
@@ -109,9 +109,10 @@ function Product(props) {
       window.alert("Failed to add to wishlist. Please try again later.");
     }
   };
-  
-  
 
+  const isInWishlist =
+    Array.isArray(wishlistItems) &&
+    wishlistItems.some((item) => item._id === product._id);
   const [notification, setNotification] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -155,12 +156,12 @@ function Product(props) {
           </CardContent>
 
           <div className="actions-card">
-          <IconButton
-            onClick={(event) => addToWishlist(product, event)} // Pass entire product object
-            aria-label="Add to Wishlist"
-            color={wishlistItems.some((item) => item._id === product._id) ? "secondary" : "default"} // Check if product exists in wishlistItems
-            sx={{ marginRight: "8px" }}
-          >
+            <IconButton
+              onClick={(event) => addToWishlist(product, event)} // Pass entire product object
+              aria-label="Add to Wishlist"
+              color={isInWishlist ? "secondary" : "default"}
+              sx={{ marginRight: "8px" }}
+            >
               <FavoriteIcon />
             </IconButton>
             {product.stoc === 0 ? (
