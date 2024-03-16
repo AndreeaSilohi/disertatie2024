@@ -27,6 +27,7 @@ import SearchScreen from "./SearchScreen/SearchScreen";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import DashboardScreen from "./DashboardScreen/DashboardScreen";
 import AdminRoute from "./AdminRoute/AdminRoute";
+import ProductListScreen from "./ProductListScreen/ProductListScreen";
 
 function App() {
   return (
@@ -90,6 +91,15 @@ function App() {
                 element={
                   <AdminRoute>
                     <DashboardScreen />
+                  </AdminRoute>
+                }
+              ></Route>
+
+              <Route
+                path="/admin/products"
+                element={
+                  <AdminRoute>
+                    <ProductListScreen />
                   </AdminRoute>
                 }
               ></Route>

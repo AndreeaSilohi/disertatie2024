@@ -229,7 +229,7 @@ function Navbar() {
               style={{ display: "flex", alignItems: "center" }}
               value={2}
               component={Link}
-              to="/admin/productlist"
+              to="/admin/products"
               onClick={handleMenuClose}
             >
               <ListBullets size={20} style={{ marginRight: "2px" }} />
@@ -240,7 +240,7 @@ function Navbar() {
             <MenuItem
               onClick={signoutHandler}
               style={{ display: "flex", alignItems: "center" }}
-              to="/admin/orderlist"
+              to="/admin/orders"
             >
               <SignOut size={20} style={{ marginRight: "2px" }} />
               <span style={{ marginLeft: "4px" }}>Orders</span>
@@ -248,7 +248,7 @@ function Navbar() {
 
             <Divider />
             <MenuItem
-              to="/admin/userlist"
+              to="/admin/users"
               onClick={signoutHandler}
               style={{ display: "flex", alignItems: "center" }}
             >

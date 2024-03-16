@@ -15,6 +15,9 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import "./Product.css";
 import { Wishlist } from "../W";
+
+
+
 function Product(props) {
   const { product } = props;
 

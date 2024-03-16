@@ -48,6 +48,8 @@ export default function PlaceOrder() {
   cart.taxPrice = round2(0.15 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
+
+  
   const placeOrderHandler = async () => {
     try {
       dispatch({ type: "CREATE_REQUEST" });
