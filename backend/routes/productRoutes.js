@@ -143,4 +143,26 @@ productRouter.get("/:id", async (req, res) => {
     res.status(404).send({ message: "Product Not Found" });
   }
 });
+
+
+productRouter.put('/:productId/updateStock', async (req, res) => {
+  const { productId } = req.params;
+  const { quantity } = req.body;
+
+  try {
+    // Find the product by its ID
+    const product = await Product.findById(productId);
+
+    // Update the stock
+    product.stoc -= quantity;
+
+    // Save the updated product
+    await product.save();
+
+    res.status(200).json({ message: 'Stock updated successfully' });
+  } catch (error) {
+    console.error('Error updating stock:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 export default productRouter;
