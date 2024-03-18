@@ -16,6 +16,7 @@ import logo from "../assets/logo.png";
 import Badge from "@mui/material/Badge";
 import { Store } from "../Store";
 import MenuItem from "@mui/material/MenuItem";
+import { Wishlist } from "../W";
 import {
   Divider,
   Drawer,
@@ -34,6 +35,11 @@ function Navbar() {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
+
+  const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
+  const {
+    wishlist: { wishlistItems },
+  } = stateW;
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -48,11 +54,12 @@ function Navbar() {
 
   const signoutHandler = () => {
     ctxDispatch({ type: "USER_SIGNOUT" });
+    ctxDispatchW({ type: "USER_SIGNOUT" });
     localStorage.removeItem("userInfo");
     localStorage.removeItem("shippingAddress");
     localStorage.removeItem("paymentMethod");
-    window.location.href = "/signin";
-  };
+    window.location.href ="/signin";
+};
 
   const toggleSidebar = () => {
     setSidebarIsOpen(!sidebarIsOpen);

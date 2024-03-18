@@ -25,17 +25,17 @@ function reducer(stateW, action) {
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
       return { ...stateW, userInfo: action.payload };
 
-    case "USER_SIGNOUT":
-      localStorage.removeItem("userInfo");
-      return {
-        ...stateW,
-        userInfo: null,
-        wishlist: {
-          wishlistItems: [],
-          shippingAddress: {},
-          paymentMethod: "",
-        },
-      };
+      case "USER_SIGNOUT":
+        localStorage.removeItem("userInfo"); // Remove user info from localStorage
+        localStorage.removeItem("wishlistItems"); // Remove wishlist items from localStorage
+        return {
+          ...stateW,
+          userInfo: null,
+          wishlist: {
+            wishlistItems: [],
+          },
+        };
+      
 
     case "WISHLIST_ADD_ITEM":
       //add to wishlist
