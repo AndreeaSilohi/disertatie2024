@@ -70,11 +70,11 @@ export default function PlaceOrder() {
       );
 
       // Update stock for each item in the order
-      for (const item of cart.cartItems) {
-        await axios.put(`/api/products/${item._id}/updateStock`, {
-          quantity: item.quantity,
-        });
-      }
+      // for (const item of cart.cartItems) {
+      //   await axios.put(`/api/products/${item._id}/updateStock`, {
+      //     quantity: item.stoc,
+      //   });
+      // }
 
       ctxDispatch({ type: "CART_CLEAR" });
       dispatch({ type: "CREATE_SUCCESS" });

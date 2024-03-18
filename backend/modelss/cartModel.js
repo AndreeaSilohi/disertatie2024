@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
-
-const wishlistSchema = new mongoose.Schema(
+const cartSchema = new mongoose.Schema(
   {
-    wishlistItems: [
+    cartItems: [
       {
+        quantity: { type: Number, required: true },
         slug: { type: String, required: true },
         name: { type: String, required: true },
         image: { type: String, required: true },
         price: { type: Number, required: true },
+
         product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Prod",
@@ -16,14 +17,12 @@ const wishlistSchema = new mongoose.Schema(
       },
     ],
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-
   },
   {
     timestamps: true, //add createdat and updatedat
   }
-
 );
 
-const WishlistItem = mongoose.model("WishlistItem", wishlistSchema);
+const Cart = mongoose.model("Cart", cartSchema);
 
-export default WishlistItem;
+export default Cart;

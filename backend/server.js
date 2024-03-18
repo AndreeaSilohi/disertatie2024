@@ -8,6 +8,8 @@ import userRouter from "./routes/userRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
 import wishlistRouter from "./routes/wishlistRoutes.js";
 
+import cartRouter from "./routes/cartRoutes.js";
+
 dotenv.config();
 
 mongoose
@@ -24,8 +26,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/api/keys/paypal',(req,res)=>{
-  res.send(process.env.PAYPAL_CLIENT_ID||'sb');
+app.get("/api/keys/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
 
 app.use("/api/seed", seedRouter);
@@ -34,6 +36,7 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/wishlist", wishlistRouter);
 
+app.use("/api/cart", cartRouter); // Use cart routes
 
 //this is like a middleware
 app.use((err, req, res, next) => {

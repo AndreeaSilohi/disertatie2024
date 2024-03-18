@@ -5,11 +5,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
-
 import ProductDetails from "../ProductDetails/ProductDetails";
-import { ShoppingCartSimple } from "phosphor-react";
 import { Store } from "../Store";
 import Button from "@mui/material/Button";
 import axios from "axios";
@@ -28,46 +25,86 @@ function Product(props) {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     cart: { cartItems },
+    userInfoCart,
   } = state;
 
-  const addToCartHandler = async (item, event) => {
+  //   const addToCartHandler = async (item, event) => {
+  //     event.preventDefault();
+  //     event.stopPropagation();
+  //     const existItem = cartItems.find((x) => x._id === product._id);
+  //     const quantity = existItem ? existItem.quantity + 1 : 1;
+  //     const { data } = await axios.get(/api/products/${item._id});
+
+  //     if (data.stoc < quantity) {
+  //       window.alert("Sorry. Product is out of stock");
+  //       return;
+  //     }
+
+  //     ctxDispatch({
+  //       type: "CART_ADD_ITEM",
+  //       payload: { ...item, quantity },
+  //     });
+
+  //     setNotification(${data.name} a fost adaugat in wishlist);
+  //     setTimeout(() => {
+  //       setNotification(null);
+  //     }, 3000);
+  //   };
+  const addToCartHandler = async (product, event) => {
+    console.log(product);
     event.preventDefault();
     event.stopPropagation();
-    const existItem = cartItems.find((x) => x._id === product._id);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/products/${item._id}`);
 
-    if (data.stoc < quantity) {
-      window.alert("Sorry. Product is out of stock");
-      return;
+    try {
+      // Check stock availability
+      const { data } = await axios.get(`/api/products/${product._id}`);
+      console.log(data)
+      const existItem = cartItems.find((x) => x._id === product._id);
+      const quantity = existItem ? existItem.quantity + 1 : 1;
+
+      if (data.stoc < quantity) {
+        window.alert("Sorry. Product is out of stock");
+        return;
+      }
+
+      // Send a POST request to add the item to the cart
+      const response = await axios.post(
+        "/api/cart",
+        {
+          quantity: quantity,
+          slug: product.slug,
+          name: product.name,
+          image: product.image,
+          price: product.price,
+          productId: product._id, // Ensure productId is provided correctly
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`, // Assuming userInfo contains user token
+          },
+        }
+      );
+
+      // Dispatch action to update the cart in the context/state
+      ctxDispatch({
+        type: "CART_ADD_ITEM",
+        payload: { ...product, quantity }, // Assuming the server responds with the updated cart data
+      });
+      ctxDispatchW({ type: "CREATE_SUCCESS" });
+      setNotification(`${product.name} was added to the cart`);
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+
+
+      
+      // Show notification or handle success
+      console.log(`${product.name} was added to the cart`);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      window.alert("Failed to add to cart. Please try again later.");
     }
-
-    ctxDispatch({
-      type: "CART_ADD_ITEM",
-      payload: { ...item, quantity },
-    });
-
-    setNotification(`${data.name} a fost adaugat in wishlist`);
-    setTimeout(() => {
-      setNotification(null);
-    }, 3000);
   };
-
-  // const addToWishlist = async (item, event) => {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-
-  //   ctxDispatchW({
-  //     type: "WISHLIST_ADD_ITEM",
-  //     payload: { ...item },
-  //   });
-
-  //   setNotification(`${item.name} a fost adaugat in wishlist`);
-  //   setTimeout(() => {
-  //     setNotification(null);
-  //   }, 3000);
-
-  // };
 
   const addToWishlist = async (item, event) => {
     event.preventDefault();
@@ -83,13 +120,11 @@ function Product(props) {
             {
               slug: item.slug,
               name: item.name,
-              quantity: 1, // You might adjust quantity as needed
               image: item.image,
               price: item.price,
               product: item._id,
             },
           ],
-     
         },
         {
           headers: {

@@ -28,7 +28,6 @@ import {
 } from "@mui/material";
 import { getError } from "../utils";
 import axios from "axios";
-import SearchBox from "../SearchBox/SearchBox";
 function Navbar() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;

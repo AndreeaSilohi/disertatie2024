@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext,useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 //nu elimin cartItem cred ca foloseste stiluri de acolo
 // import { CartItem } from "./CartItem";
@@ -16,22 +16,91 @@ function Cart() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     cart: { cartItems },
+    userInfo
   } = state;
 
-  const updateCartHandler = async (item, quantity) => {
-    const { data } = await axios.get(`/api/products/${item._id}`);
 
-    console.log(quantity);
-    if (data.stoc < quantity) {
-      window.alert("Sorry. Product is out of stock");
-      return;
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        if (!userInfo || !userInfo.token) {
+          // If userInfo or token is not available, return early
+          return;
+        }
+        const { data } = await axios.get("/api/cart", {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        });
+
+        ctxDispatch({
+          type: "CART_SET_ITEMS",
+          payload: data.cartItems,
+        });
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+        // Log specific error details
+        console.error("Error details:", error.response || error.message);
+        // Handle error
+      }
+    };
+    
+
+    fetchCartItems();
+  }, [ctxDispatch, userInfo]);
+
+
+
+  const updateCartHandler = async (product, quantity,event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    console.log(product)
+    console.log(quantity)
+    try {
+      // Check stock availability
+      const { data } = await axios.get(`/api/products/${product.product}`);
+      console.log(data)
+      
+
+      if (data.stoc < quantity) {
+        window.alert("Sorry. Product is out of stock");
+        return;
+      }
+
+      // Send a POST request to add the item to the cart
+      const response = await axios.post(
+        "/api/cart",
+        {
+          quantity: quantity,
+          slug: product.slug,
+          name: product.name,
+          image: product.image,
+          price: product.price,
+          productId: product.product, // Ensure productId is provided correctly
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`, // Assuming userInfo contains user token
+          },
+        }
+      );
+
+      // Dispatch action to update the cart in the context/state
+      ctxDispatch({
+        type: "CART_ADD_ITEM",
+        payload: { ...product, quantity }, // Assuming the server responds with the updated cart data
+      });
+
+      // Show notification or handle success
+      console.log(`${product.name} was added to the cart`);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      window.alert("Failed to add to cart. Please try again later.");
     }
-
-    ctxDispatch({
-      type: "CART_ADD_ITEM",
-      payload: { ...item, quantity },
-    });
   };
+  
+
 
   const removeItemHandler = (item) => {
     ctxDispatch({ type: "CART_REMOVE_ITEM", payload: item });
@@ -106,8 +175,8 @@ function Cart() {
                     <div className="table-content-3">
                       <div>
                         <button
-                          onClick={() =>
-                            updateCartHandler(product, product.quantity - 1)
+                          onClick={(event) =>
+                            updateCartHandler(product, product.quantity - 1,event)
                           }
                           disabled={product.quantity === 1}
                         >
@@ -121,8 +190,8 @@ function Cart() {
                       <div>
                         <button
                           disabled={product.quantity === product.stoc}
-                          onClick={() =>
-                            updateCartHandler(product, product.quantity + 1)
+                          onClick={(event) =>
+                            updateCartHandler(product, product.quantity + 1,event)
                           }
                         >
                           {" "}

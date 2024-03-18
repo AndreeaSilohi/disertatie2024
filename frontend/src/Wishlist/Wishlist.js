@@ -38,7 +38,7 @@ function WishList() {
     };
 
     fetchWishlistItems();
-  }, [ctxDispatch, userInfo, wishlistItems]);
+  }, [ctxDispatch, userInfo]);
 
   const removeItemHandler = async (item) => {
     try {

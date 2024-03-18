@@ -1,7 +1,6 @@
 import express from "express";
-import Product from "../modelss/productModel.js";
 import expressAsyncHandler from "express-async-handler";
-import {isAuth,isAdmin} from '../utils.js'
+import {isAuth} from '../utils.js'
 import WishlistItem from "../modelss/wishlistModel.js";
 
 const wishlistRouter = express.Router();
@@ -41,6 +40,7 @@ wishlistRouter.post(
         } else {
           // If item doesn't exist, add it to the wishlist
           userWishlist.wishlistItems.push({
+            quantity:item.quantity,
             slug: item.slug,
             name: item.name,
             quantity: item.quantity,
