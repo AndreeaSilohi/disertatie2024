@@ -2,7 +2,6 @@ import { createContext, useReducer } from "react";
 import React from "react";
 
 export const Store = createContext();
-
 const initialState = {
   userInfo: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
@@ -15,11 +14,15 @@ const initialState = {
     paymentMethod: localStorage.getItem("paymentMethod")
       ? localStorage.getItem("paymentMethod")
       : "",
-    cartItems: localStorage.getItem("cartItems")
+      
+    cartItems: localStorage.getItem("cartItems") === undefined
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [],
   },
 };
+
+
+console.log(initialState)
 
 function reducer(state, action) {
   switch (action.type) {
@@ -94,7 +97,22 @@ function reducer(state, action) {
           },
         };
 
-
+        case "CART_UPDATE_QUANTITY":
+          const { product, newQuantity } = action.payload;
+          const updatedCartItems = state.cart.cartItems.map((item) => {
+            if (item._id === product._id) {
+              return { ...item, quantity: newQuantity };
+            }
+            return item;
+          });
+          localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+          return {
+            ...state,
+            cart: {
+              ...state.cart,
+              cartItems: updatedCartItems,
+            },
+          };
     default:
       return state;
   }

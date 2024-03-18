@@ -1,30 +1,24 @@
-import { useContext,useEffect} from "react";
+import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-//nu elimin cartItem cred ca foloseste stiluri de acolo
-// import { CartItem } from "./CartItem";
-
 import React from "react";
 import "./Cart.css";
 import { Store } from "../Store";
 import { Trash } from "phosphor-react";
 import Navbar from "../navbar/Navbar";
 import axios from "axios";
-//folosesc stiluri din cartItem
 
 function Cart() {
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     cart: { cartItems },
-    userInfo
+    userInfo,
   } = state;
-
 
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
         if (!userInfo || !userInfo.token) {
-          // If userInfo or token is not available, return early
           return;
         }
         const { data } = await axios.get("/api/cart", {
@@ -39,68 +33,46 @@ function Cart() {
         });
       } catch (error) {
         console.error("Error fetching cart items:", error);
-        // Log specific error details
-        console.error("Error details:", error.response || error.message);
-        // Handle error
       }
     };
-    
 
     fetchCartItems();
   }, [ctxDispatch, userInfo]);
 
-
-
-  const updateCartHandler = async (product, quantity,event) => {
+  const updateCartHandler = async (product, newQuantity, event) => {
     event.preventDefault();
     event.stopPropagation();
-
-    console.log(product)
-    console.log(quantity)
+    
     try {
-      // Check stock availability
-      const { data } = await axios.get(`/api/products/${product.product}`);
-      console.log(data)
-      
-
-      if (data.stoc < quantity) {
-        window.alert("Sorry. Product is out of stock");
-        return;
-      }
-
-      // Send a POST request to add the item to the cart
-      const response = await axios.post(
-        "/api/cart",
-        {
-          quantity: quantity,
-          slug: product.slug,
-          name: product.name,
-          image: product.image,
-          price: product.price,
-          productId: product.product, // Ensure productId is provided correctly
-        },
+      const response = await axios.put(
+        `/api/cart/${product.product}`, // assuming _id is the identifier of the product
+        { quantity: newQuantity },
         {
           headers: {
-            Authorization: `Bearer ${userInfo.token}`, // Assuming userInfo contains user token
+            Authorization: `Bearer ${userInfo.token}`,
           },
         }
       );
-
-      // Dispatch action to update the cart in the context/state
+      
+      // Dispatch CART_UPDATE_QUANTITY action to update the quantity locally
       ctxDispatch({
-        type: "CART_ADD_ITEM",
-        payload: { ...product, quantity }, // Assuming the server responds with the updated cart data
+        type: "CART_UPDATE_QUANTITY",
+        payload: {
+          product: { ...product, quantity: newQuantity }, // Update quantity in the product object
+          newQuantity: newQuantity,
+        },
       });
-
-      // Show notification or handle success
-      console.log(`${product.name} was added to the cart`);
+      
+      console.log(`${product.name} quantity updated in the cart`);
     } catch (error) {
-      console.error("Error adding to cart:", error);
-      window.alert("Failed to add to cart. Please try again later.");
+      console.error("Error updating cart item quantity:", error);
+      window.alert(
+        "Failed to update cart item quantity. Please try again later."
+      );
     }
   };
   
-
+  
 
   const removeItemHandler = (item) => {
     ctxDispatch({ type: "CART_REMOVE_ITEM", payload: item });
@@ -166,9 +138,6 @@ function Cart() {
                           {product.name}
                         </div>
                       </div>
-                      {/* <div className="name">
-                    <p style={{ maxWidth: "220px" }}>{item.name}</p>
-                  </div> */}
                     </div>
                     <div className="table-content-2">{product.price}</div>
 
@@ -176,7 +145,11 @@ function Cart() {
                       <div>
                         <button
                           onClick={(event) =>
-                            updateCartHandler(product, product.quantity - 1,event)
+                            updateCartHandler(
+                              product,
+                              product.quantity - 1,
+                              event
+                            )
                           }
                           disabled={product.quantity === 1}
                         >
@@ -191,7 +164,11 @@ function Cart() {
                         <button
                           disabled={product.quantity === product.stoc}
                           onClick={(event) =>
-                            updateCartHandler(product, product.quantity + 1,event)
+                            updateCartHandler(
+                              product,
+                              product.quantity + 1,
+                              event
+                            )
                           }
                         >
                           {" "}
@@ -242,4 +219,5 @@ function Cart() {
     </div>
   );
 }
+
 export default Cart;

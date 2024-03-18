@@ -78,10 +78,43 @@ cartRouter.get(
     })
   );
 
+  cartRouter.put(
+    "/:productId",
+    isAuth,
+    expressAsyncHandler(async (req, res) => {
+      const productId = req.params.productId;
+      const { quantity } = req.body;
+  
+      try {
+        const userCart = await Cart.findOne({ user: req.user._id });
+  
+        if (!userCart) {
+          return res.status(404).send({ message: "Cart not found" });
+        }
+  
+        const existingItem = userCart.cartItems.find(
+          (item) => item.product.toString() === productId
+        );
+  
+        if (!existingItem) {
+          return res.status(404).send({ message: "Item not found in cart" });
+        }
+  
+        existingItem.quantity = quantity;
+  
+        const savedCart = await userCart.save();
+        res.status(200).send({ message: "Cart updated", cart: savedCart });
+      } catch (error) {
+        console.error("Error updating cart:", error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    })
+  );
+
  
 
 
 
 
   
-export default cartRouter;
+export default cartRouter;
