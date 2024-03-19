@@ -22,7 +22,7 @@ function reducer(stateW, action) {
       // Set loading or any other appropriate flag
       return { ...stateW, loading: true };
     case "USER_SIGNIN":
-      localStorage.setItem("userInfo", JSON.stringify(action.payload));
+     // localStorage.setItem("userInfo", JSON.stringify(action.payload));
       return { ...stateW, userInfo: action.payload };
 
       case "USER_SIGNOUT":
@@ -59,7 +59,7 @@ function reducer(stateW, action) {
         },
       };
     case "WISHLIST_SET_ITEMS":
-      localStorage.setItem("wishlistItems", JSON.stringify(action.payload));
+      //localStorage.setItem("wishlistItems", JSON.stringify(action.payload));
       return {
         ...stateW,
         wishlist: {

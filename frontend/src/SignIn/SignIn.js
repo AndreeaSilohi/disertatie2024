@@ -5,6 +5,7 @@ import Navbar from "../navbar/Navbar";
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Store } from "../Store";
+import { Wishlist } from "../W";
 function Profile() {
   const navigate = useNavigate();
   const { search } = useLocation();
@@ -17,6 +18,11 @@ function Profile() {
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
+
+  const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
+  const {
+    wishlist: { wishlistItems },
+  } = stateW;
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -32,7 +38,7 @@ function Profile() {
       console.log(data);
       // Update the userInfo state with the token
       ctxDispatch({ type: "USER_SIGNIN", payload: { ...data } });
-
+      ctxDispatchW({ type: "USER_SIGNIN", payload: { ...data } });
       // Store the user info (including the token) in localStorage
       localStorage.setItem("userInfo", JSON.stringify({ ...data }));
       Axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
