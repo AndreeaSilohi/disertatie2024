@@ -25,13 +25,23 @@ function Profile() {
         email,
         password,
       });
-      ctxDispatch({ type: "USER_SIGNIN", payload: data });
-      localStorage.setItem("userInfo", JSON.stringify(data));
+
+      console.log(data.token);
+      // Extract the token from the response data
+
+      console.log(data);
+      // Update the userInfo state with the token
+      ctxDispatch({ type: "USER_SIGNIN", payload: { ...data } });
+
+      // Store the user info (including the token) in localStorage
+      localStorage.setItem("userInfo", JSON.stringify({ ...data }));
+      Axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+      // Redirect the user to the specified URL or the homepage
       navigate(redirect || "/");
     } catch (err) {
       alert("Invalid email or password");
     }
-    window.location.reload();
+    //window.location.reload();
   };
 
   useEffect(() => {

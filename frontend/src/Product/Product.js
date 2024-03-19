@@ -54,19 +54,25 @@ function Product(props) {
     console.log(product);
     event.preventDefault();
     event.stopPropagation();
-
+  
     try {
       // Check stock availability
       const { data } = await axios.get(`/api/products/${product._id}`);
-      console.log(data)
+      console.log(data);
       const existItem = cartItems.find((x) => x._id === product._id);
       const quantity = existItem ? existItem.quantity + 1 : 1;
-
+  
       if (data.stoc < quantity) {
         window.alert("Sorry. Product is out of stock");
         return;
       }
-
+  
+      // Access token if userInfo is set, otherwise, token will be undefined
+      const token = userInfo?.token;
+  
+      // Construct headers only if token exists
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  
       // Send a POST request to add the item to the cart
       const response = await axios.post(
         "/api/cart",
@@ -79,12 +85,10 @@ function Product(props) {
           productId: product._id, // Ensure productId is provided correctly
         },
         {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`, // Assuming userInfo contains user token
-          },
+          headers: headers,
         }
       );
-
+  
       // Dispatch action to update the cart in the context/state
       ctxDispatch({
         type: "CART_ADD_ITEM",
@@ -95,9 +99,7 @@ function Product(props) {
       setTimeout(() => {
         setNotification(null);
       }, 3000);
-
-
-      
+  
       // Show notification or handle success
       console.log(`${product.name} was added to the cart`);
     } catch (error) {
@@ -105,6 +107,7 @@ function Product(props) {
       window.alert("Failed to add to cart. Please try again later.");
     }
   };
+  
 
   const addToWishlist = async (item, event) => {
     event.preventDefault();
@@ -113,6 +116,11 @@ function Product(props) {
     try {
       ctxDispatchW({ type: "CREATE_REQUEST" });
       const user = userInfo ? userInfo.user : null;
+      console.log(user)
+      const token = userInfo?.token; // Access token if userInfo is set, otherwise, token will be undefined
+
+         // Construct headers only if token exists
+    const headers = token ? { authorization: `Bearer ${token}` } : {};
       const { data } = await axios.post(
         "/api/wishlist",
         {
@@ -127,9 +135,7 @@ function Product(props) {
           ],
         },
         {
-          headers: {
-            authorization: `Bearer ${userInfo.token}`,
-          },
+          headers:headers,
         }
       );
 
