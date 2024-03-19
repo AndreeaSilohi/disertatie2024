@@ -135,8 +135,13 @@ function Navbar() {
       </ul>
       <div className="icons">
         <NavLink to="/wishlist">
-          <IconButton color="inherit">
-            <HeartStraight style={{ color: "black" }} size={30} />
+        <IconButton color="inherit">
+            <Badge
+              badgeContent={wishlistItems.length} // Total items in the wishlist
+              color="secondary" // You can change the color as needed
+            >
+              <HeartStraight style={{ color: "black" }} size={30} />
+            </Badge>
           </IconButton>
         </NavLink>
 

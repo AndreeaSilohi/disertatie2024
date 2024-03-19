@@ -9,7 +9,6 @@ const initialstateW = {
     : null,
 
   wishlist: {
-  
     wishlistItems: localStorage.getItem("wishlistItems")
       ? JSON.parse(localStorage.getItem("wishlistItems"))
       : [],
@@ -22,20 +21,19 @@ function reducer(stateW, action) {
       // Set loading or any other appropriate flag
       return { ...stateW, loading: true };
     case "USER_SIGNIN":
-     // localStorage.setItem("userInfo", JSON.stringify(action.payload));
+      // localStorage.setItem("userInfo", JSON.stringify(action.payload));
       return { ...stateW, userInfo: action.payload };
 
-      case "USER_SIGNOUT":
-        localStorage.removeItem("userInfo"); // Remove user info from localStorage
-        localStorage.removeItem("wishlistItems"); // Remove wishlist items from localStorage
-        return {
-          ...stateW,
-          userInfo: null,
-          wishlist: {
-            wishlistItems: [],
-          },
-        };
-      
+    case "USER_SIGNOUT":
+      localStorage.removeItem("userInfo"); // Remove user info from localStorage
+      localStorage.removeItem("wishlistItems"); // Remove wishlist items from localStorage
+      return {
+        ...stateW,
+        userInfo: null,
+        wishlist: {
+          wishlistItems: [],
+        },
+      };
 
     case "WISHLIST_ADD_ITEM":
       //add to wishlist
@@ -59,7 +57,7 @@ function reducer(stateW, action) {
         },
       };
     case "WISHLIST_SET_ITEMS":
-      //localStorage.setItem("wishlistItems", JSON.stringify(action.payload));
+      localStorage.setItem("wishlistItems", JSON.stringify(action.payload));
       return {
         ...stateW,
         wishlist: {
@@ -98,8 +96,6 @@ function reducer(stateW, action) {
       return stateW;
   }
 }
-
-
 
 export function WishlistProvider(props) {
   const [stateW, dispatch] = useReducer(reducer, initialstateW);

@@ -24,6 +24,39 @@ function Profile() {
     wishlist: { wishlistItems },
   } = stateW;
 
+  const fetchWishlistItems = async (token) => {
+    try {
+      const { data } = await Axios.get("/api/wishlist", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      ctxDispatchW({
+        type: "WISHLIST_SET_ITEMS",
+        payload: data.wishlistItems,
+      });
+    } catch (error) {
+      console.error("Error fetching wishlist items:", error);
+    }
+  };
+
+  const fetchcartItems = async (token) => {
+    try {
+      const { data } = await Axios.get("/api/cart", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      ctxDispatch({
+        type: "CART_SET_ITEMS",
+        payload: data.cartItems,
+      });
+    } catch (error) {
+      console.error("Error fetching wishlist items:", error);
+  
+    }
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -43,6 +76,8 @@ function Profile() {
       localStorage.setItem("userInfo", JSON.stringify({ ...data }));
       Axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
       // Redirect the user to the specified URL or the homepage
+      fetchWishlistItems(data.token);
+      fetchcartItems(data.token);
       navigate(redirect || "/");
     } catch (err) {
       alert("Invalid email or password");
