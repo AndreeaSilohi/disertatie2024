@@ -134,7 +134,7 @@ function Product(props) {
           headers: headers,
         }
       );
-      ctxDispatch({
+      ctxDispatchW({
         type: "WISHLIST_ADD_ITEM",
         payload: { ...product }, // Assuming the server responds with the updated cart data
       });
