@@ -64,11 +64,6 @@ function Profile() {
         email,
         password,
       });
-
-      console.log(data.token);
-      // Extract the token from the response data
-
-      console.log(data);
       // Update the userInfo state with the token
       ctxDispatch({ type: "USER_SIGNIN", payload: { ...data } });
       ctxDispatchW({ type: "USER_SIGNIN", payload: { ...data } });

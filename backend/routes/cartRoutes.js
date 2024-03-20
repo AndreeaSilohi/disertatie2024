@@ -112,7 +112,41 @@ cartRouter.get(
   );
 
  
-
+  cartRouter.delete(
+    "/:productId",
+    isAuth,
+    expressAsyncHandler(async (req, res) => {
+      const productId = req.params.productId;
+  
+      try {
+        const userCart = await Cart.findOne({ user: req.user._id });
+  
+        if (!userCart) {
+          return res.status(404).send({ message: "Cart not found" });
+        }
+  
+        // Find the index of the item to be deleted
+        const itemIndex = userCart.cartItems.findIndex(
+          (item) => item.product.toString() === productId
+        );
+  
+        if (itemIndex === -1) {
+          return res.status(404).send({ message: "Item not found in cart" });
+        }
+  
+        // Remove the item from the cart array
+        userCart.cartItems.splice(itemIndex, 1);
+  
+        // Save the updated cart
+        const savedCart = await userCart.save();
+        res.status(200).send({ message: "Item removed from cart", cart: savedCart });
+      } catch (error) {
+        console.error("Error removing item from cart:", error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    })
+  );
+  
 
 
 

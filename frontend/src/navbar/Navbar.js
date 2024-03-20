@@ -145,14 +145,14 @@ function Navbar() {
           </IconButton>
         </NavLink>
 
-        <NavLink to="/cart" className="nav-link">
+        <NavLink to="/cart">
           <Badge
             badgeContent={cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-            color="error"
+            color="secondary"//daca vreau cu rosu trebuie sa fie error
           >
-            <IconButton color="inherit">
+            {/* <IconButton color="inherit"> */}
               <ShoppingCart style={{ color: "black" }} size={30} />
-            </IconButton>
+            {/* </IconButton> */}
           </Badge>
         </NavLink>
         {userInfo ? (

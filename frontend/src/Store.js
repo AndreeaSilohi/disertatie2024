@@ -2,6 +2,8 @@ import { createContext, useReducer } from "react";
 import React from "react";
 
 export const Store = createContext();
+
+//DACA MAI AM PROBLEME CU INITIAL STATE AR TREBUI SA AM  userInfo: localStorage.getItem("userInfo")===UNDEFINED
 const initialState = {
   userInfo: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
@@ -15,7 +17,7 @@ const initialState = {
       ? localStorage.getItem("paymentMethod")
       : "",
       
-    cartItems: localStorage.getItem("cartItems") === undefined
+    cartItems: localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [],
   },
@@ -59,6 +61,8 @@ function reducer(state, action) {
     case "USER_SIGNIN":
       return { ...state, userInfo: action.payload };
     case "USER_SIGNOUT":
+      localStorage.removeItem("userInfo"); // Remove user info from localStorage
+      localStorage.removeItem("cartItems"); // Remove wishlist items from localStorage
       return {
         ...state,
         userInfo: null,
@@ -86,7 +90,7 @@ function reducer(state, action) {
         },
       };
       case "CART_SET_ITEMS":
-        //localStorage.setItem("cartItems", JSON.stringify(action.payload));
+        localStorage.setItem("cartItems", JSON.stringify(action.payload));
         return {
           ...state,
           cart: {

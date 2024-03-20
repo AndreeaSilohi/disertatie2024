@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Wishlist } from "../W";
 import { Trash } from "phosphor-react";
@@ -42,19 +42,15 @@ function WishList() {
 
   const removeItemHandler = async (item) => {
     try {
-      if (!userInfo || !userInfo.token) {
-        // If userInfo or token is not available, return early
-        return;
-      }
-      await axios.delete(`/api/wishlist/${item._id}`, {
+      await axios.delete(`/api/wishlist/${item.product}`, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
       });
+
       ctxDispatch({ type: "WISHLIST_REMOVE_ITEM", payload: item });
     } catch (error) {
-      console.error("Error removing wishlist item:", error);
-      // Handle error
+      console.error("Error removing item from wishlist:", error);
     }
   };
 

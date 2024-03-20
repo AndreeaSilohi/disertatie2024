@@ -74,9 +74,26 @@ function Cart() {
   
   
 
-  const removeItemHandler = (item) => {
-    ctxDispatch({ type: "CART_REMOVE_ITEM", payload: item });
+  // const removeItemHandler = (item) => {
+  //   ctxDispatch({ type: "CART_REMOVE_ITEM", payload: item });
+  // };
+
+
+  const removeItemHandler = async (product) => {
+    try {
+      const response = await axios.delete(`/api/cart/${product.product}`, {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+
+      ctxDispatch({ type: "CART_REMOVE_ITEM", payload: product });
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+      window.alert("Failed to remove item from cart. Please try again later.");
+    }
   };
+
 
   const checkoutHandler = () => {
     navigate("/signin?redirect=/shipping");

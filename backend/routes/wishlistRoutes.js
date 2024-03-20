@@ -80,6 +80,32 @@ wishlistRouter.get(
   })
 );
 
+wishlistRouter.delete(
+  "/:productId",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    try {
+      const userWishlist = await WishlistItem.findOne({ user: req.user._id });
+
+      if (!userWishlist) {
+        return res.status(404).send({ message: "Wishlist not found" });
+      }
+
+      const updatedWishlistItems = userWishlist.wishlistItems.filter(
+        (item) => item.product.toString() !== req.params.productId
+      );
+
+      userWishlist.wishlistItems = updatedWishlistItems;
+      const savedWishlist = await userWishlist.save();
+
+      res.status(200).send({ message: "Item removed from wishlist", wishlist: savedWishlist });
+    } catch (error) {
+      console.error("Error removing item from wishlist:", error);
+      res.status(500).send({ message: "Internal Server Error" });
+    }
+  })
+);
+
 
 
 export default wishlistRouter;
