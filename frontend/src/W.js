@@ -75,23 +75,6 @@ function reducer(stateW, action) {
     case "WISHLIST_CLEAR":
       return { ...stateW, wishlist: { ...stateW.wishlist, wishlistItems: [] } };
 
-    case "SAVE_SHIPPING_ADDRESS":
-      return {
-        ...stateW,
-        wishlist: {
-          ...stateW.wishlist,
-          shippingAddress: action.payload,
-        },
-      };
-    case "SAVE_PAYMENT_METHOD":
-      return {
-        ...stateW,
-        wishlist: {
-          ...stateW.wishlist,
-          paymentMethod: action.payload,
-        },
-      };
-
     default:
       return stateW;
   }

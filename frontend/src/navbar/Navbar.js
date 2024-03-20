@@ -32,6 +32,7 @@ import axios from "axios";
 function Navbar() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
+
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
@@ -39,8 +40,9 @@ function Navbar() {
   const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
   const {
     wishlist: { wishlistItems },
+   
   } = stateW;
-
+  const wishlistCount = wishlistItems.length;
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -54,14 +56,17 @@ function Navbar() {
     fetchCategories();
   }, []);
 
-  useEffect(() => {
-    // Dispatch an action to retrieve wishlist items from local storage
-    const storedWishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || [];
-    ctxDispatch({ type: "WISHLIST_SET_ITEMS", payload: storedWishlistItems });
-  }, [ctxDispatch]);
+
+  // const [wishlistCount, setWishlistCount] = useState(wishlistItems.length);
+
+  // useEffect(() => {
+  //   // Update the wishlist count whenever wishlist items change
+  //   const newWishlistCount = wishlistItems.length;
+  //   setWishlistCount(newWishlistCount);
+  // }, [wishlistItems]);
 
 
-  const wishlistCount = wishlistItems.length;
+ 
   const signoutHandler = () => {
     ctxDispatch({ type: "USER_SIGNOUT" });
     ctxDispatchW({ type: "USER_SIGNOUT" });
