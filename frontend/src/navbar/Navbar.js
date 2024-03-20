@@ -40,6 +40,8 @@ function Navbar() {
   const {
     wishlist: { wishlistItems },
   } = stateW;
+
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -52,6 +54,14 @@ function Navbar() {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    // Dispatch an action to retrieve wishlist items from local storage
+    const storedWishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+    ctxDispatch({ type: "WISHLIST_SET_ITEMS", payload: storedWishlistItems });
+  }, [ctxDispatch]);
+
+
+  const wishlistCount = wishlistItems.length;
   const signoutHandler = () => {
     ctxDispatch({ type: "USER_SIGNOUT" });
     ctxDispatchW({ type: "USER_SIGNOUT" });
@@ -74,6 +84,11 @@ function Navbar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+
+
+
+
   return (
     <div className={sidebarIsOpen ? "navbar active-cont" : "navbar"}>
       <div className="div-logo-menu">
@@ -137,7 +152,7 @@ function Navbar() {
         <NavLink to="/wishlist">
         <IconButton color="inherit">
             <Badge
-              badgeContent={wishlistItems.length} // Total items in the wishlist
+              badgeContent={wishlistCount} // Total items in the wishlist
               color="secondary" // You can change the color as needed
             >
               <HeartStraight style={{ color: "black" }} size={30} />

@@ -115,8 +115,6 @@ function Product(props) {
       ctxDispatchW({ type: "CREATE_REQUEST" });
       const user = userInfo ? userInfo.user : null;
 
-
-      
       const token = userInfo?.token; // Access token if userInfo is set, otherwise, token will be undefined
       const headers = token ? { authorization: `Bearer ${token}` } : {};
       const { data } = await axios.post(
@@ -136,6 +134,10 @@ function Product(props) {
           headers: headers,
         }
       );
+      ctxDispatch({
+        type: "WISHLIST_ADD_ITEM",
+        payload: { ...product }, // Assuming the server responds with the updated cart data
+      });
 
       ctxDispatchW({ type: "CREATE_SUCCESS" });
       setNotification(`${item.name} was added to the wishlist`);

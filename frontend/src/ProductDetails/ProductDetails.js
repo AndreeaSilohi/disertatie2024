@@ -75,29 +75,92 @@ const ProductDetails = () => {
     }
   };
 
-  const { state, dispatch: ctxDispath } = useContext(Store);
-  const { cart } = state;
+  // const { state, dispatch: ctxDispatch } = useContext(Store);
+  // const { cart } = state;
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const {
+    cart: { cartItems },
+    userInfoCart,
+    userInfo
+  } = state;
   const navigate = useNavigate();
 
-  const handleAddToCart = async () => {
-    const existItem = cart.cartItems.find((x) => x._id === product._id);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/products/${product._id}`);
+  // const handleAddToCart = async () => {
+  //   const existItem = cart.cartItems.find((x) => x._id === product._id);
+  //   const quantity = existItem ? existItem.quantity + 1 : 1;
+  //   const { data } = await axios.get(`/api/products/${product._id}`);
 
-    if (data.stoc < quantity) {
-      window.alert("Sorry. Product is out of stock");
-      return;
+  //   if (data.stoc < quantity) {
+  //     window.alert("Sorry. Product is out of stock");
+  //     return;
+  //   }
+
+  //   ctxDispath({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+  //   navigate("/cart");
+
+  //   setNotification(` Ai adaugat ${product.name} in cos`);
+  //   setTimeout(() => {
+  //     setNotification(null);
+  //   }, 3000);
+  // };
+
+
+  const addToCartHandler = async (product, event) => {
+    console.log(product);
+    event.preventDefault();
+    event.stopPropagation();
+
+    try {
+      // Check stock availability
+      const { data } = await axios.get(`/api/products/${product._id}`);
+
+      const existItem = cartItems.find((x) => x._id === product._id);
+      const quantity = existItem ? existItem.quantity + 1 : 1;
+
+      if (data.stoc < quantity) {
+        window.alert("Sorry. Product is out of stock");
+        return;
+      }
+
+      // Access token if userInfo is set, otherwise, token will be undefined
+      const token = userInfo?.token;
+      // Construct headers only if token exists
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+      // Send a POST request to add the item to the cart
+      const response = await axios.post(
+        "/api/cart",
+        {
+          quantity: quantity,
+          slug: product.slug,
+          name: product.name,
+          image: product.image,
+          price: product.price,
+          productId: product._id, // Ensure productId is provided correctly
+        },
+        {
+          headers: headers,
+        }
+      );
+
+      // Dispatch action to update the cart in the context/state
+      ctxDispatch({
+        type: "CART_ADD_ITEM",
+        payload: { ...product, quantity }, // Assuming the server responds with the updated cart data
+      });
+      // ctxDispatch({ type: "CREATE_SUCCESS" });
+      setNotification(`${product.name} was added to the cart`);
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+
+      // Show notification or handle success
+      console.log(`${product.name} was added to the cart`);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      window.alert("Failed to add to cart. Please try again later.");
     }
-
-    ctxDispath({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
-    navigate("/cart");
-
-    setNotification(` Ai adaugat ${product.name} in cos`);
-    setTimeout(() => {
-      setNotification(null);
-    }, 3000);
   };
-
   return (
     <div className="detalii-page">
       <div className="detalii-navbar">
@@ -237,7 +300,7 @@ const ProductDetails = () => {
                       fontSize: "15px",
                       textTransform: "uppercase",
                     }}
-                    onClick={handleAddToCart}
+                    onClick={(event) => addToCartHandler(product, event)}
                   >
                     {" "}
                     Add to cart
