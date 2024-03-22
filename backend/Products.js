@@ -50,7 +50,7 @@ export const productsDataNew = [
     additional: "Este fabricata in romania",
     price: 135,
     stoc: 9,
-    rating: 4.5,
+    rating: 5,
     numReviews: 20,
   },
   {
@@ -63,7 +63,7 @@ export const productsDataNew = [
     additional: "Este fabricata in romania",
     price: 40,
     stoc: 0,
-    rating: 4.5,
+    rating: 3,
     numReviews: 20,
   },
 
@@ -77,7 +77,7 @@ export const productsDataNew = [
     additional: "Este fabricata in romania",
     price: 40,
     stoc: 0,
-    rating: 4.5,
+    rating: 5,
     numReviews: 20,
   },
   {
