@@ -10,6 +10,27 @@ productRouter.get("/", async (req, res) => {
   res.send(products);
 });
 
+productRouter.post(
+  "/",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const newProduct = new Product({
+      name: "sample name" + Date.now(),
+      slug: "sample-name-" + Date.now(),
+      image: "https://i.postimg.cc/nLKDwD1W/mierecufagure.png",
+      price: 0,
+      category: "sample category",
+      stoc: 0,
+      rating: 0,
+      numReviews: 0,
+      description: "sample description",
+      additional:"Este fabricata in romania",
+    });
+    const product = await newProduct.save();
+    res.send({ message: "Product Created", product });//il trimit catre frontend
+  })
+);
 const PAGE_SIZE = 4;
 
 productRouter.get(
@@ -143,7 +164,6 @@ productRouter.get("/:id", async (req, res) => {
     res.status(404).send({ message: "Product Not Found" });
   }
 });
-
 
 // productRouter.put('/:productId/updateStock', async (req, res) => {
 //   const { productId } = req.params;
