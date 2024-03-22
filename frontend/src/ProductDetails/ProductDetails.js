@@ -19,6 +19,7 @@ import axios from "axios";
 import LoadingBox from "../LoadingBox";
 import MessageBox from "../MessageBox";
 import { Store } from "../Store";
+import RatingComponent from "../Rating/RatingComponent";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -81,8 +82,10 @@ const ProductDetails = () => {
   const {
     cart: { cartItems },
     userInfoCart,
-    userInfo
+    userInfo,
   } = state;
+
+  console.log(product);
   const navigate = useNavigate();
 
   // const handleAddToCart = async () => {
@@ -103,7 +106,6 @@ const ProductDetails = () => {
   //     setNotification(null);
   //   }, 3000);
   // };
-
 
   const addToCartHandler = async (product, event) => {
     console.log(product);
@@ -207,7 +209,7 @@ const ProductDetails = () => {
                   }`}
                   onClick={() => handleClick("reviews")}
                 >
-                  REVIEWS
+                  REVIEWS {product.numReviews}
                 </div>
               </div>
               <div className="divider"></div>
@@ -269,25 +271,31 @@ const ProductDetails = () => {
                     fontFamily: "Catamaran, sans-serif",
                   }}
                 >
-                  <Rating
+                  {/* <Rating
                     name="simple-controlled"
                     value={value}
                     onChange={(event, newValue) => {
                       setValue(newValue);
                     }}
-                  />
+                  /> */}
+                  <RatingComponent
+                    rating={product.rating}
+                    numReviews={product.numReviews}
+                  >
+                    {" "}
+                  </RatingComponent>
                 </Box>
               </div>
               <div className="detalii-quantity">
                 {product.stoc === 0 ? (
-                  <Button 
-                  variant="contained" 
-                  sx={{
-                    fontFamily: "Catamaran, sans-serif",
-                    fontSize: "15px",
-                    textTransform: "uppercase",
-                  }}
-                  disabled
+                  <Button
+                    variant="contained"
+                    sx={{
+                      fontFamily: "Catamaran, sans-serif",
+                      fontSize: "15px",
+                      textTransform: "uppercase",
+                    }}
+                    disabled
                   >
                     Out of stock
                   </Button>
