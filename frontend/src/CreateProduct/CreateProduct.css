@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+
+.input-field {
+  width: 90%;
+  outline: none;
+  margin-bottom: 10px;
+  padding: 10px 30px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-family: "Catamaran", sans-serif !important;
+  margin-bottom: 10px;
+}
+
+.input-field:focus {
+  border-color: #007bff;
+}
+.dialog-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Add this line */
+  text-align: center; /* Add this line */
+}

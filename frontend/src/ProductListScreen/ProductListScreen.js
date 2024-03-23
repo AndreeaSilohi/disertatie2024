@@ -128,6 +128,7 @@ export default function ProductListScreen() {
                   <TableCell>NAME</TableCell>
                   <TableCell>PRICE</TableCell>
                   <TableCell>CATEGORY</TableCell>
+                  <TableCell>ACTIONS</TableCell>
                 </TableRow>
               </TableHead>
 
@@ -138,6 +139,17 @@ export default function ProductListScreen() {
                     <TableCell>{String(product.name)}</TableCell>
                     <TableCell>{product.price}</TableCell>
                     <TableCell>{product.category}</TableCell>
+                    <TableCell>
+                      <Button
+                        type="button"
+                        variant="light"
+                        onClick={() =>
+                          navigate(`/admin/product/${product._id}`)
+                        }
+                      >
+                        Edit
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

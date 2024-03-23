@@ -46,6 +46,31 @@ productRouter.post(
   })
 );
 
+productRouter.put(
+  "/:id",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    if (product) {
+      product.name = req.body.name;
+      product.slug = req.body.slug;
+      product.price = req.body.price;
+      product.image = req.body.image;
+      product.category = req.body.category;
+      product.stoc = req.body.stoc;
+      product.description = req.body.description;
+      product.additional = req.body.additional;
+      await product.save();
+
+      res.send({ message: "Product updated" });
+    } else {
+      res.status(404).send({ message: "Product not found" });
+    }
+  })
+);
+
 const PAGE_SIZE = 8;
 productRouter.get(
   "/admin",
@@ -154,7 +179,6 @@ productRouter.get(
     res.send(categories);
   })
 );
-
 
 productRouter.get("/slug/:slug", async (req, res) => {
   const product = await Product.findOne({ slug: req.params.slug });

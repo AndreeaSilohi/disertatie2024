@@ -28,6 +28,7 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import DashboardScreen from "./DashboardScreen/DashboardScreen";
 import AdminRoute from "./AdminRoute/AdminRoute";
 import ProductListScreen from "./ProductListScreen/ProductListScreen";
+import ProductEditScreen from "./ProductEditScreen/ProductEditScreen";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
               <Route path="/shipping" element={<ShippingAddress />} />
               <Route path="/payment" element={<PaymentMethod />} />
               <Route path="/placeorder" element={<PlaceOrder />} />
+
               <Route
                 path="/order/:id"
                 element={
@@ -100,6 +102,15 @@ function App() {
                 element={
                   <AdminRoute>
                     <ProductListScreen />
+                  </AdminRoute>
+                }
+              ></Route>
+
+              <Route
+                path="/admin/product/:id"
+                element={
+                  <AdminRoute>
+                    <ProductEditScreen />
                   </AdminRoute>
                 }
               ></Route>
