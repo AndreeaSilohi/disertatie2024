@@ -15,24 +15,38 @@ productRouter.post(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
+    const {
+      name,
+      slug,
+      image,
+      price,
+      category,
+      stoc,
+      rating,
+      numReviews,
+      description,
+      additional,
+    } = req.body;
+
     const newProduct = new Product({
-      name: "sample name" + Date.now(),
-      slug: "sample-name-" + Date.now(),
-      image: "https://i.postimg.cc/nLKDwD1W/mierecufagure.png",
-      price: 0,
-      category: "sample category",
-      stoc: 0,
-      rating: 0,
-      numReviews: 0,
-      description: "sample description",
-      additional:"Este fabricata in romania",
+      name,
+      slug,
+      image,
+      price,
+      category,
+      stoc,
+      rating,
+      numReviews,
+      description,
+      additional,
     });
+
     const product = await newProduct.save();
-    res.send({ message: "Product Created", product });//il trimit catre frontend
+    res.status(201).send({ message: "Product Created", product });
   })
 );
-const PAGE_SIZE = 4;
 
+const PAGE_SIZE = 8;
 productRouter.get(
   "/admin",
   isAuth,
@@ -62,7 +76,6 @@ productRouter.get(
     const pageSize = query.pageSize || PAGE_SIZE;
     const page = query.page || 1;
     const category = query.category || "";
-    const brand = query.brand || "";
     const price = query.price || "";
     const rating = query.rating || "";
     const order = query.order || "";
@@ -77,7 +90,6 @@ productRouter.get(
             },
           }
         : {};
-
     const categoryFilter = category && category !== "all" ? { category } : {};
     const ratingFilter =
       rating && rating !== "all"
@@ -87,18 +99,16 @@ productRouter.get(
             },
           }
         : {};
-
     const priceFilter =
       price && price !== "all"
         ? {
-            //1-50
+            // 1-50
             price: {
               $gte: Number(price.split("-")[0]),
               $lte: Number(price.split("-")[1]),
             },
           }
         : {};
-
     const sortOrder =
       order === "featured"
         ? { featured: -1 }
@@ -136,7 +146,6 @@ productRouter.get(
     });
   })
 );
-
 productRouter.get(
   "/categories",
   expressAsyncHandler(async (req, res) => {
@@ -145,6 +154,8 @@ productRouter.get(
     res.send(categories);
   })
 );
+
+
 productRouter.get("/slug/:slug", async (req, res) => {
   const product = await Product.findOne({ slug: req.params.slug });
 

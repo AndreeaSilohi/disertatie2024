@@ -5,7 +5,10 @@ import LoadingBox from "../LoadingBox";
 import MessageBox from "../MessageBox";
 import Navbar from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
+import "./ProductListScreen.css";
+import { getError } from "../utils";
+import CreateProduct from "../CreateProduct/CreateProduct";
 import {
   Button,
   Table,
@@ -15,9 +18,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
-import "./ProductListScreen.css";
-import { getError } from "../utils";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -39,21 +39,28 @@ const reducer = (state, action) => {
       return {
         ...state,
         loadingCreate: false,
+        openCreateDialog: false,
       };
     case "CREATE_FAIL":
       return { ...state, loadingCreate: false };
-
+    case "OPEN_CREATE_DIALOG":
+      return { ...state, openCreateDialog: true }; // Open the create product dialog
+    case "CLOSE_CREATE_DIALOG":
+      return { ...state, openCreateDialog: false }; // Close the create product dialog
     default:
       return state;
   }
 };
 
 export default function ProductListScreen() {
-  const [{ loading, error, products, pages, loadingCreate }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: "",
-    });
+  const [
+    { loading, error, products, pages, loadingCreate, openCreateDialog },
+    dispatch,
+  ] = useReducer(reducer, {
+    loading: true,
+    error: "",
+    openCreateDialog: false,
+  });
   const navigate = useNavigate();
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
@@ -75,26 +82,26 @@ export default function ProductListScreen() {
     fetchData();
   }, [page, userInfo]);
 
-  const createHandler = async () => {
-    if (window.confirm("Are you sure to create?")) {
-      try {
-        dispatch({ type: "CREATE_REQUEST" });
-        const { data } = await axios.post(
-          "/api/products",
-          {},
-          {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-          }
-        );
-        window.alert("product created successfully");
-        dispatch({ type: "CREATE_SUCCESS" });
-        navigate(`/admin/product/${data.product._id}`);
-      } catch (err) {
-        window.alert(getError(error));
-        dispatch({
-          type: "CREATE_FAIL",
-        });
-      }
+  const createHandler = () => {
+    dispatch({ type: "CREATE_REQUEST" });
+    dispatch({ type: "OPEN_CREATE_DIALOG" }); // Open the create product dialog
+  };
+
+  const closeCreateDialog = () => {
+    dispatch({ type: "CLOSE_CREATE_DIALOG" }); // Close the create product dialog
+  };
+
+  const submitCreateForm = async (productData) => {
+    try {
+      const { data } = await axios.post("/api/products", productData, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
+      window.alert("Product created successfully");
+      dispatch({ type: "CREATE_SUCCESS" });
+      navigate(`/admin/product/${data.product._id}`);
+    } catch (err) {
+      window.alert(getError(err));
+      dispatch({ type: "CREATE_FAIL" });
     }
   };
   return (
@@ -139,8 +146,8 @@ export default function ProductListScreen() {
             <div className="pagination">
               {[...Array(pages).keys()].map((x) => (
                 <Link
-                  className={x + 1 === Number(page) ? "btn text-bold" : "btn"}
                   key={x + 1}
+                  className={x + 1 === Number(page) ? "btn text-bold" : "btn"}
                   to={`/admin/products?page=${x + 1}`}
                 >
                   {x + 1}
@@ -149,6 +156,11 @@ export default function ProductListScreen() {
             </div>
           </TableContainer>
         )}
+        <CreateProduct
+          open={openCreateDialog}
+          onClose={closeCreateDialog}
+          onSubmit={submitCreateForm}
+        />
       </div>
     </div>
   );

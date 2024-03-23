@@ -7,9 +7,11 @@ import axios from "axios";
 import { XCircle, Warning } from "phosphor-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button, Grid, Typography, Select, MenuItem } from "@mui/material";
+
 import Product from "../Product/Product";
 import SearchBox from "../SearchBox/SearchBox";
 import Divider from "@mui/material/Divider";
+
 import "./SearchScreen.css";
 
 import RatingComponent from "../Rating/RatingComponent";
@@ -99,22 +101,22 @@ export default function SearchScreen() {
       error: "",
     });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(
-          `/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
-        );
-        dispatch({ type: "FETCH_SUCCESS", payload: data });
-      } catch (err) {
-        dispatch({
-          type: "FETCH_FAIL",
-          payload: getError(error),
-        });
-      }
-    };
-    fetchData();
-  }, [category, error, order, page, price, query, rating]);
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const { data } = await axios.get(
+            `/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
+          );
+          dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        } catch (err) {
+          dispatch({
+            type: 'FETCH_FAIL',
+            payload: getError(error),
+          });
+        }
+      };
+      fetchData();
+    }, [category, error, order, page, price, query, rating]);
 
   const [categories, setCategories] = useState([]);
 
@@ -130,6 +132,8 @@ export default function SearchScreen() {
     fetchCategories();
   }, [dispatch]);
 
+
+
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || page;
     const filterCategory = filter.category || category;
@@ -140,6 +144,9 @@ export default function SearchScreen() {
 
     return `/search?category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&order=${sortOrder}&page=${filterPage}`;
   };
+
+
+  
   return (
     <div>
       <div className={styles.navbarShipping}>
@@ -339,6 +346,7 @@ export default function SearchScreen() {
                   </Link>
                 ))}
               </div>
+            
             </>
           )}
         </Grid>
@@ -346,3 +354,4 @@ export default function SearchScreen() {
     </div>
   );
 }
+//GET FILTER URL DE VERIFICAT!
