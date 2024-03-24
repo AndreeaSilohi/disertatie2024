@@ -98,7 +98,7 @@ export default function ProductListScreen() {
       });
       window.alert("Product created successfully");
       dispatch({ type: "CREATE_SUCCESS" });
-      navigate(`/admin/product/${data.product._id}`);
+      //navigate(`/admin/product/${data.product._id}`);
     } catch (err) {
       window.alert(getError(err));
       dispatch({ type: "CREATE_FAIL" });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext,useReducer } from "react";
 import {
   Button,
   Dialog,
@@ -7,7 +7,37 @@ import {
   DialogTitle,
 } from "@mui/material";
 import "./CreateProduct.css";
+import { Store } from "../Store";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { getError } from "../utils";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "UPLOAD_NEW_REQUEST":
+      return { ...state, loadingUploadNew: true, errorUploadNew: "" };
+    case "UPLOAD_NEW_SUCCESS":
+      return { ...state, loadingUploadNew: false, errorUploadNew: "" };
+    case "UPLOAD_NEW_FAIL":
+      return { ...state, loadingUploadNew: false, errorUploadNew: action.payload };
+    default:
+      return state;
+  }
+};
+
 const CreateProduct = ({ open, onClose, onSubmit }) => {
+
+  const { state } = useContext(Store);
+  const { userInfo } = state;
+
+  const [{  loadingUploadNew }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      error: "",
+    });
+
+
+
   const [productData, setProductData] = useState({
     name: "",
     slug: "",
@@ -30,6 +60,26 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
     onSubmit(productData);
   };
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append("file", file);
+    try {
+      dispatch({ type: "UPLOAD_NEW_REQUEST" });
+      const { data } = await axios.post("/api/upload", bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      dispatch({ type: "UPLOAD_NEW_SUCCESS" });
+      window.alert("Image uploaded successfully");
+      setProductData({ ...productData, image: data.secure_url });
+    } catch (err) {
+      window.alert(getError(err));
+      dispatch({ type: "UPLOAD_NEW_FAIL", payload: getError(err) });
+    }
+  };
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle
@@ -67,6 +117,13 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
             fullWidth
             value={productData.image}
             onChange={handleChange}
+          />
+
+          <input
+            type="file"
+            id="imageFile"
+            label="Choose Image"
+            onChange={uploadFileHandler}
           />
           <input
             className="input-field"
