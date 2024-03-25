@@ -15,43 +15,44 @@ function Cart() {
     userInfo,
   } = state;
 
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        if (!userInfo || !userInfo.token) {
-          return;
-        }
-        const { data } = await axios.get("/api/cart", {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        });
+  // useEffect(() => {
+  //   const fetchCartItems = async () => {
+  //     try {
+  //       if (!userInfo || !userInfo.token) {
+  //         return;
+  //       }
+  //       const { data } = await axios.get("/api/cart", {
+  //         headers: {
+  //           Authorization: `Bearer ${userInfo.token}`,
+  //         },
+  //       });
 
-        ctxDispatch({
-          type: "CART_SET_ITEMS",
-          payload: data.cartItems,
-        });
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
-      }
-    };
+  //       ctxDispatch({
+  //         type: "CART_SET_ITEMS",
+  //         payload: data.cartItems,
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching cart items:", error);
+  //     }
+  //   };
 
-    fetchCartItems();
-  }, [ctxDispatch, userInfo]);
+  //   fetchCartItems();
+  // }, [ctxDispatch, userInfo]);
 
   const updateCartHandler = async (product, newQuantity, event) => {
     event.preventDefault();
     event.stopPropagation();
-    
+
     try {
+      console.log(product.product);
+      const { data } = await axios.get(`/api/products/${product.product}`);
+      
 
-      const { data } = await axios.get(`/api/products/${product._id}`);
-      console.log(data)
-
-      const existItem = cartItems.find((x) => x._id === product._id);
-      const quantity = existItem ? existItem.quantity + 1 : 1;
-
-      if (data.stoc < quantity) {
+      // const existItem = cartItems.find((x) => x.product === product.product);
+      
+      // const quantity = existItem ? existItem.quantity + 1 : 1;
+   
+      if (data.stoc < newQuantity) {
         window.alert("Sorry. Product is out of stock");
         return;
       }
@@ -65,7 +66,7 @@ function Cart() {
           },
         }
       );
-      
+
       // Dispatch CART_UPDATE_QUANTITY action to update the quantity locally
       ctxDispatch({
         type: "CART_UPDATE_QUANTITY",
@@ -74,7 +75,7 @@ function Cart() {
           newQuantity: newQuantity,
         },
       });
-      
+
       console.log(`${product.name} quantity updated in the cart`);
     } catch (error) {
       console.error("Error updating cart item quantity:", error);
@@ -83,13 +84,10 @@ function Cart() {
       );
     }
   };
-  
-  
 
   // const removeItemHandler = (item) => {
   //   ctxDispatch({ type: "CART_REMOVE_ITEM", payload: item });
   // };
-
 
   const removeItemHandler = async (product) => {
     try {
@@ -105,7 +103,6 @@ function Cart() {
       window.alert("Failed to remove item from cart. Please try again later.");
     }
   };
-
 
   const checkoutHandler = () => {
     navigate("/signin?redirect=/shipping");

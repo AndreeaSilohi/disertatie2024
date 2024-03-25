@@ -54,6 +54,7 @@ function Product(props) {
     console.log(product);
     event.preventDefault();
     event.stopPropagation();
+    console.log(product._id)
 
     try {
       // Check stock availability
