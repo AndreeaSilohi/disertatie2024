@@ -15,29 +15,29 @@ function Cart() {
     userInfo,
   } = state;
 
-  // useEffect(() => {
-  //   const fetchCartItems = async () => {
-  //     try {
-  //       if (!userInfo || !userInfo.token) {
-  //         return;
-  //       }
-  //       const { data } = await axios.get("/api/cart", {
-  //         headers: {
-  //           Authorization: `Bearer ${userInfo.token}`,
-  //         },
-  //       });
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        if (!userInfo || !userInfo.token) {
+          return;
+        }
+        const { data } = await axios.get("/api/cart", {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        });
 
-  //       ctxDispatch({
-  //         type: "CART_SET_ITEMS",
-  //         payload: data.cartItems,
-  //       });
-  //     } catch (error) {
-  //       console.error("Error fetching cart items:", error);
-  //     }
-  //   };
+        ctxDispatch({
+          type: "CART_SET_ITEMS",
+          payload: data.cartItems,
+        });
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
 
-  //   fetchCartItems();
-  // }, [ctxDispatch, userInfo]);
+    fetchCartItems();
+  }, [ctxDispatch, userInfo]);
 
   const updateCartHandler = async (product, newQuantity, event) => {
     event.preventDefault();
