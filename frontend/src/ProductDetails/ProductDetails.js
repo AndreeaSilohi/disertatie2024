@@ -124,12 +124,18 @@ const ProductDetails = () => {
         return;
       }
 
-      // Access token if userInfo is set, otherwise, token will be undefined
+    
       const token = userInfo?.token;
-      // Construct headers only if token exists
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
-      // Send a POST request to add the item to the cart
+      if (existItem) {
+        // If the product already exists in the cart, update its quantity
+        const response = await axios.put(
+          `/api/cart/${existItem._id}`,
+          { quantity: quantity },
+          { headers: headers }
+        );
+      } else {
+   
       const response = await axios.post(
         "/api/cart",
         {
@@ -144,6 +150,7 @@ const ProductDetails = () => {
           headers: headers,
         }
       );
+      }
 
       // Dispatch action to update the cart in the context/state
       ctxDispatch({

@@ -45,16 +45,16 @@ function Cart() {
     
     try {
 
-      // const { data } = await axios.get(`/api/products/${product._id}`);
-      // console.log(data)
+      const { data } = await axios.get(`/api/products/${product._id}`);
+      console.log(data)
 
-      // const existItem = cartItems.find((x) => x._id === product._id);
-      // const quantity = existItem ? existItem.quantity + 1 : 1;
+      const existItem = cartItems.find((x) => x._id === product._id);
+      const quantity = existItem ? existItem.quantity + 1 : 1;
 
-      // if (data.stoc < quantity) {
-      //   window.alert("Sorry. Product is out of stock");
-      //   return;
-      // }
+      if (data.stoc < quantity) {
+        window.alert("Sorry. Product is out of stock");
+        return;
+      }
 
       const response = await axios.put(
         `/api/cart/${product.product}`, // assuming _id is the identifier of the product
