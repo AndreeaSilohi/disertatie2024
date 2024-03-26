@@ -36,11 +36,9 @@ function Navbar() {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
-
   const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
   const {
     wishlist: { wishlistItems },
-   
   } = stateW;
   const wishlistCount = wishlistItems.length;
 
@@ -56,7 +54,6 @@ function Navbar() {
     fetchCategories();
   }, []);
 
-
   // const [wishlistCount, setWishlistCount] = useState(wishlistItems.length);
 
   // useEffect(() => {
@@ -65,16 +62,14 @@ function Navbar() {
   //   setWishlistCount(newWishlistCount);
   // }, [wishlistItems]);
 
-
- 
   const signoutHandler = () => {
     ctxDispatch({ type: "USER_SIGNOUT" });
     ctxDispatchW({ type: "USER_SIGNOUT" });
     localStorage.removeItem("userInfo");
     localStorage.removeItem("shippingAddress");
     localStorage.removeItem("paymentMethod");
-    window.location.href ="/signin";
-};
+    window.location.href = "/signin";
+  };
 
   const toggleSidebar = () => {
     setSidebarIsOpen(!sidebarIsOpen);
@@ -89,10 +84,6 @@ function Navbar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
-
-
-
 
   return (
     <div className={sidebarIsOpen ? "navbar active-cont" : "navbar"}>
@@ -155,7 +146,7 @@ function Navbar() {
       </ul>
       <div className="icons">
         <NavLink to="/wishlist">
-        <IconButton color="inherit">
+          <IconButton color="inherit">
             <Badge
               badgeContent={wishlistCount} // Total items in the wishlist
               color="secondary" // You can change the color as needed
@@ -168,10 +159,10 @@ function Navbar() {
         <NavLink to="/cart">
           <Badge
             badgeContent={cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-            color="secondary"//daca vreau cu rosu trebuie sa fie error
+            color="secondary" //daca vreau cu rosu trebuie sa fie error
           >
             {/* <IconButton color="inherit"> */}
-              <ShoppingCart style={{ color: "black" }} size={30} />
+            <ShoppingCart style={{ color: "black" }} size={30} />
             {/* </IconButton> */}
           </Badge>
         </NavLink>
@@ -269,11 +260,12 @@ function Navbar() {
 
             <Divider />
             <MenuItem
-              onClick={signoutHandler}
               style={{ display: "flex", alignItems: "center" }}
+              value={3}
+              component={Link}
               to="/admin/orders"
+              onClick={handleMenuClose}
             >
-              <SignOut size={20} style={{ marginRight: "2px" }} />
               <span style={{ marginLeft: "4px" }}>Orders</span>
             </MenuItem>
 
@@ -289,12 +281,12 @@ function Navbar() {
 
             <Divider />
             <MenuItem
-                onClick={signoutHandler}
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <SignOut size={20} style={{ marginRight: "2px" }} />
-                <span style={{ marginLeft: "4px" }}>Sign out</span>
-              </MenuItem>
+              onClick={signoutHandler}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <SignOut size={20} style={{ marginRight: "2px" }} />
+              <span style={{ marginLeft: "4px" }}>Sign out</span>
+            </MenuItem>
           </Menu>
         )}
       </div>

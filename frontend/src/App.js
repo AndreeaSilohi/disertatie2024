@@ -29,6 +29,7 @@ import DashboardScreen from "./DashboardScreen/DashboardScreen";
 import AdminRoute from "./AdminRoute/AdminRoute";
 import ProductListScreen from "./ProductListScreen/ProductListScreen";
 import ProductEditScreen from "./ProductEditScreen/ProductEditScreen";
+import OrderListScreen from "./OrderListScreen/OrderListScreen";
 
 function App() {
   return (
@@ -102,6 +103,15 @@ function App() {
                 element={
                   <AdminRoute>
                     <ProductListScreen />
+                  </AdminRoute>
+                }
+              ></Route>
+
+              <Route
+                path="/admin/orders"
+                element={
+                  <AdminRoute>
+                    <OrderListScreen />
                   </AdminRoute>
                 }
               ></Route>

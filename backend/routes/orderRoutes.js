@@ -6,6 +6,16 @@ import User from "../modelss/userModel.js";
 import Product from "../modelss/productModel.js";
 
 const orderRouter = express.Router();
+
+orderRouter.get(
+  "/",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find().populate("user", "name");
+    res.send(orders);
+  })
+);
 orderRouter.post(
   "/",
   isAuth,
@@ -67,7 +77,7 @@ orderRouter.get(
         },
       },
     ]);
-    res.send({ users, orders, dailyOrders,productCategories });//aici se intorc ca si parametru catre frontend
+    res.send({ users, orders, dailyOrders, productCategories }); //aici se intorc ca si parametru catre frontend
   })
 );
 orderRouter.get(
