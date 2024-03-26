@@ -81,7 +81,7 @@ function reducer(state, action) {
           shippingAddress: action.payload,
         },
       };
-    case "SAVE_PAYMENT_METHOD":
+    case "SAVE_PAYMENT_METH OD":
       return {
         ...state,
         cart: {
