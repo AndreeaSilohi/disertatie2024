@@ -271,11 +271,12 @@ function Navbar() {
 
             <Divider />
             <MenuItem
-              to="/admin/users"
-              onClick={signoutHandler}
               style={{ display: "flex", alignItems: "center" }}
+              value={4}
+              component={Link}
+              to="/admin/users"
+              onClick={handleMenuClose}
             >
-              <SignOut size={20} style={{ marginRight: "2px" }} />
               <span style={{ marginLeft: "4px" }}>Users</span>
             </MenuItem>
 
