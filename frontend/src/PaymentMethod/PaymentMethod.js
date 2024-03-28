@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import CheckoutSteps from "../CheckoutSteps/CheckoutSteps";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
 import "./PaymentMethod.css";
 import miere from "../assets/miere.png";
+
 export default function PaymentMethod() {
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -19,24 +20,34 @@ export default function PaymentMethod() {
     cart: { shippingAddress, paymentMethod },
   } = state;
 
+ 
+  const [paymentMethodName, setPaymentMethodName] = React.useState(
+    paymentMethod || "PayPal"
+  );//To have selected payPal by default the "PayPal"should be the same with the value of PayPal
+
   useEffect(() => {
     if (!shippingAddress.address) {
       navigate("/shipping");
     }
   }, [shippingAddress, navigate]);
-  const [paymentMethodName, setPaymentMethodName] = React.useState(
-    paymentMethod || "PayPal"
-  );
 
-  const handleChange = (event) => {
-    setPaymentMethodName(event.target.value);
-  };
+ 
+
+  // const submitHandler = (e) => { //mine
+  //   e.preventDefault();
+  //   ctxDispatch({ type: "SAVE_PAYMENT_METHOD", payload: paymentMethodName });
+  //   localStorage.setItem("paymentMethod", paymentMethodName);
+  //   navigate("/placeorder");
+  // };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    ctxDispatch({ type: "SAVE_PAYMENT_METHOD", payload: paymentMethodName });
-    localStorage.setItem("paymentMethod", paymentMethod);
-    navigate("/placeorder");
+    ctxDispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethodName });
+    localStorage.setItem('paymentMethod', paymentMethodName);
+    navigate('/placeorder');
+  };
+  const handleChange = (event) => {
+    setPaymentMethodName(event.target.value);
   };
   return (
     <div className="container-payment">
@@ -67,12 +78,12 @@ export default function PaymentMethod() {
                     onChange={handleChange}
                   >
                     <FormControlLabel
-                      value="paypal"
+                      value="PayPal"
                       control={<Radio />}
                       label="PayPal"
                     />
                     <FormControlLabel
-                      value="stripe"
+                      value="Stripe"
                       control={<Radio />}
                       label="Stripe"
                     />

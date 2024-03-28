@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 import { Store } from "../Store";
 import { getError } from "../utils";
 import axios from "axios";
@@ -14,6 +15,7 @@ import {
 } from "@mui/material";
 import LoadingBox from "../LoadingBox";
 import MessageBox from "../MessageBox";
+
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -34,6 +36,7 @@ const reducer = (state, action) => {
   }
 };
 export default function UserListScreen() {
+  const navigate = useNavigate();
   const [{ loading, error, users }, dispatch] = useReducer(reducer, {
     loading: true,
     error: "",
@@ -91,7 +94,15 @@ export default function UserListScreen() {
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.isAdmin ? "YES" : "NO"}</TableCell>
 
-                    <TableCell></TableCell>
+                    <TableCell>
+                      <Button
+                        type="button"
+                        variant="light"
+                        onClick={() => navigate(`/admin/user/${user._id}`)}
+                      >
+                        Edit
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
