@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-// import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -14,7 +13,7 @@ import "./Product.css";
 import { Wishlist } from "../W";
 
 function Product(props) {
-  const { product } = props;
+  const { product, userToken } = props;
 
   const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
   const {
@@ -28,33 +27,9 @@ function Product(props) {
     userInfoCart,
   } = state;
 
-  //   const addToCartHandler = async (item, event) => {
-  //     event.preventDefault();
-  //     event.stopPropagation();
-  //     const existItem = cartItems.find((x) => x._id === product._id);
-  //     const quantity = existItem ? existItem.quantity + 1 : 1;
-  //     const { data } = await axios.get(/api/products/${item._id});
-
-  //     if (data.stoc < quantity) {
-  //       window.alert("Sorry. Product is out of stock");
-  //       return;
-  //     }
-
-  //     ctxDispatch({
-  //       type: "CART_ADD_ITEM",
-  //       payload: { ...item, quantity },
-  //     });
-
-  //     setNotification(${data.name} a fost adaugat in wishlist);
-  //     setTimeout(() => {
-  //       setNotification(null);
-  //     }, 3000);
-  //   };
   const addToCartHandler = async (product, event) => {
-    console.log(product);
     event.preventDefault();
     event.stopPropagation();
-    console.log(product._id)
 
     try {
       // Check stock availability
@@ -68,11 +43,9 @@ function Product(props) {
         return;
       }
 
-      const token = userInfo?.token;
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const headers = userToken ? { Authorization: `Bearer ${userToken}` } : {};
 
       if (existItem) {
-        // If the product already exists in the cart, update its quantity
         const response = await axios.put(
           `/api/cart/${existItem._id}`,
           { quantity: quantity },
@@ -87,7 +60,7 @@ function Product(props) {
             name: product.name,
             image: product.image,
             price: product.price,
-            productId: product._id, // Ensure productId is provided correctly
+            productId: product._id,
           },
           {
             headers: headers,
@@ -95,19 +68,15 @@ function Product(props) {
         );
       }
 
-      // Dispatch action to update the cart in the context/state
       ctxDispatch({
         type: "CART_ADD_ITEM",
-        payload: { ...product, quantity }, // Assuming the server responds with the updated cart data
+        payload: { ...product, quantity },
       });
       ctxDispatchW({ type: "CREATE_SUCCESS" });
       setNotification(`${product.name} was added to the cart`);
       setTimeout(() => {
         setNotification(null);
       }, 3000);
-
-      // Show notification or handle success
-      console.log(`${product.name} was added to the cart`);
     } catch (error) {
       console.error("Error adding to cart:", error);
       window.alert("Failed to add to cart. Please try again later.");
@@ -120,10 +89,9 @@ function Product(props) {
 
     try {
       ctxDispatchW({ type: "CREATE_REQUEST" });
-      const user = userInfo ? userInfo.user : null;
-
-      const token = userInfo?.token; // Access token if userInfo is set, otherwise, token will be undefined
-      const headers = token ? { authorization: `Bearer ${token}` } : {};
+      const token = userToken;
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      
       const { data } = await axios.post(
         "/api/wishlist",
         {
@@ -143,7 +111,7 @@ function Product(props) {
       );
       ctxDispatchW({
         type: "WISHLIST_ADD_ITEM",
-        payload: { ...product }, // Assuming the server responds with the updated cart data
+        payload: { ...product },
       });
 
       ctxDispatchW({ type: "CREATE_SUCCESS" });
@@ -205,7 +173,7 @@ function Product(props) {
 
           <div className="actions-card">
             <IconButton
-              onClick={(event) => addToWishlist(product, event)} // Pass entire product object
+              onClick={(event) => addToWishlist(product, event)}
               aria-label="Add to Wishlist"
               color={isInWishlist ? "secondary" : "default"}
               sx={{ marginRight: "8px" }}

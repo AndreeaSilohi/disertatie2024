@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer,useContext } from "react";
 import { getError } from "../utils";
 import LoadingBox from "../LoadingBox";
 import MessageBox from "../MessageBox";
@@ -11,7 +11,7 @@ import { Button, Grid, Typography, Select, MenuItem } from "@mui/material";
 import Product from "../Product/Product";
 import SearchBox from "../SearchBox/SearchBox";
 import Divider from "@mui/material/Divider";
-
+import { Store } from "../Store";
 import "./SearchScreen.css";
 
 import RatingComponent from "../Rating/RatingComponent";
@@ -86,7 +86,7 @@ export const ratings = [
 export default function SearchScreen() {
   const navigate = useNavigate();
   const { search } = useLocation();
-
+  const { state: { userInfo } } = useContext(Store);
   const sp = new URLSearchParams(search);
   const category = sp.get("category") || "all";
   const query = sp.get("query") || "all";
@@ -104,19 +104,28 @@ export default function SearchScreen() {
     useEffect(() => {
       const fetchData = async () => {
         try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+          };
+  
           const { data } = await axios.get(
-            `/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
+            `/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`,
+            config
           );
+  
           dispatch({ type: 'FETCH_SUCCESS', payload: data });
         } catch (err) {
           dispatch({
             type: 'FETCH_FAIL',
-            payload: getError(error),
+            payload: getError(err),
           });
         }
       };
+  
       fetchData();
-    }, [category, error, order, page, price, query, rating]);
+    }, [category, order, page, price, query, rating, userInfo.token]);
 
   const [categories, setCategories] = useState([]);
 
@@ -325,7 +334,7 @@ export default function SearchScreen() {
               <Grid container className={styles.productGrid}>
                 {products.map((product) => (
                   <Grid item sm={6} lg={6} key={product._id}>
-                    <Product product={product}></Product>
+                    <Product product={product} userToken={userInfo.token}></Product>
                   </Grid>
                 ))}
               </Grid>
