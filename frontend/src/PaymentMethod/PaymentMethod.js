@@ -83,9 +83,9 @@ export default function PaymentMethod() {
                       label="PayPal"
                     />
                     <FormControlLabel
-                      value="Stripe"
+                      value="Cash"
                       control={<Radio />}
-                      label="Stripe"
+                      label="Cash la livrare"
                     />
                   </RadioGroup>
                   <button className="button-continue">Continue</button>
