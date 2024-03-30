@@ -147,7 +147,25 @@ cartRouter.get(
     })
   );
   
-
+  cartRouter.delete(
+    "/",
+    isAuth,
+    expressAsyncHandler(async (req, res) => {
+      try {
+        const userCart = await Cart.findOneAndDelete({ user: req.user._id });
+  
+        if (!userCart) {
+          return res.status(404).send({ message: "Cart not found" });
+        }
+  
+        res.status(200).send({ message: "Cart deleted" });
+      } catch (error) {
+        console.error("Error deleting cart:", error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    })
+  );
+  
 
 
   

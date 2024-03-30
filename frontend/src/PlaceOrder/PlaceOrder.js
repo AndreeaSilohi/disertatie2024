@@ -75,6 +75,12 @@ export default function PlaceOrder() {
       //     quantity: item.stoc,
       //   });
       // }
+      // Delete cart after placing the order
+      await axios.delete("/api/cart", {
+        headers: {
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      });
 
       ctxDispatch({ type: "CART_CLEAR" });
       dispatch({ type: "CREATE_SUCCESS" });
