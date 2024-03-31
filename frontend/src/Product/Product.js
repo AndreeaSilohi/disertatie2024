@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -26,6 +26,35 @@ function Product(props) {
     cart: { cartItems },
     userInfoCart,
   } = state;
+
+
+  const fetchWishlistItems = async (token) => {
+    try {
+      const { data } = await axios.get("/api/wishlist", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      ctxDispatchW({
+        type: "WISHLIST_SET_ITEMS",
+        payload: data.wishlistItems,
+      });
+    } catch (error) {
+      console.error("Error fetching wishlist items:", error);
+    }
+  };
+
+
+
+
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [notification, setNotification] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  useEffect(() => {
+    // Check if the product is in the wishlist when the component mounts
+    setIsInWishlist(wishlistItems.some((item) => item.product === product._id));
+  }, [wishlistItems, product._id]);
+
 
   const addToCartHandler = async (product, event) => {
     event.preventDefault();
@@ -91,7 +120,7 @@ function Product(props) {
       ctxDispatchW({ type: "CREATE_REQUEST" });
       const token = userToken;
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      
+
       const { data } = await axios.post(
         "/api/wishlist",
         {
@@ -109,11 +138,14 @@ function Product(props) {
           headers: headers,
         }
       );
+
+      fetchWishlistItems(token);
       ctxDispatchW({
         type: "WISHLIST_ADD_ITEM",
-        payload: { ...product },
+        payload: { ...item },
       });
-
+      console.log(!isInWishlist);
+      setIsInWishlist(true);
       ctxDispatchW({ type: "CREATE_SUCCESS" });
       setNotification(`${item.name} was added to the wishlist`);
       setTimeout(() => {
@@ -126,16 +158,42 @@ function Product(props) {
     }
   };
 
-  const isInWishlist =
-    Array.isArray(wishlistItems) &&
-    wishlistItems.some((item) => item._id === product._id);
-  const [notification, setNotification] = useState(null);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+
+
+  const removeFromWishlist = async (item, event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+
+    try {
+      ctxDispatchW({ type: "CREATE_REQUEST" });
+      const token = userToken;
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+      await axios.delete(`/api/wishlist/${item._id}`, {
+        headers: headers,
+      });
+      console.log("Deleted from wishlist:", item._id);
+      fetchWishlistItems(token);
+      ctxDispatchW({ type: "WISHLIST_REMOVE_ITEM", payload: item });
+      setIsInWishlist(false); // Set isInWishlist to false locally
+      ctxDispatchW({ type: "CREATE_SUCCESS" });
+      setNotification(`${item.name} was removed from the wishlist`);
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+    } catch (error) {
+      console.error("Error removing item from wishlist:", error);
+      window.alert(
+        "Failed to remove item from wishlist. Please try again later."
+      );
+    }
+  };
+
 
   const handleCardClick = (product) => {
     setSelectedProduct(product);
   };
-
   return (
     <div>
       <Link
@@ -173,8 +231,14 @@ function Product(props) {
 
           <div className="actions-card">
             <IconButton
-              onClick={(event) => addToWishlist(product, event)}
+              onClick={(event) =>
+                isInWishlist
+                  ? removeFromWishlist(product, event)
+                  : addToWishlist(product, event)
+              }
               aria-label="Add to Wishlist"
+              
+              // color={wishlistItems[product._id] ? "secondary" : "default"}
               color={isInWishlist ? "secondary" : "default"}
               sx={{ marginRight: "8px" }}
             >

@@ -13,6 +13,7 @@ const initialstateW = {
       ? JSON.parse(localStorage.getItem("wishlistItems"))
       : [],
   },
+  wishlistIconColor: localStorage.getItem("wishlistIconColor") || "default",
 };
 
 function reducer(stateW, action) {
@@ -55,6 +56,7 @@ function reducer(stateW, action) {
           ...stateW.wishlist,
           wishlistItems,
         },
+        wishlistIconColor: existItem ? stateW.wishlistIconColor : "secondary",
       };
     case "WISHLIST_SET_ITEMS":
       localStorage.setItem("wishlistItems", JSON.stringify(action.payload));
@@ -74,7 +76,10 @@ function reducer(stateW, action) {
     }
     case "WISHLIST_CLEAR":
       return { ...stateW, wishlist: { ...stateW.wishlist, wishlistItems: [] } };
-
+    case "WISHLIST_ICON_COLOR": {
+      localStorage.setItem("wishlistIconColor", action.payload);
+      return { ...stateW, wishlistIconColor: action.payload };
+    }
     default:
       return stateW;
   }
@@ -82,6 +87,6 @@ function reducer(stateW, action) {
 
 export function WishlistProvider(props) {
   const [stateW, dispatch] = useReducer(reducer, initialstateW);
-  const value = { stateW, dispatch };
+  const value = { stateW, dispatch,wishlistIconColor: stateW.wishlistIconColor  };
   return <Wishlist.Provider value={value}>{props.children}</Wishlist.Provider>;
 }
