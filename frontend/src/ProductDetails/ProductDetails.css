@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
 
 .detalii-page {
-  background-color: #eeebdd;
+  background-color:white;
   height: 100%;
 }
 .detalii-titlu {
@@ -33,7 +33,7 @@
 
 .card-media {
   height: 600px;
-  background-color: #eeebdd;
+  background-color: white;
   border: none;
 }
 
@@ -129,4 +129,13 @@
 .unavailable {
   color: red;
 
+}
+
+.review-form{
+    font-family: "Catamaran", sans-serif !important;
+    padding: 40px;
+}
+
+.user-info-review{
+  padding: 40px;
 }

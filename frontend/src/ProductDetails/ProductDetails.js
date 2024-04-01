@@ -131,7 +131,7 @@ const ProductDetails = () => {
       alert("You are not logged in. Please log in to add items to the cart.");
       return;
     }
-  
+
     try {
       // Check stock availability
       const { data } = await axios.get(`/api/products/${product._id}`);
@@ -190,7 +190,7 @@ const ProductDetails = () => {
   };
 
   const submitHandler = async (e) => {
-    console.log(userInfo.token)
+    console.log(userInfo.token);
     e.preventDefault();
     if (!comment || !rating) {
       window.alert("Please enter a comment and rating");
@@ -299,10 +299,28 @@ const ProductDetails = () => {
                   <List>
                     {product.reviews.map((review) => (
                       <ListItem key={review._id}>
-                        <ListItemText>
-                          <strong>{review.name}</strong>
-                          <RatingComponent  rating={review.rating} caption=" "/>
-                          <p>{review.createdAt}</p>
+                        <ListItemText
+                          sx={{
+                            fontFamily: "Catamaran, sans-serif !important",
+                            fontSize: "25px",
+                          }}
+                        >
+                          <img
+                            src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"
+                            alt="User Avatar"
+                            style={{
+                              width: "30px", // Set the width of the image
+                              height: "30px", // Set the height of the image
+                              borderRadius: "50%", // Make the image circular
+                              marginTop: "20px",
+                            }}
+                          ></img>
+                          <strong>
+                            {review.name}&nbsp;-&nbsp;
+                            {review.createdAt.substring(0, 10)}
+                          </strong>
+                          <RatingComponent rating={review.rating} caption=" " />
+                          {/* <p >{review.createdAt.substring(0, 10)}</p> */}
                           <p>{review.comment}</p>
                         </ListItemText>
                       </ListItem>

@@ -118,6 +118,10 @@ function Product(props) {
     event.preventDefault();
     event.stopPropagation();
 
+    if (!userInfoCart) {
+      alert("You are not logged in. Please log in to add items to the cart.");
+      return;
+    }
     try {
       ctxDispatchW({ type: "CREATE_REQUEST" });
       const token = userToken;
