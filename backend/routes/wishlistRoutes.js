@@ -1,10 +1,9 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import {isAuth} from '../utils.js'
+import { isAuth } from "../utils.js";
 import WishlistItem from "../modelss/wishlistModel.js";
 
 const wishlistRouter = express.Router();
-
 
 wishlistRouter.post(
   "/",
@@ -36,11 +35,12 @@ wishlistRouter.post(
 
         if (existingItemIndex !== -1) {
           // If item already exists in wishlist, update its quantity
-          userWishlist.wishlistItems[existingItemIndex].quantity += item.quantity;
+          userWishlist.wishlistItems[existingItemIndex].quantity +=
+            item.quantity;
         } else {
           // If item doesn't exist, add it to the wishlist
           userWishlist.wishlistItems.push({
-            quantity:item.quantity,
+            quantity: item.quantity,
             slug: item.slug,
             name: item.name,
             quantity: item.quantity,
@@ -53,14 +53,15 @@ wishlistRouter.post(
 
       // Save the updated or new wishlist
       const savedWishlist = await userWishlist.save();
-      res.status(201).send({ message: "Wishlist updated", wishlist: savedWishlist });
+      res
+        .status(201)
+        .send({ message: "Wishlist updated", wishlist: savedWishlist });
     } catch (error) {
       console.error("Error updating wishlist:", error);
       res.status(500).send({ message: "Internal Server Error" });
     }
   })
 );
-
 
 wishlistRouter.get(
   "/",
@@ -98,17 +99,17 @@ wishlistRouter.delete(
       userWishlist.wishlistItems = updatedWishlistItems;
       const savedWishlist = await userWishlist.save();
 
-      res.status(200).send({ message: "Item removed from wishlist", wishlist: savedWishlist });
+      res
+        .status(200)
+        .send({
+          message: "Item removed from wishlist",
+          wishlist: savedWishlist,
+        });
     } catch (error) {
       console.error("Error removing item from wishlist:", error);
       res.status(500).send({ message: "Internal Server Error" });
     }
   })
 );
-
-
-
-
-
 
 export default wishlistRouter;

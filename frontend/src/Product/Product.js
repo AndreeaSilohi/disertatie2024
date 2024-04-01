@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -11,10 +11,11 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import "./Product.css";
 import { Wishlist } from "../W";
+import MessageBox from "../MessageBox";
 
 function Product(props) {
+  let reviewsRef = useRef();
   const { product, userToken } = props;
-
   const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
   const {
     wishlist: { wishlistItems },
@@ -26,7 +27,6 @@ function Product(props) {
     cart: { cartItems },
     userInfoCart,
   } = state;
-
 
   const fetchWishlistItems = async (token) => {
     try {
@@ -44,9 +44,6 @@ function Product(props) {
     }
   };
 
-
-
-
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [notification, setNotification] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -54,7 +51,6 @@ function Product(props) {
     // Check if the product is in the wishlist when the component mounts
     setIsInWishlist(wishlistItems.some((item) => item.product === product._id));
   }, [wishlistItems, product._id]);
-
 
   const addToCartHandler = async (product, event) => {
     event.preventDefault();
@@ -158,12 +154,9 @@ function Product(props) {
     }
   };
 
-
-
   const removeFromWishlist = async (item, event) => {
     event.preventDefault();
     event.stopPropagation();
-    
 
     try {
       ctxDispatchW({ type: "CREATE_REQUEST" });
@@ -189,7 +182,6 @@ function Product(props) {
       );
     }
   };
-
 
   const handleCardClick = (product) => {
     setSelectedProduct(product);
@@ -237,7 +229,6 @@ function Product(props) {
                   : addToWishlist(product, event)
               }
               aria-label="Add to Wishlist"
-              
               // color={wishlistItems[product._id] ? "secondary" : "default"}
               color={isInWishlist ? "secondary" : "default"}
               sx={{ marginRight: "8px" }}
@@ -267,8 +258,16 @@ function Product(props) {
         </div>
       </Link>
       {notification && <div className="notification">{notification}</div>}
-
       {selectedProduct && <ProductDetails product={selectedProduct} />}
+      {/* <div className="review-form">
+        <h2 ref={reviewsRef}>Reviews</h2>
+        <div className="no-review">
+          <div>ceva</div>
+          {product.reviews.length===0 &&(
+            <MessageBox>There is no review</MessageBox>
+          )}
+        </div>
+      </div> */}
     </div>
   );
 }
