@@ -56,6 +56,12 @@ function Product(props) {
     event.preventDefault();
     event.stopPropagation();
 
+    if (!userInfoCart) {
+      alert("You are not logged in. Please log in to add items to the cart.");
+      return;
+    }
+  
+
     try {
       // Check stock availability
       const { data } = await axios.get(`/api/products/${product._id}`);

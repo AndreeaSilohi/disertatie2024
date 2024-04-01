@@ -32,6 +32,7 @@ import ProductEditScreen from "./ProductEditScreen/ProductEditScreen";
 import OrderListScreen from "./OrderListScreen/OrderListScreen";
 import UserListScreen from "./UserListScreen/UserListScreen";
 import UserEditScreen from "./UserEditScreen/UserEditScreen";
+import MainShop from "./MainShop/MainShop";
 
 function App() {
   return (
@@ -48,7 +49,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               {/* <Route path="/shop" element={<OurShop />} /> */}
-              <Route path="/shop" element={<SearchScreen />} />
+              <Route path="/shop" element={<MainShop />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/contact-form" element={<ContactForm />} />
