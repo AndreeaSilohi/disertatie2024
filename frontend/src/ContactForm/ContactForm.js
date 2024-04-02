@@ -3,13 +3,32 @@ import "./ContactForm.css";
 import { useState } from "react";
 import { TextField, Button, Typography, Box } from "@mui/material";
 import React from "react";
+import axios from "axios";
 function ContactForm() {
-  const [name, setName] = useState("");
+  const [subject, setSubject] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const handleSubmit = (e) => {
+
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    //
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/api/email", {
+        subject,
+        email,
+        message,
+      });
+      setLoading(false);
+      window.alert(data.message);
+    } catch (err) {
+      setLoading(false);
+      window.alert(
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message
+      );
+    }
   };
   return (
     <div>
@@ -60,9 +79,9 @@ function ContactForm() {
               <form onSubmit={handleSubmit}>
                 <TextField
                   fullWidth
-                  label="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  label="Subject"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
                   margin="normal"
                   required
                 />
@@ -87,6 +106,7 @@ function ContactForm() {
                 />
                 <div className="button-submit">
                   <Button
+                    disabled={loading}
                     fullWidth
                     type="submit"
                     sx={{
@@ -98,7 +118,7 @@ function ContactForm() {
                       },
                     }}
                   >
-                    Submit
+                    {loading ? "Sending..." : "Submit"}
                   </Button>
                 </div>
               </form>

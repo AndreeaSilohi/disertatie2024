@@ -7,12 +7,12 @@ import productRouter from "./routes/productRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
 import wishlistRouter from "./routes/wishlistRoutes.js";
-
 import cartRouter from "./routes/cartRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
+import emailRouter from "./routes/formEmail.js";
+
 
 dotenv.config();
-
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
@@ -37,8 +37,8 @@ app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/wishlist", wishlistRouter);
-
 app.use("/api/cart", cartRouter); // Use cart routes
+app.use("/api/email",emailRouter);
 
 //this is like a middleware
 app.use((err, req, res, next) => {
