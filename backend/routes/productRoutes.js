@@ -98,12 +98,16 @@ productRouter.post(
           .status(400)
           .send({ message: "You already submited a review" });
       }
-
+      console.log(req.body);
       const review = {
         name: req.user.name,
         rating: Number(req.body.rating),
         comment: req.body.comment,
+        profilePhoto: req.body.profilePhoto,
+      
       };
+      console.log(review.profilePhoto)
+
       product.reviews.push(review);
       product.numReviews = product.reviews.length;
       product.rating =

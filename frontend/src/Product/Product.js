@@ -19,7 +19,6 @@ function Product(props) {
   const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
   const {
     wishlist: { wishlistItems },
-    userInfo,
   } = stateW;
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -28,7 +27,10 @@ function Product(props) {
     userInfoCart,
   } = state;
 
+ 
+
   const fetchWishlistItems = async (token) => {
+    console.log(token);
     try {
       const { data } = await axios.get("/api/wishlist", {
         headers: {
@@ -55,12 +57,11 @@ function Product(props) {
   const addToCartHandler = async (product, event) => {
     event.preventDefault();
     event.stopPropagation();
-
-    if (!userInfoCart) {
+   
+    if (!userToken) {
       alert("You are not logged in. Please log in to add items to the cart.");
       return;
     }
-  
 
     try {
       // Check stock availability
@@ -118,8 +119,10 @@ function Product(props) {
     event.preventDefault();
     event.stopPropagation();
 
-    if (!userInfoCart) {
-      alert("You are not logged in. Please log in to add items to the cart.");
+    if (!userToken) {
+      alert(
+        "You are not logged in. Please log in to add items to the wihslist."
+      );
       return;
     }
     try {
@@ -196,6 +199,7 @@ function Product(props) {
   const handleCardClick = (product) => {
     setSelectedProduct(product);
   };
+ 
   return (
     <div>
       <Link
@@ -268,16 +272,7 @@ function Product(props) {
         </div>
       </Link>
       {notification && <div className="notification">{notification}</div>}
-      {selectedProduct && <ProductDetails product={selectedProduct} />}
-      {/* <div className="review-form">
-        <h2 ref={reviewsRef}>Reviews</h2>
-        <div className="no-review">
-          <div>ceva</div>
-          {product.reviews.length===0 &&(
-            <MessageBox>There is no review</MessageBox>
-          )}
-        </div>
-      </div> */}
+      {selectedProduct && <ProductDetails userToken={userToken}/>}
     </div>
   );
 }

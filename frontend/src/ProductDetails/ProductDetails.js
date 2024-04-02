@@ -37,6 +37,7 @@ import { Store } from "../Store";
 import RatingComponent from "../Rating/RatingComponent";
 import { getError } from "../utils";
 
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "REFRESH_PRODUCT":
@@ -64,10 +65,10 @@ const ProductDetails = () => {
   const [comment, setComment] = useState("");
   const params = useParams();
   const { slug } = params;
-
   const [value, setValue] = React.useState(0);
   const [notification, setNotification] = useState(null);
   // const { addToCart, cartItems } = useContext(ShopContext); // Use the ShopContext
+
 
   const [{ loading, error, product, loadingCreateReview }, dispatch] =
     useReducer(reducer, {
@@ -76,19 +77,41 @@ const ProductDetails = () => {
       error: "",
     });
 
+
+    const { state, dispatch: ctxDispatch } = useContext(Store);
+    const {
+      cart: { cartItems },
+  
+      userInfo,
+    } = state;
+  
+    console.log(userInfo);
+    const [user, setUser] = useState(null);
+    console.log(user)
+
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: "FETCH_REQUEST" });
       try {
         const result = await axios.get(`/api/products/slug/${slug}`);
+
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
+
+        // Fetch user data
+        if(userInfo){
+          const userResult = await axios.get(`/api/users/profile/${userInfo._id}`,{
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          });
+          setUser(userResult.data);
+        }
+
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: err.message });
       }
     };
     fetchData();
   }, [slug]);
-
+console.log(user)
   // const cartItemAmount = cartItems[product.id];
 
   const [selectedTab, setSelectedTab] = useState(null);
@@ -113,21 +136,15 @@ const ProductDetails = () => {
     setSelectedTab(null);
   };
 
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {
-    cart: { cartItems },
-    userInfoCart,
-    userInfo,
-  } = state;
+
+
 
   const navigate = useNavigate();
-
   const addToCartHandler = async (product, event) => {
-    console.log(product);
     event.preventDefault();
     event.stopPropagation();
 
-    if (!userInfoCart) {
+    if (!user) {
       alert("You are not logged in. Please log in to add items to the cart.");
       return;
     }
@@ -190,7 +207,6 @@ const ProductDetails = () => {
   };
 
   const submitHandler = async (e) => {
-    console.log(userInfo.token);
     e.preventDefault();
     if (!comment || !rating) {
       window.alert("Please enter a comment and rating");
@@ -199,11 +215,18 @@ const ProductDetails = () => {
     try {
       const { data } = await axios.post(
         `/api/products/${product._id}/reviews`,
-        { rating, comment, name: userInfo.name },
+        {
+          rating,
+          comment,
+          name: userInfo.name,
+          profilePhoto: user.profilePhoto,
+        },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }
       );
+
+      console.log(user)
 
       dispatch({
         type: "CREATE_SUCCESS",
@@ -306,7 +329,7 @@ const ProductDetails = () => {
                           }}
                         >
                           <img
-                            src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"
+                            src={review.profilePhoto}
                             alt="User Avatar"
                             style={{
                               width: "30px", // Set the width of the image

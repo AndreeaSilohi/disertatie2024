@@ -25,10 +25,26 @@ userRouter.get(
     if (user) {
       res.send(user);
     } else {
-      res.status(404).send({ messae: "User not found" });
+      res.status(404).send({ message: "User not found" });
     }
   })
 );
+
+
+// Endpoint to get user by ID
+userRouter.get(
+  "/profile/:id",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send({ message: "User not found" });
+    }
+  })
+);
+
 
 userRouter.put(
   "/:id",
@@ -43,6 +59,21 @@ userRouter.put(
       user.isAdmin = Boolean(req.body.isAdmin);
       const updatedUser = await user.save();
       res.send({ message: "User Updated", user: updatedUser });
+    } else {
+      res.status(404).send({ message: "User not found" });
+    }
+  })
+);
+
+userRouter.put(
+  "/update-photo/:id",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      user.profilePhoto = req.body.profilePhoto || user.profilePhoto;
+      const updatedUser = await user.save();
+      res.send({ message: "Profile photo updated", user: updatedUser });
     } else {
       res.status(404).send({ message: "User not found" });
     }
@@ -94,13 +125,14 @@ userRouter.post(
       name: req.body.name,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password),
+      profilePhoto: "", // Add an empty profilePhoto property
     });
     const user = await newUser.save();
     res.send({
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
+      isAdmin: user.isAdmin, 
       token: generateToken(user),
     });
   })

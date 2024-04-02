@@ -84,6 +84,62 @@ function Navbar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+  let urlProfile;
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const { data } = await axios.post("/api/upload/profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      urlProfile = data.url;
+      window.alert("Image uploaded successfully");
+      console.log("Uploaded photo URL:", data.url);
+    } catch (error) {
+      console.error("Error uploading photo:", error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const fileInput = document.getElementById("photoInput");
+      if (fileInput.files.length === 0) {
+        window.alert("Please select a file.");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      // const uploadResponse = await axios.post("/api/upload/profile", formData, {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //     Authorization: `Bearer ${userInfo.token}`,
+      //   },
+      // });
+
+      // const uploadedPhotoURL = uploadResponse.data.url;
+
+      await axios.put(
+        `/api/users/update-photo/${userInfo._id}`,
+        { profilePhoto: urlProfile }, // Include the profilePhoto field in the request body
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      window.alert("Image uploaded successfully in database");
+    } catch (error) {
+      console.error("Error uploading photo:", error);
+    }
+  };
 
   return (
     <div className={sidebarIsOpen ? "navbar active-cont" : "navbar"}>
@@ -183,6 +239,16 @@ function Navbar() {
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
             >
+              <MenuItem style={{ display: "flex", alignItems: "center" }}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                  id="photoInput" // Ensure the id is set to "photoInput"
+                />   
+              </MenuItem>
+              <button onClick={handleSubmit}>Submit</button>
+              <Divider />
               <MenuItem
                 style={{ display: "flex", alignItems: "center" }}
                 value={1}
