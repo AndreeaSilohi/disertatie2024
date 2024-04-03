@@ -255,25 +255,19 @@ productRouter.get("/:id", async (req, res) => {
   }
 });
 
-// productRouter.put('/:productId/updateStock', async (req, res) => {
-//   const { productId } = req.params;
-//   const { quantity } = req.body;
+productRouter.put(
+  "/:slug/reduceStock",
+  expressAsyncHandler(async (req, res) => {
+    console.log(req.params.id)
+    const product = await Product.findOne({ slug: req.params.slug });
+    if (product) {
+      product.stoc -= req.body.quantity;
+      await product.save();
+      res.send({ message: "Stock reduced successfully" });
+    } else {
+      res.status(404).send({ message: "Product not found" });
+    }
+  })
+);
 
-//   try {
-//     // Find the product by its ID
-//     const product = await Product.findById(productId);
-//     console.log(product)
-
-//     // Update the stock
-//     product.stoc -= quantity;
-
-//     // Save the updated product
-//     await product.save();
-
-//     res.status(200).json({ message: 'Stock updated successfully' });
-//   } catch (error) {
-//     console.error('Error updating stock:', error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// });
 export default productRouter;

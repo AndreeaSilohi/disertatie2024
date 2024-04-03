@@ -89,9 +89,9 @@ const ProductDetails = () => {
     userInfo,
   } = state;
 
-  console.log(userInfo);
+  // console.log(userInfo);
   const [user, setUser] = useState(null);
-  console.log(user);
+  // console.log(user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -135,26 +135,13 @@ const ProductDetails = () => {
     }
   }, [slug, userInfo]);
 
-  console.log(orders);
-  console.log(slug);
+  // console.log(orders);
+  // console.log(slug);
   const isProductInOrders = () => {
     return orders.some((order) =>
       order.orderItems.some((item) => item && item.slug === slug)
     );
   };
-  // Check if product slug exists in any order item
-  // const isProductInOrders = () => {
-  //   return orders.some((order) =>
-  //     order.orderItems.some((item) => {
-  //       console.log(item)
-  //       if (item && item.slug === slug) {
-  //         console.log('Matching item:', item);
-  //         return true; // Return true if a matching item is found
-  //       }
-  //       return false; // Return false if no matching item is found
-  //     })
-  //   );
-  // };
 
   // const cartItemAmount = cartItems[product.id];
   const [selectedTab, setSelectedTab] = useState(null);
@@ -239,7 +226,7 @@ const ProductDetails = () => {
       }, 3000);
 
       // Show notification or handle success
-      console.log(`${product.name} was added to the cart`);
+      // console.log(`${product.name} was added to the cart`);
     } catch (error) {
       console.error("Error adding to cart:", error);
       window.alert("Failed to add to cart. Please try again later.");
@@ -266,7 +253,7 @@ const ProductDetails = () => {
         }
       );
 
-      console.log(user);
+      // console.log(user);
 
       dispatch({
         type: "CREATE_SUCCESS",
@@ -398,52 +385,53 @@ const ProductDetails = () => {
                           <div className="user-info-review">
                             {userInfo ? (
                               <form onSubmit={submitHandler}>
-                              <h2>Write a customer review</h2>
+                                <h2>Write a customer review</h2>
 
-                              <FormControl fullWidth>
-                                <InputLabel id="rating-label">
-                                  Rating
-                                </InputLabel>
-                                <Select
-                                  labelId="rating-label"
-                                  id="rating"
-                                  value={rating}
-                                  label="Rating"
-                                  onChange={(e) => setRating(e.target.value)}
+                                <FormControl fullWidth>
+                                  <InputLabel id="rating-label">
+                                    Rating
+                                  </InputLabel>
+                                  <Select
+                                    labelId="rating-label"
+                                    id="rating"
+                                    value={rating}
+                                    label="Rating"
+                                    onChange={(e) => setRating(e.target.value)}
+                                  >
+                                    <MenuItem value="">
+                                      <em>Select...</em>
+                                    </MenuItem>
+                                    <MenuItem value={1}>1- Poor</MenuItem>
+                                    <MenuItem value={2}>2- Fair</MenuItem>
+                                    <MenuItem value={3}>3- Good</MenuItem>
+                                    <MenuItem value={4}>4- Very good</MenuItem>
+                                    <MenuItem value={5}>5- Excellent</MenuItem>
+                                  </Select>
+                                  <FormHelperText>
+                                    Please select a rating
+                                  </FormHelperText>
+                                </FormControl>
+                                <TextField
+                                  id="comment"
+                                  label="Comments"
+                                  placeholder="Leave a comment here"
+                                  multiline
+                                  fullWidth
+                                  value={comment}
+                                  onChange={(e) => setComment(e.target.value)}
+                                />
+                                <Button
+                                  disabled={loadingCreateReview}
+                                  type="submit"
+                                  variant="contained"
+                                  sx={{ mt: 2 }}
                                 >
-                                  <MenuItem value="">
-                                    <em>Select...</em>
-                                  </MenuItem>
-                                  <MenuItem value={1}>1- Poor</MenuItem>
-                                  <MenuItem value={2}>2- Fair</MenuItem>
-                                  <MenuItem value={3}>3- Good</MenuItem>
-                                  <MenuItem value={4}>4- Very good</MenuItem>
-                                  <MenuItem value={5}>5- Excellent</MenuItem>
-                                </Select>
-                                <FormHelperText>
-                                  Please select a rating
-                                </FormHelperText>
-                              </FormControl>
-                              <TextField
-                                id="comment"
-                                label="Comments"
-                                placeholder="Leave a comment here"
-                                multiline
-                                fullWidth
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                              />
-                              <Button
-                                disabled={loadingCreateReview}
-                                type="submit"
-                                variant="contained"
-                                sx={{ mt: 2 }}
-                              >
-                                Submit
-                              </Button>
-                              {loadingCreateReview && <LoadingBox></LoadingBox>}
-                            </form>
-
+                                  Submit
+                                </Button>
+                                {loadingCreateReview && (
+                                  <LoadingBox></LoadingBox>
+                                )}
+                              </form>
                             ) : (
                               <MessageBox>
                                 Please <Link to={"/signin"}>Sign In</Link> to

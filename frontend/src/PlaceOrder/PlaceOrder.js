@@ -69,13 +69,13 @@ export default function PlaceOrder() {
         }
       );
 
-      // Update stock for each item in the order
-      // for (const item of cart.cartItems) {
-      //   await axios.put(`/api/products/${item._id}/updateStock`, {
-      //     quantity: item.stoc,
-      //   });
-      // }
-      // Delete cart after placing the order
+      // Reduce stock quantity for each product in the cart
+      for (const item of cart.cartItems) {
+        console.log(item)
+        await axios.put(`/api/products/${item.slug}/reduceStock`, {
+          quantity: item.quantity,
+        });
+      }
       await axios.delete("/api/cart", {
         headers: {
           authorization: `Bearer ${userInfo.token}`,
