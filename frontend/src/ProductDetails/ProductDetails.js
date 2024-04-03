@@ -37,7 +37,6 @@ import { Store } from "../Store";
 import RatingComponent from "../Rating/RatingComponent";
 import { getError } from "../utils";
 
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "REFRESH_PRODUCT":
@@ -61,14 +60,14 @@ const reducer = (state, action) => {
 
 const ProductDetails = () => {
   let reviewsRef = useRef();
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
   const params = useParams();
   const { slug } = params;
+
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
   const [value, setValue] = React.useState(0);
   const [notification, setNotification] = useState(null);
   // const { addToCart, cartItems } = useContext(ShopContext); // Use the ShopContext
-
 
   const [{ loading, error, product, loadingCreateReview }, dispatch] =
     useReducer(reducer, {
@@ -77,17 +76,22 @@ const ProductDetails = () => {
       error: "",
     });
 
+  const [{ ordersLoading, ordersError, orders }, setOrders] = useState({
+    orders: [],
+    ordersLoading: true,
+    ordersError: "",
+  });
 
-    const { state, dispatch: ctxDispatch } = useContext(Store);
-    const {
-      cart: { cartItems },
-  
-      userInfo,
-    } = state;
-  
-    console.log(userInfo);
-    const [user, setUser] = useState(null);
-    console.log(user)
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const {
+    cart: { cartItems },
+
+    userInfo,
+  } = state;
+
+  console.log(userInfo);
+  const [user, setUser] = useState(null);
+  console.log(user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,22 +102,61 @@ const ProductDetails = () => {
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
 
         // Fetch user data
-        if(userInfo){
-          const userResult = await axios.get(`/api/users/profile/${userInfo._id}`,{
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-          });
+        if (userInfo) {
+          const userResult = await axios.get(
+            `/api/users/profile/${userInfo._id}`,
+            {
+              headers: { Authorization: `Bearer ${userInfo.token}` },
+            }
+          );
           setUser(userResult.data);
         }
-
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: err.message });
       }
     };
     fetchData();
-  }, [slug]);
-console.log(user)
-  // const cartItemAmount = cartItems[product.id];
+    const fetchOrders = async () => {
+      try {
+        const { data } = await axios.get("/api/orders/mine", {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+        setOrders({ orders: data, ordersLoading: false, ordersError: "" });
+      } catch (error) {
+        setOrders({
+          orders: [],
+          ordersLoading: false,
+          ordersError: getError(error),
+        });
+      }
+    };
+    if (userInfo) {
+      fetchOrders();
+    }
+  }, [slug, userInfo]);
 
+  console.log(orders);
+  console.log(slug);
+  const isProductInOrders = () => {
+    return orders.some((order) =>
+      order.orderItems.some((item) => item && item.slug === slug)
+    );
+  };
+  // Check if product slug exists in any order item
+  // const isProductInOrders = () => {
+  //   return orders.some((order) =>
+  //     order.orderItems.some((item) => {
+  //       console.log(item)
+  //       if (item && item.slug === slug) {
+  //         console.log('Matching item:', item);
+  //         return true; // Return true if a matching item is found
+  //       }
+  //       return false; // Return false if no matching item is found
+  //     })
+  //   );
+  // };
+
+  // const cartItemAmount = cartItems[product.id];
   const [selectedTab, setSelectedTab] = useState(null);
   const [selectedTabReviews, setSelectedTabReviews] = useState(null);
   const [additionalInfoVisible, setAdditionalInfoVisible] = useState(false);
@@ -135,9 +178,6 @@ console.log(user)
 
     setSelectedTab(null);
   };
-
-
-
 
   const navigate = useNavigate();
   const addToCartHandler = async (product, event) => {
@@ -226,7 +266,7 @@ console.log(user)
         }
       );
 
-      console.log(user)
+      console.log(user);
 
       dispatch({
         type: "CREATE_SUCCESS",
@@ -349,57 +389,84 @@ console.log(user)
                       </ListItem>
                     ))}
                   </List>
-                  <div className="user-info-review">
-                    {userInfo ? (
-                      <form onSubmit={submitHandler}>
-                        <h2>Write a customer review</h2>
 
-                        <FormControl fullWidth>
-                          <InputLabel id="rating-label">Rating</InputLabel>
-                          <Select
-                            labelId="rating-label"
-                            id="rating"
-                            value={rating}
-                            label="Rating"
-                            onChange={(e) => setRating(e.target.value)}
-                          >
-                            <MenuItem value="">
-                              <em>Select...</em>
-                            </MenuItem>
-                            <MenuItem value={1}>1- Poor</MenuItem>
-                            <MenuItem value={2}>2- Fair</MenuItem>
-                            <MenuItem value={3}>3- Good</MenuItem>
-                            <MenuItem value={4}>4- Very good</MenuItem>
-                            <MenuItem value={5}>5- Excellent</MenuItem>
-                          </Select>
-                          <FormHelperText>
-                            Please select a rating
-                          </FormHelperText>
-                        </FormControl>
-                        <TextField
-                          id="comment"
-                          label="Comments"
-                          placeholder="Leave a comment here"
-                          multiline
-                          fullWidth
-                          value={comment}
-                          onChange={(e) => setComment(e.target.value)}
-                        />
-                        <Button
-                          disabled={loadingCreateReview}
-                          type="submit"
-                          variant="contained"
-                          sx={{ mt: 2 }}
-                        >
-                          Submit
-                        </Button>
-                        {loadingCreateReview && <LoadingBox></LoadingBox>}
-                      </form>
-                    ) : (
-                      <MessageBox>
-                        Please <Link to={"/signin"}>Sign In</Link> to write a
-                        review
-                      </MessageBox>
+                  <div className="user-info-review">
+                    {!loading && !error && (
+                      <>
+                        {isProductInOrders() ? (
+                          // Show the review form only if the product is in orders
+                          <div className="user-info-review">
+                            {userInfo ? (
+                              <form onSubmit={submitHandler}>
+                              <h2>Write a customer review</h2>
+
+                              <FormControl fullWidth>
+                                <InputLabel id="rating-label">
+                                  Rating
+                                </InputLabel>
+                                <Select
+                                  labelId="rating-label"
+                                  id="rating"
+                                  value={rating}
+                                  label="Rating"
+                                  onChange={(e) => setRating(e.target.value)}
+                                >
+                                  <MenuItem value="">
+                                    <em>Select...</em>
+                                  </MenuItem>
+                                  <MenuItem value={1}>1- Poor</MenuItem>
+                                  <MenuItem value={2}>2- Fair</MenuItem>
+                                  <MenuItem value={3}>3- Good</MenuItem>
+                                  <MenuItem value={4}>4- Very good</MenuItem>
+                                  <MenuItem value={5}>5- Excellent</MenuItem>
+                                </Select>
+                                <FormHelperText>
+                                  Please select a rating
+                                </FormHelperText>
+                              </FormControl>
+                              <TextField
+                                id="comment"
+                                label="Comments"
+                                placeholder="Leave a comment here"
+                                multiline
+                                fullWidth
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                              />
+                              <Button
+                                disabled={loadingCreateReview}
+                                type="submit"
+                                variant="contained"
+                                sx={{ mt: 2 }}
+                              >
+                                Submit
+                              </Button>
+                              {loadingCreateReview && <LoadingBox></LoadingBox>}
+                            </form>
+
+                            ) : (
+                              <MessageBox>
+                                Please <Link to={"/signin"}>Sign In</Link> to
+                                write a review
+                              </MessageBox>
+                            )}
+                          </div>
+                        ) : (
+                          // Show a message if the product is not in orders
+                          <MessageBox>
+                            {userInfo ? (
+                              // If the user is logged in and the product is not in orders
+                              "This product is not in your orders. You cannot let a review"
+                            ) : (
+                              // If the user is not logged in
+                              <>
+                                Please <Link to={"/signin"}>Sign In</Link> to
+                                write a review
+                              </>
+                            )}
+                          </MessageBox>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
@@ -553,6 +620,25 @@ console.log(user)
           </div>
           {loading && <LoadingBox />}
           {notification && <div className="notification">{notification}</div>}
+          {/* {ordersLoading ? (
+            <LoadingBox />
+          ) : (
+            <>
+              {ordersError ? (
+                <MessageBox severity="error">{ordersError}</MessageBox>
+              ) : (
+                <>
+                  {isProductInOrders() ? (
+                    <MessageBox>
+                      This product is already in your orders.
+                    </MessageBox>
+                  ) : (
+                    <MessageBox>This product is not in your orders.</MessageBox>
+                  )}
+                </>
+              )}
+            </>
+          )} */}
         </>
       )}
     </div>
