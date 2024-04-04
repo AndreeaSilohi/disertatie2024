@@ -3,15 +3,15 @@ import "./Animation.css";
 import React from "react";
 function Animation(){
   return(
-    <div class="bug">
-    <div class="bee1">
-      <div class="eye"></div>
+    <div className="bug">
+    <div className="bee1">
+      <div className="eye"></div>
     </div>
-    <div class="bee2">
-      <div class="wing"></div>
-      <div class="wing2"></div>
+    <div className="bee2">
+      <div className="wing"></div>
+      <div className="wing2"></div>
     </div>
-    <div class="black"></div>
+    <div className="black"></div>
   </div>
  )
 

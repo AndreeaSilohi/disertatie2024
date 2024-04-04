@@ -67,7 +67,7 @@ const ProductDetails = () => {
   const [comment, setComment] = useState("");
   const [value, setValue] = React.useState(0);
   const [notification, setNotification] = useState(null);
-  // const { addToCart, cartItems } = useContext(ShopContext); // Use the ShopContext
+
 
   const [{ loading, error, product, loadingCreateReview }, dispatch] =
     useReducer(reducer, {
@@ -89,9 +89,8 @@ const ProductDetails = () => {
     userInfo,
   } = state;
 
-  // console.log(userInfo);
   const [user, setUser] = useState(null);
-  // console.log(user);
+
 
   useEffect(() => {
     const fetchData = async () => {

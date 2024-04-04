@@ -5,7 +5,7 @@ import Shop from "../OurShop/OurShop";
 
 const MainShop= () => {
   const { state: { userInfo } } = useContext(Store);
-  console.log(userInfo)
+
 
   return (
     <>

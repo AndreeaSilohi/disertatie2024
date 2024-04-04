@@ -4,11 +4,13 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Navbar from "./navbar/Navbar";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <PayPalScriptProvider deferLoading={true}>
+      {/* <Navbar/> */}
       <App />
     </PayPalScriptProvider>
   </React.StrictMode>

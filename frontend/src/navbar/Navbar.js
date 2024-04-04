@@ -33,34 +33,37 @@ function Navbar() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
 
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
-
   const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
   const {
     wishlist: { wishlistItems },
   } = stateW;
   const wishlistCount = wishlistItems.length;
 
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const { data } = await axios.get(`/api/products/categories`);
         setCategories(data);
+
+        if (userInfo) {
+          const userResult = await axios.get(
+            `/api/users/profile/${userInfo._id}`,
+            {
+              headers: { Authorization: `Bearer ${userInfo.token}` },
+            }
+          );
+          setUser(userResult.data);
+        }
       } catch (err) {
         window.alert(getError(err));
       }
     };
     fetchCategories();
   }, []);
-
-  // const [wishlistCount, setWishlistCount] = useState(wishlistItems.length);
-
-  // useEffect(() => {
-  //   // Update the wishlist count whenever wishlist items change
-  //   const newWishlistCount = wishlistItems.length;
-  //   setWishlistCount(newWishlistCount);
-  // }, [wishlistItems]);
 
   const signoutHandler = () => {
     ctxDispatch({ type: "USER_SIGNOUT" });
@@ -85,6 +88,7 @@ function Navbar() {
     setAnchorEl(null);
   };
   let urlProfile;
+
   const handlePhotoUpload = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -97,13 +101,42 @@ function Navbar() {
           authorization: `Bearer ${userInfo.token}`,
         },
       });
+
       urlProfile = data.url;
+      console.log(urlProfile);
       window.alert("Image uploaded successfully");
       console.log("Uploaded photo URL:", data.url);
     } catch (error) {
       console.error("Error uploading photo:", error);
     }
   };
+
+  // const handleSubmit = async () => {
+  //   try {
+  //     const fileInput = document.getElementById("photoInput");
+  //     if (fileInput.files.length === 0) {
+  //       window.alert("Please select a file.");
+  //       return;
+  //     }
+
+  //     const file = fileInput.files[0];
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+
+  //     await axios.put(
+  //       `/api/users/update-photo/${userInfo._id}`,
+  //       { profilePhoto: urlProfile },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${userInfo.token}`,
+  //         },
+  //       }
+  //     );
+  //     window.alert("Image uploaded successfully in database");
+  //   } catch (error) {
+  //     console.error("Error uploading photo:", error);
+  //   }
+  // };
 
   const handleSubmit = async () => {
     try {
@@ -117,25 +150,30 @@ function Navbar() {
       const formData = new FormData();
       formData.append("file", file);
 
-      // const uploadResponse = await axios.post("/api/upload/profile", formData, {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //     Authorization: `Bearer ${userInfo.token}`,
-      //   },
-      // });
+      const { data } = await axios.post("/api/upload/profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      });
 
-      // const uploadedPhotoURL = uploadResponse.data.url;
-
+      const urlProfile = data.url;
+      console.log(urlProfile);
       await axios.put(
         `/api/users/update-photo/${userInfo._id}`,
-        { profilePhoto: urlProfile }, // Include the profilePhoto field in the request body
+        { profilePhoto: urlProfile },
         {
           headers: {
             Authorization: `Bearer ${userInfo.token}`,
           },
         }
       );
-      window.alert("Image uploaded successfully in database");
+      window.alert("Image uploaded successfully");
+
+      // Update user state with the new profile photo URL
+      setUser({ ...user, profilePhoto: urlProfile });
+
+      console.log("Uploaded photo URL:", data.url);
     } catch (error) {
       console.error("Error uploading photo:", error);
     }
@@ -147,9 +185,7 @@ function Navbar() {
         <div className="burger-menu" onClick={toggleSidebar}>
           <List size={28} />
         </div>
-
         <img className="logo" src={logo} alt="Logo" />
-        {/* <SearchBox /> */}
       </div>
 
       <ul className="nav-links">
@@ -203,10 +239,7 @@ function Navbar() {
       <div className="icons">
         <NavLink to="/wishlist">
           <IconButton color="inherit">
-            <Badge
-              badgeContent={wishlistCount} // Total items in the wishlist
-              color="secondary" // You can change the color as needed
-            >
+            <Badge badgeContent={wishlistCount} color="secondary">
               <HeartStraight style={{ color: "black" }} size={30} />
             </Badge>
           </IconButton>
@@ -224,14 +257,28 @@ function Navbar() {
         </NavLink>
         {userInfo ? (
           <div>
-            <IconButton
+            {/* <IconButton
               aria-controls="user-menu"
               aria-haspopup="true"
               onClick={handleMenuOpen}
               color="inherit"
             >
               <UserCircle size={32} />
-            </IconButton>
+            </IconButton> */}
+
+            <img
+              src={user && user.profilePhoto}
+              alt="user"
+              style={{
+                width: "60px",
+                height: "80px",
+                borderRadius: "50%",
+                marginTop: "20px",
+              }}
+              aria-controls="user-menu"
+              onClick={handleMenuOpen}
+            ></img>
+
             <Menu
               id="user-menu"
               anchorEl={anchorEl}
@@ -244,8 +291,8 @@ function Navbar() {
                   type="file"
                   accept="image/*"
                   onChange={handlePhotoUpload}
-                  id="photoInput" // Ensure the id is set to "photoInput"
-                />   
+                  id="photoInput"
+                />
               </MenuItem>
               <button onClick={handleSubmit}>Submit</button>
               <Divider />
@@ -367,11 +414,11 @@ function Navbar() {
               to={`/search?category=${category}`}
               onClick={() => setSidebarIsOpen(false)}
             >
-              {/* Displaying category text */}
+              
               <ListItemText>
                 <Typography variant="body1">{category}</Typography>
               </ListItemText>
-              {/* Add an icon if needed */}
+          
             </ListItem>
           ))}
         </MuiList>
