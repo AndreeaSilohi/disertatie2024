@@ -332,7 +332,7 @@ export default function OrderScreen() {
                       </Grid>
                     </Grid>
                   </ListItem>
-                  {!order.isPaid && (
+                  {!order.isPaid && order.paymentMethod !== 'Cash' &&(
                     <ListItem>
                       {isPending ? (
                         <LoadingBox />
