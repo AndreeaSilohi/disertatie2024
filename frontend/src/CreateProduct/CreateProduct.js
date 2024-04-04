@@ -9,7 +9,6 @@ import {
 import "./CreateProduct.css";
 import { Store } from "../Store";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
 import { getError } from "../utils";
 
 const reducer = (state, action) => {

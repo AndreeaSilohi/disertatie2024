@@ -270,14 +270,14 @@ function Navbar() {
               src={user && user.profilePhoto}
               alt="user"
               style={{
-                width: "60px",
-                height: "80px",
+                width: "30px",
+                height: "30px",
                 borderRadius: "50%",
                 marginTop: "20px",
               }}
               aria-controls="user-menu"
               onClick={handleMenuOpen}
-            ></img>
+            />
 
             <Menu
               id="user-menu"
@@ -414,11 +414,9 @@ function Navbar() {
               to={`/search?category=${category}`}
               onClick={() => setSidebarIsOpen(false)}
             >
-              
               <ListItemText>
                 <Typography variant="body1">{category}</Typography>
               </ListItemText>
-          
             </ListItem>
           ))}
         </MuiList>
