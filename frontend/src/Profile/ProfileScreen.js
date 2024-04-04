@@ -33,33 +33,29 @@ export default function ProfileScreen() {
     loadingUpdate: false,
   });
   const submitHandler = async (e) => {
-    e.preventDefault(); //prevent the refresh of the page
+    e.preventDefault();
+    dispatch({ type: "UPDATE_REQUEST" });
     try {
-      const { data } = await axios.put(
-        "/api/users/profile",
-        {
-          name,
-          email,
-          password,
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
         },
-        {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        }
-      );
-      dispatch({
-        type: "UPDATE_SUCCESS",
-      });
-      ctxDispatch({ type: "USER_SIGNIN", payload: data });
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      window.alert("User updated successfully");
-    } catch (err) {
-      dispatch({
-        type: "FETCH_FAIL",
-      });
-
-      window.alert(getError(err));
+      };
+  
+      const { data } = await axios.put(`/api/users/edit/${userInfo._id}`, {
+        name,
+        email,
+        password,
+      }, config);
+      
+      ctxDispatch({ type: "USER_UPDATE_SUCCESS", payload: data });
+      dispatch({ type: "UPDATE_SUCCESS" });
+    } catch (error) {
+      dispatch({ type: "UPDATE_FAIL" });
+      console.error("Error updating user:", error);
     }
   };
+  
 
   return (
     <div className="container-profile-screen">
@@ -99,7 +95,6 @@ export default function ProfileScreen() {
                 type="password"
                 fullWidth
                 required
-             
                 onChange={(e) => setPassword(e.target.value)}
               />
 
