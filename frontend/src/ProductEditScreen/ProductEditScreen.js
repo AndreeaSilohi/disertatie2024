@@ -134,9 +134,9 @@ export default function ProductEditScreen() {
   };
   return (
     <div className="edit-screen-container">
-      <div>
+      {/* <div>
         <Navbar />
-      </div>
+      </div> */}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (

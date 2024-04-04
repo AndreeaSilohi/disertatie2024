@@ -101,9 +101,9 @@ export default function PlaceOrder() {
   return (
     <div className="container-place-order">
       <div className="image-background">
-        <div className="navbar-place-order">
+        {/* <div className="navbar-place-order">
           <Navbar />
-        </div>
+        </div> */}
         <div className="background-picture">
           <h1 className="header-center">
             <p>Preview Order</p>

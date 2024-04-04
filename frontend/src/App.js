@@ -33,12 +33,14 @@ import OrderListScreen from "./OrderListScreen/OrderListScreen";
 import UserListScreen from "./UserListScreen/UserListScreen";
 import UserEditScreen from "./UserEditScreen/UserEditScreen";
 import MainShop from "./MainShop/MainShop";
+import Navbar from "./navbar/Navbar";
 
 function App() {
   return (
     <WishlistProvider>
       <StoreProvider>
         <Router>
+          <Navbar />
           <div
             style={{
               fontFamily: "sans-serif",

@@ -6,9 +6,9 @@ import React from "react";
 function Contact(){
     return (
         <div className="container">
-            <div className="navbar">
+            {/* <div className="navbar">
             <Navbar />
-            </div>
+            </div> */}
          <img className="background" src={background}></img>
         </div>
     );

@@ -99,9 +99,9 @@ export default function UserListScreen() {
   };
   return (
     <div className="container-order">
-      <div className="navbar-place-order">
+      {/* <div className="navbar-place-order">
         <Navbar />
-      </div>
+      </div> */}
       <div className="order-history-content">
         <h1>Users</h1>
         {loadingDelete && <LoadingBox></LoadingBox>}

@@ -19,9 +19,9 @@ const CarouselComponent = () => {
 
   return (
     <div className="curiosities-container">
-      <div className="curiosities-navbar">
+      {/* <div className="curiosities-navbar">
         <Navbar />
-      </div>
+      </div> */}
       <div className="carusel">
         <Box width="100%">
           <Slider {...settings} style={{ width: "100%" }} autoPlay={true}>

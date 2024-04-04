@@ -28,9 +28,9 @@ const imageArray = [
 function HomePage() {
   return (
     <div className="container-home">
-      <div className="navbarHome">
+      {/* <div className="navbarHome">
         <Navbar />
-      </div>
+      </div> */}
       <header>
         <div className="background-container">
           <div className="overlay-text">

@@ -21,9 +21,9 @@ function About() {
 
   return (
     <div className="container-about">
-      <div className="about-navbar">
+      {/* <div className="about-navbar">
         <Navbar />
-      </div>
+      </div> */}
       <div className="div-photo">
         <img
           className="background-about"

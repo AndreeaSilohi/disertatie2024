@@ -273,9 +273,9 @@ const ProductDetails = () => {
   };
   return (
     <div className="detalii-page">
-      <div className="detalii-navbar">
+      {/* <div className="detalii-navbar">
         <Navbar />
-      </div>
+      </div> */}
 
       {error ? (
         <div style={{ height: "100vh" }}>

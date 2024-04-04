@@ -125,7 +125,8 @@ export default function SearchScreen() {
       };
   
       fetchData();
-    }, [category, order, page, price, query, rating, userInfo.token]);
+    }, [category, order, page, price, query, rating]);
+    //    }, [category, order, page, price, query, rating, userInfo.token]); OLD
 
   const [categories, setCategories] = useState([]);
 
@@ -158,9 +159,9 @@ export default function SearchScreen() {
   
   return (
     <div>
-      <div className={styles.navbarShipping}>
+      {/* <div className={styles.navbarShipping}>
         <Navbar />
-      </div>
+      </div> */}
       <header className="header-shop">
         <div className="background-container-shop">
           <div className="overlay-text-shop">

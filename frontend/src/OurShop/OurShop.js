@@ -43,9 +43,9 @@ function Shop() {
 
   return (
     <div>
-      <div className="ourshop-navbar">
+      {/* <div className="ourshop-navbar">
         <Navbar />
-      </div>
+      </div> */}
       <header className="header-shop">
         <div className="background-container-shop">
           <div className="overlay-text-shop">

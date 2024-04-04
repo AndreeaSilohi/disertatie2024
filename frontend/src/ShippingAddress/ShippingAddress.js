@@ -60,9 +60,9 @@ export default function ShippingAddress() {
   return (
     <div className="container-shipping">
       <div className="image-background">
-        <div className="navbar-shipping">
+        {/* <div className="navbar-shipping">
           <Navbar />
-        </div>
+        </div> */}
         <div className="total">
           <div className="left">
             <img className="left-img" src={miere}></img>

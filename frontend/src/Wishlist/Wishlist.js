@@ -57,9 +57,9 @@ function WishList() {
   return (
     <div className="wrapper-wishlist">
       <div className="wishList">
-        <div className="navbar">
+        {/* <div className="navbar">
           <Navbar />
-        </div>
+        </div> */}
 
         <div className="container-wishlist">
           <img

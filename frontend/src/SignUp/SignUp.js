@@ -48,9 +48,9 @@ function SignUp() {
 
   return (
     <div>
-      <div className="navbar">
+      {/* <div className="navbar">
         <Navbar />
-      </div>
+      </div> */}
       <div className="background">
         <div className="container">
           <input type="checkbox" id="flip" />

@@ -110,9 +110,9 @@ function Cart() {
 
   return (
     <div>
-      <div className="navbar">
+      {/* <div className="navbar">
         <Navbar />
-      </div>
+      </div> */}
       <header className="header-cart">
         <div className="background-container-cart">
           <div className="overlay-text-cart">

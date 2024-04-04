@@ -59,9 +59,9 @@ export default function ProfileScreen() {
 
   return (
     <div className="container-profile-screen">
-      <div className="navbar-shipping">
+      {/* <div className="navbar-shipping">
         <Navbar />
-      </div>
+      </div> */}
 
       <div className="form-profile">
         <form onSubmit={submitHandler}>

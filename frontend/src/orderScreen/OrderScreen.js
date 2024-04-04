@@ -202,9 +202,9 @@ export default function OrderScreen() {
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div className="container-order">
-      <div className="navbar-place-order">
+      {/* <div className="navbar-place-order">
         <Navbar />
-      </div>
+      </div> */}
       <div className="order-content">
         <h1>Order {orderId}</h1>
         <Grid container spacing={3}>

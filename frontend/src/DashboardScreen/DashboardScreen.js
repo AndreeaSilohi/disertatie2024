@@ -62,9 +62,9 @@ export default function DashboardScreen() {
 
   return (
     <div className="container-dashboard">
-      <div className="navbar-shipping">
+      {/* <div className="navbar-shipping">
         <Navbar />
-      </div>
+      </div> */}
       <h1>Dashboard</h1>
       {loading ? (
         <LoadingBox />

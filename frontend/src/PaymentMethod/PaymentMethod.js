@@ -52,9 +52,9 @@ export default function PaymentMethod() {
   return (
     <div className="container-payment">
       <div className="img-background">
-        <div className="navbar-payment">
+        {/* <div className="navbar-payment">
           <Navbar />
-        </div>
+        </div> */}
         <div className="total">
           <div className="left">
             <img className="left-img" src={miere}></img>
