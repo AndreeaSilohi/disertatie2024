@@ -46,6 +46,13 @@ export const mailgun = () =>
     apiKey: process.env.MAILGUN_API_KEY,
     domain: process.env.MAILGUN_DOMAIN,
   });
+
+  export const mailgunForm = () =>
+  mg({
+    apiKey: process.env.MAILGUN_API_KEY_FORM,
+    domain: process.env.MAILGUN_DOMAIN,
+  });
+  
 export const formMessage = (message) => {
   return `<p>${message}</p>`;
 };

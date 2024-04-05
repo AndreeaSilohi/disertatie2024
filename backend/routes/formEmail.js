@@ -1,11 +1,11 @@
 import express from "express";
 import { formMessage } from "../utils.js";
-import { mailgun } from "../utils.js";
+import { mailgunForm } from "../utils.js";
 const emailRouter = express();
 
 emailRouter.post("/", (req, res) => {
   const { subject,email, message } = req.body;
-  mailgun()
+  mailgunForm()
     .messages()
     .send(
       {subject:`${subject}`,
