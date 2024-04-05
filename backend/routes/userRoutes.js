@@ -30,7 +30,6 @@ userRouter.get(
   })
 );
 
-
 // Endpoint to get user by ID
 userRouter.get(
   "/profile/:id",
@@ -44,7 +43,6 @@ userRouter.get(
     }
   })
 );
-
 
 userRouter.put(
   "/:id",
@@ -132,7 +130,7 @@ userRouter.post(
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin, 
+      isAdmin: user.isAdmin,
       token: generateToken(user),
     });
   })
@@ -142,7 +140,7 @@ userRouter.post(
 //   "/profile",
 //   isAuth,
 //   expressAsyncHandler(async (req, res) => {
-  
+
 //     const user = await User.findById(req.user._id);
 //     console.log(user)
 //     if (user) {
@@ -154,7 +152,7 @@ userRouter.post(
 //       }
 
 //       const updatedUser = await user.save();
-    
+
 //       res.send({
 //         _id: updatedUser._id,
 //         name: updatedUser.name,
@@ -173,11 +171,11 @@ userRouter.put(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
-    console.log(user)
+    console.log(user);
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
-      
+
       if (req.body.password) {
         user.password = bcrypt.hashSync(req.body.password, 8);
       }
@@ -195,6 +193,18 @@ userRouter.put(
     }
   })
 );
-
+// Add a new endpoint to fetch user by email
+userRouter.get(
+  "/currentById/:id",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send({ message: "User not found" });
+    }
+  })
+);
 
 export default userRouter;

@@ -71,6 +71,7 @@ function Navbar() {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("shippingAddress");
     localStorage.removeItem("paymentMethod");
+    localStorage.removeItem("profilePhoto");
     window.location.href = "/signin";
   };
 
@@ -88,7 +89,7 @@ function Navbar() {
     setAnchorEl(null);
   };
   let urlProfile;
-
+  
   const handlePhotoUpload = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -104,6 +105,7 @@ function Navbar() {
 
       urlProfile = data.url;
       console.log(urlProfile);
+      localStorage.setItem("profilePhoto", urlProfile);//UPDATEZ LOCAL STORAGE CU FOTOGRAFIA PENTRU CA ACUM AFISEZ FOTOGRAFIA DIN LOCALSTORAGE VEZI SIGN IN 71
       window.alert("Image uploaded successfully");
       console.log("Uploaded photo URL:", data.url);
     } catch (error) {
@@ -111,32 +113,6 @@ function Navbar() {
     }
   };
 
-  // const handleSubmit = async () => {
-  //   try {
-  //     const fileInput = document.getElementById("photoInput");
-  //     if (fileInput.files.length === 0) {
-  //       window.alert("Please select a file.");
-  //       return;
-  //     }
-
-  //     const file = fileInput.files[0];
-  //     const formData = new FormData();
-  //     formData.append("file", file);
-
-  //     await axios.put(
-  //       `/api/users/update-photo/${userInfo._id}`,
-  //       { profilePhoto: urlProfile },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${userInfo.token}`,
-  //         },
-  //       }
-  //     );
-  //     window.alert("Image uploaded successfully in database");
-  //   } catch (error) {
-  //     console.error("Error uploading photo:", error);
-  //   }
-  // };
 
   const handleSubmit = async () => {
     try {
@@ -179,6 +155,7 @@ function Navbar() {
     }
   };
 
+  const profilePhoto = localStorage.getItem("profilePhoto");
   return (
     <div className={sidebarIsOpen ? "navbar active-cont" : "navbar"}>
       <div className="div-logo-menu">
@@ -256,78 +233,146 @@ function Navbar() {
           </Badge>
         </NavLink>
         {userInfo ? (
-          <div>
-            {/* <IconButton
-              aria-controls="user-menu"
-              aria-haspopup="true"
-              onClick={handleMenuOpen}
-              color="inherit"
-            >
-              <UserCircle size={32} />
-            </IconButton> */}
+          <>
+            {userInfo.isAdmin ? (
+              // Render admin menu
+              <div>
+                <IconButton
+                  color="inherit"
+                  aria-controls="admin-menu"
+                  aria-haspopup="true"
+                  onClick={handleMenuOpen}
+                >
+                  <UserCircle style={{ color: "black" }} size={30} />
+                </IconButton>
+                <Menu
+                  id="admin-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
+                  <MenuItem
+                    style={{ display: "flex", alignItems: "center" }}
+                    value={1}
+                    component={Link}
+                    to="/admin/dashboard"
+                    onClick={handleMenuClose}
+                  >
+                    <User size={20} style={{ marginRight: "2px" }} />
+                    <span style={{ marginLeft: "4px" }}>Dashboard</span>
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem
+                    style={{ display: "flex", alignItems: "center" }}
+                    value={2}
+                    component={Link}
+                    to="/admin/products"
+                    onClick={handleMenuClose}
+                  >
+                    <ListBullets size={20} style={{ marginRight: "2px" }} />
+                    <span style={{ marginLeft: "4px" }}>Products</span>
+                  </MenuItem>
 
-            <img
-              src={user && user.profilePhoto}
-              alt="user"
-              style={{
-                width: "30px",
-                height: "30px",
-                borderRadius: "50%",
-                marginTop: "20px",
-              }}
-              aria-controls="user-menu"
-              onClick={handleMenuOpen}
-            />
+                  <Divider />
+                  <MenuItem
+                    style={{ display: "flex", alignItems: "center" }}
+                    value={3}
+                    component={Link}
+                    to="/admin/orders"
+                    onClick={handleMenuClose}
+                  >
+                    <span style={{ marginLeft: "4px" }}>Orders</span>
+                  </MenuItem>
 
-            <Menu
-              id="user-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-            >
-              <MenuItem style={{ display: "flex", alignItems: "center" }}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handlePhotoUpload}
-                  id="photoInput"
+                  <Divider />
+                  <MenuItem
+                    style={{ display: "flex", alignItems: "center" }}
+                    value={4}
+                    component={Link}
+                    to="/admin/users"
+                    onClick={handleMenuClose}
+                  >
+                    <span style={{ marginLeft: "4px" }}>Users</span>
+                  </MenuItem>
+
+                  <Divider />
+                  <MenuItem
+                    onClick={signoutHandler}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <SignOut size={20} style={{ marginRight: "2px" }} />
+                    <span style={{ marginLeft: "4px" }}>Sign out</span>
+                  </MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              // Render user menu
+              <div>
+                <img
+                  src={profilePhoto }
+                  alt="user"
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    marginTop: "20px",
+                  }}
+                  aria-controls="user-menu"
+                  onClick={handleMenuOpen}
                 />
-              </MenuItem>
-              <button onClick={handleSubmit}>Submit</button>
-              <Divider />
-              <MenuItem
-                style={{ display: "flex", alignItems: "center" }}
-                value={1}
-                component={Link}
-                to="/profile"
-                onClick={handleMenuClose}
-              >
-                <User size={20} style={{ marginRight: "2px" }} />
-                <span style={{ marginLeft: "4px" }}>Profile</span>
-              </MenuItem>
-              <Divider />
-              <MenuItem
-                style={{ display: "flex", alignItems: "center" }}
-                value={2}
-                component={Link}
-                to="/orderhistory"
-                onClick={handleMenuClose}
-              >
-                <ListBullets size={20} style={{ marginRight: "2px" }} />
-                <span style={{ marginLeft: "4px" }}>Order history</span>
-              </MenuItem>
 
-              <Divider />
-              <MenuItem
-                onClick={signoutHandler}
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <SignOut size={20} style={{ marginRight: "2px" }} />
-                <span style={{ marginLeft: "4px" }}>Sign out</span>
-              </MenuItem>
-            </Menu>
-          </div>
+                <Menu
+                  id="user-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
+                  <MenuItem style={{ display: "flex", alignItems: "center" }}>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePhotoUpload}
+                      id="photoInput"
+                    />
+                  </MenuItem>
+                  <button onClick={handleSubmit}>Submit</button>
+                  <Divider />
+                  <MenuItem
+                    style={{ display: "flex", alignItems: "center" }}
+                    value={1}
+                    component={Link}
+                    to="/profile"
+                    onClick={handleMenuClose}
+                  >
+                    <User size={20} style={{ marginRight: "2px" }} />
+                    <span style={{ marginLeft: "4px" }}>Profile</span>
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem
+                    style={{ display: "flex", alignItems: "center" }}
+                    value={2}
+                    component={Link}
+                    to="/orderhistory"
+                    onClick={handleMenuClose}
+                  >
+                    <ListBullets size={20} style={{ marginRight: "2px" }} />
+                    <span style={{ marginLeft: "4px" }}>Order history</span>
+                  </MenuItem>
+
+                  <Divider />
+                  <MenuItem
+                    onClick={signoutHandler}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <SignOut size={20} style={{ marginRight: "2px" }} />
+                    <span style={{ marginLeft: "4px" }}>Sign out</span>
+                  </MenuItem>
+                </Menu>
+              </div>
+            )}
+          </>
         ) : (
           <Link to="/signin">
             <SignIn
@@ -340,68 +385,6 @@ function Navbar() {
               }}
             />
           </Link>
-        )}
-        {userInfo && userInfo.isAdmin && (
-          <Menu
-            id="user-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-          >
-            <MenuItem
-              style={{ display: "flex", alignItems: "center" }}
-              value={1}
-              component={Link}
-              to="/admin/dashboard"
-              onClick={handleMenuClose}
-            >
-              <User size={20} style={{ marginRight: "2px" }} />
-              <span style={{ marginLeft: "4px" }}>Dashboard</span>
-            </MenuItem>
-            <Divider />
-            <MenuItem
-              style={{ display: "flex", alignItems: "center" }}
-              value={2}
-              component={Link}
-              to="/admin/products"
-              onClick={handleMenuClose}
-            >
-              <ListBullets size={20} style={{ marginRight: "2px" }} />
-              <span style={{ marginLeft: "4px" }}>Products</span>
-            </MenuItem>
-
-            <Divider />
-            <MenuItem
-              style={{ display: "flex", alignItems: "center" }}
-              value={3}
-              component={Link}
-              to="/admin/orders"
-              onClick={handleMenuClose}
-            >
-              <span style={{ marginLeft: "4px" }}>Orders</span>
-            </MenuItem>
-
-            <Divider />
-            <MenuItem
-              style={{ display: "flex", alignItems: "center" }}
-              value={4}
-              component={Link}
-              to="/admin/users"
-              onClick={handleMenuClose}
-            >
-              <span style={{ marginLeft: "4px" }}>Users</span>
-            </MenuItem>
-
-            <Divider />
-            <MenuItem
-              onClick={signoutHandler}
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <SignOut size={20} style={{ marginRight: "2px" }} />
-              <span style={{ marginLeft: "4px" }}>Sign out</span>
-            </MenuItem>
-          </Menu>
         )}
       </div>
       {/* Sidebar */}
@@ -423,6 +406,5 @@ function Navbar() {
       </Drawer>
     </div>
   );
-}
-
+          }
 export default Navbar;

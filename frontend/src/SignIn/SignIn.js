@@ -53,7 +53,30 @@ function Profile() {
       });
     } catch (error) {
       console.error("Error fetching wishlist items:", error);
+    }
+  };
+
+  const fetchCurrentUserById = async (userId, token) => {
+    try {
+      const response = await Axios.get(
+        `/api/users/currentById/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
   
+      const currentUserData = response.data;
+      console.log(currentUserData)
+      // Store the current user information in localStorage
+      //localStorage.setItem("userInfo", JSON.stringify(currentUserData));
+    //localStorage.setItem("currentUser", JSON.stringify(currentUserData));
+      localStorage.setItem("profilePhoto", currentUserData.profilePhoto);
+      return currentUserData;
+    } catch (error) {
+      console.error("Error fetching current user:", error);
+      return null;
     }
   };
 
@@ -71,6 +94,7 @@ function Profile() {
       localStorage.setItem("userInfo", JSON.stringify({ ...data }));
       Axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
       // Redirect the user to the specified URL or the homepage
+      fetchCurrentUserById(data._id, data.token);
       fetchWishlistItems(data.token);
       fetchcartItems(data.token);
       navigate(redirect || "/");
