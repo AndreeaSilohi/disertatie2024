@@ -1,39 +1,41 @@
-import "./App.css";
-import Footer from "./Footer";
-import HomePage from "./Home/HomePage";
-import About from "./About/About";
-import Contact from "./Contact/Contact";
-import OurShop from "./OurShop/OurShop";
-import Profile from "./SignIn/SignIn";
-import React from "react";
+import './App.css';
+import Footer from './Footer';
+import HomePage from './Home/HomePage';
+import About from './About/About';
+import Contact from './Contact/Contact';
+import OurShop from './OurShop/OurShop';
+import Profile from './SignIn/SignIn';
+import React from 'react';
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ContactForm from "./ContactForm/ContactForm";
-import ProductDetails from "./ProductDetails/ProductDetails";
-import Curiosities from "./Curiosities/Curiosities";
-import Cart from "./Cart/Cart";
-import { StoreProvider } from "./Store";
-import { WishlistProvider } from "./W";
-import WishList from "./Wishlist/Wishlist";
-import Drawer from "./Drawer/Drawer";
-import ShippingAddress from "./ShippingAddress/ShippingAddress";
-import SignUp from "./SignUp/SignUp";
-import PaymentMethod from "./PaymentMethod/PaymentMethod";
-import PlaceOrder from "./PlaceOrder/PlaceOrder";
-import OrderScreen from "./orderScreen/OrderScreen";
-import OrderHistory from "./OrderHistory/OrderHistory";
-import ProfileScreen from "./Profile/ProfileScreen";
-import SearchScreen from "./SearchScreen/SearchScreen";
-import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
-import DashboardScreen from "./DashboardScreen/DashboardScreen";
-import AdminRoute from "./AdminRoute/AdminRoute";
-import ProductListScreen from "./ProductListScreen/ProductListScreen";
-import ProductEditScreen from "./ProductEditScreen/ProductEditScreen";
-import OrderListScreen from "./OrderListScreen/OrderListScreen";
-import UserListScreen from "./UserListScreen/UserListScreen";
-import UserEditScreen from "./UserEditScreen/UserEditScreen";
-import MainShop from "./MainShop/MainShop";
-import Navbar from "./navbar/Navbar";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ContactForm from './ContactForm/ContactForm';
+import ProductDetails from './ProductDetails/ProductDetails';
+import Curiosities from './Curiosities/Curiosities';
+import Cart from './Cart/Cart';
+import { StoreProvider } from './Store';
+import { WishlistProvider } from './W';
+import WishList from './Wishlist/Wishlist';
+import Drawer from './Drawer/Drawer';
+import ShippingAddress from './ShippingAddress/ShippingAddress';
+import SignUp from './SignUp/SignUp';
+import PaymentMethod from './PaymentMethod/PaymentMethod';
+import PlaceOrder from './PlaceOrder/PlaceOrder';
+import OrderScreen from './orderScreen/OrderScreen';
+import OrderHistory from './OrderHistory/OrderHistory';
+import ProfileScreen from './Profile/ProfileScreen';
+import SearchScreen from './SearchScreen/SearchScreen';
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
+import DashboardScreen from './DashboardScreen/DashboardScreen';
+import AdminRoute from './AdminRoute/AdminRoute';
+import ProductListScreen from './ProductListScreen/ProductListScreen';
+import ProductEditScreen from './ProductEditScreen/ProductEditScreen';
+import OrderListScreen from './OrderListScreen/OrderListScreen';
+import UserListScreen from './UserListScreen/UserListScreen';
+import UserEditScreen from './UserEditScreen/UserEditScreen';
+import MainShop from './MainShop/MainShop';
+import Navbar from './navbar/Navbar';
+import ForgotPassword from './ForgotPassword/ForgotPassword';
+import ResetPassword from './ResetPassword/ResetPassword';
 
 function App() {
   return (
@@ -43,9 +45,9 @@ function App() {
           <Navbar />
           <div
             style={{
-              fontFamily: "sans-serif",
-              width: "100%",
-              minHeight: "100vh",
+              fontFamily: 'sans-serif',
+              width: '100%',
+              minHeight: '100vh',
             }}
           >
             <Routes>
@@ -60,6 +62,9 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/signin" element={<Profile />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/forget-password" element={<ForgotPassword />} />
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
+
               <Route
                 path="/profile"
                 element={

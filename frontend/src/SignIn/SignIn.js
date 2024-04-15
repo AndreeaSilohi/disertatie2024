@@ -6,6 +6,7 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Store } from "../Store";
 import { Wishlist } from "../W";
+import ResetPassword from "../ResetPassword/ResetPassword";
 function Profile() {
   const navigate = useNavigate();
   const { search } = useLocation();
@@ -162,9 +163,19 @@ function Profile() {
                         Create an account
                       </Link>
                     </div>
+
+                    <div className="text sign-up-text">
+                      Forgot password?
+                      <Link to={`/forget-password`}>
+                        Reset password
+                      </Link>
+                    </div>
+
+                   
                   </div>
                 </form>
               </div>
+        
             </div>
           </div>
         </div>

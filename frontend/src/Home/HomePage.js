@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Animation from "../Animation/Animation";
 import React from "react";
 import { Divider } from "@mui/material";
+import ResetPassword from "../ResetPassword/ResetPassword";
 
 const imageArray = [
   "https://gardenbio.ro/wp-content/uploads/2016/12/rama-plina-albine-1-1-of-1-e1484691569330.jpg",
@@ -104,6 +105,7 @@ function HomePage() {
             <img key={index} className="image" alt="text" src={imageUrl} />
           ))}
         </div>
+        <ResetPassword/>
       </div>
     </div>
   );
