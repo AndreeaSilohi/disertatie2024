@@ -231,7 +231,7 @@ function Product(props) {
               {product.name}
             </Typography>
             <Typography className="typografy-price" color="text.secondary">
-              Pret: {product.price} de lei
+               {product.price} de lei
             </Typography>
           </CardContent>
 

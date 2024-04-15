@@ -1,10 +1,5 @@
 import Navbar from "../navbar/Navbar";
 import "./Home.css";
-// import Card from "@mui/material/Card";
-// import CardContent from "@mui/material/CardContent";
-// import CardMedia from "@mui/material/CardMedia";
-// import Typography from "@mui/material/Typography";
-// import { CardActionArea } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Animation from "../Animation/Animation";
@@ -34,13 +29,13 @@ function HomePage() {
       <header>
         <div className="background-container">
           <div className="overlay-text">
-            <h1 className="h1-title">Din pasiune pentru natura si sanatate!</h1>
+            Din pasiune pentru natura si sanatate!
           </div>
         </div>
       </header>
 
       <div className="about-products">
-        <h4>Despre produsele noastre</h4>
+        <p className="about-products-p">Despre produsele noastre</p>
         <div className="grid-container">
           <div className="grid-item">
             Stupul este o intreaga farmacie. Produsele apicole sunt necesare

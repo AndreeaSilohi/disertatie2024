@@ -3,48 +3,41 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900");
 @import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 .background-container {
   position: relative;
-  z-index: 1; /* Ensure the background container is above other elements */
+  /* z-index: 1; */
 }
 
-.h1-title {
-  margin-top: 50%;
+.p-title {
   font-size: 2rem;
   white-space: nowrap;
+  font-weight: 600;
+}
+
+.overlay-text {
+  position: absolute;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  top: 250px;
+  left: 500px;
+  color: white;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+  white-space: nowrap;
+  font-weight: 600;
+  /* font-family: "Source Sans Pro", sans-serif; */
 }
 
 header {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(https://images.unsplash.com/photo-1586779161657-041097557546?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    url(https://i.postimg.cc/66MQJ4Qw/Whats-App-Image-2024-04-05-at-22-59-35-d0e805f9-1.png);
   background-size: cover;
-  height: 100vh;
-}
-
-.container-home {
-  position: relative;
-}
-
-.navbarHome {
-  position: absolute;
-  top: 1%;
-  left: 2%;
-  right: 2%;
-  height: 100px;
-  display: flex;
-  align-items: center;
-}
-
-.overlay-text {
-  margin-top: 200px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  text-align: center;
-  font-family: "Source Sans Pro", sans-serif;
+  height: 500px;
+  /* height: 100%; */
 }
 
 /* .white-background {
@@ -60,19 +53,19 @@ header {
   width: 400px;
 }
 
-/* .cards {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 20px;
-} */
-
 .about-products {
+  padding-top: 40px;
   padding-bottom: 20px;
   text-align: center;
-  font-family: "Catamaran", sans-serif !important;
+  font-family: "Montserrat", sans-serif;
   font-size: 35px;
-  color: rgb(215, 126, 43);
- 
+  font-weight: 300;
+  /* color: rgb(215, 126, 43); */
+}
+
+.about-products-p {
+  font-weight: 400;
+  color: #ffa500;
 }
 
 .grid-container {
