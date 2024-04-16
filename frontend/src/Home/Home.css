@@ -1,8 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Whisper&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@1,200&family=Pacifico&family=Whisper&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900");
-@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 .background-container {
@@ -18,9 +14,6 @@
 
 .overlay-text {
   position: absolute;
-  /* top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
   top: 250px;
   left: 500px;
   color: white;
@@ -29,7 +22,7 @@
   font-size: 2rem;
   white-space: nowrap;
   font-weight: 600;
-  /* font-family: "Source Sans Pro", sans-serif; */
+
 }
 
 header {
@@ -37,17 +30,8 @@ header {
     url(https://i.postimg.cc/66MQJ4Qw/Whats-App-Image-2024-04-05-at-22-59-35-d0e805f9-1.png);
   background-size: cover;
   height: 500px;
-  /* height: 100%; */
 }
 
-/* .white-background {
-  padding-bottom: 20px;
-  background-color: #eeebdd;
-  text-align: center;
-  font-family: "Catamaran", sans-serif !important;
-  font-size: 35px;
-  color: rgb(215, 126, 43);
-} */
 .card-media {
   height: 400px;
   width: 400px;
@@ -99,14 +83,14 @@ header {
 .new-products {
   padding-bottom: 20px;
   text-align: center;
-  font-family: "Catamaran", sans-serif !important;
+  font-family: "Montserrat", sans-serif;
   font-size: 40px;
   color: rgb(215, 126, 43);
   /* background-color: rgb(193, 192, 250); */
 }
 
 .text-new-product {
-  font-family: "Catamaran", sans-serif !important;
+  font-family: "Montserrat", sans-serif;
 }
 
 .photos {
@@ -121,18 +105,18 @@ header {
 }
 .carousel {
   margin-top: 40px;
-  background-color: #fff7ec;
+  /* background-color: #fff7ec; */
   width: 100%;
 }
 .text-photos {
   padding-top: 20px;
   padding-left: 20px;
   text-align: center;
-  font-family: "Catamaran", sans-serif !important;
+  font-family: "Montserrat", sans-serif;;
 }
 
 .contact {
-  font-family: "Catamaran", sans-serif !important;
+  font-family: "Montserrat", sans-serif;
 }
 /* .MuiButton-outlinedPrimary {
   color: rgb(148, 88, 88) !important;

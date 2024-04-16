@@ -231,7 +231,7 @@ export default function PlaceOrder() {
                           <Grid container justifyContent="center">
                             <Button
                               sx={{
-                                fontFamily: "Catamaran, sans-serif",
+                                fontFamily: "Montserrat, sans-serif",
                                 fontSize: "15px",
                                 textTransform: "uppercase",
                                 color: "black",

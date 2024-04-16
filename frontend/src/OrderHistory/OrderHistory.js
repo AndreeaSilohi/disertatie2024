@@ -110,7 +110,7 @@ export default function OrderHistory() {
                           navigate(`/order/${order._id}`);
                         }}
                         sx={{
-                          fontFamily: "Catamaran, sans-serif",
+                          fontFamily: "Montserrat, sans-serif",
                           fontSize: "15px",
                           textTransform: "uppercase",
                           color: "black",

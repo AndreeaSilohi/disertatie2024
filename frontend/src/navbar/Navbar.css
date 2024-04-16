@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap");
+
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 .navbar {
@@ -10,7 +10,6 @@
   font-weight: 900;
   background-color: rgba(255, 255, 255, 0.9);
   z-index: 99;
-  /* font-family: "Ubuntu Condensed", sans-serif; */
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   text-transform: uppercase;
@@ -74,4 +73,14 @@
   display: flex;
   align-items: center;
   padding:50px;
+}
+
+
+.icons-wishlist-cart{
+  margin-right:60px;
+}
+
+.span-menu{
+  font-family: "Montserrat", sans-serif !important;
+ margin-left: 4px;
 }

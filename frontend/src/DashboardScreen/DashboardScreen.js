@@ -62,10 +62,7 @@ export default function DashboardScreen() {
 
   return (
     <div className="container-dashboard">
-      {/* <div className="navbar-shipping">
-        <Navbar />
-      </div> */}
-      <h1>Dashboard</h1>
+      <h1>Monitorizare vânzări</h1>
       {loading ? (
         <LoadingBox />
       ) : error ? (

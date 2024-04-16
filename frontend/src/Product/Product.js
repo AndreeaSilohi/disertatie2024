@@ -258,7 +258,7 @@ function Product(props) {
                 variant="contained"
                 style={{ backgroundColor: "#d77e2b" }}
                 sx={{
-                  fontFamily: "Catamaran, sans-serif",
+                  fontFamily: "Montserrat, sans-serif",
                   fontSize: "15px",
                   textTransform: "uppercase",
                 }}

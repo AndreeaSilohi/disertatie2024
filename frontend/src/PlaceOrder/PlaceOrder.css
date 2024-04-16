@@ -27,7 +27,7 @@
 }
 
 .header-center {
-  font-family: "Catamaran", sans-serif !important;
+  font-family: "Montserrat", sans-serif;
   font-size: 32px;
   font-weight: 500;
   padding: 10px;
@@ -35,12 +35,4 @@
   justify-content: center;
 }
 
-.checkout-steps{
-  
 
-}
-
-.center-all{
-    /* display: flex;
-    align-items: center; */
-}

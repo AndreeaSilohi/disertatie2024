@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu+Condensed&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap');
 .wishlist-content {
   display: flex;
@@ -43,7 +43,7 @@
 .wishlist-stock {
   width: 150px;
   display: flex;
-  font-family: "Catamaran", sans-serif;
+  font-family: "Montserrat", sans-serif;
   justify-content: center;
   align-items: center;
 }
@@ -54,7 +54,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Catamaran", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 16px;
 }

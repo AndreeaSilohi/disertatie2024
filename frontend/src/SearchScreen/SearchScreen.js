@@ -159,9 +159,6 @@ export default function SearchScreen() {
   
   return (
     <div>
-      {/* <div className={styles.navbarShipping}>
-        <Navbar />
-      </div> */}
       <header className="header-shop">
         <div className="background-container-shop">
           <div className="overlay-text-shop">
@@ -177,35 +174,35 @@ export default function SearchScreen() {
           <Grid item className="text-end">
             Sort by{" "}
             <Select
-              sx={{ fontFamily: "Catamaran, sans-serif", fontSize: "17px" }}
+              sx={{ fontFamily: "Montserrat, sans-serif", fontSize: "17px" }}
               value={order}
               onChange={(e) => {
                 navigate(getFilterUrl({ order: e.target.value }));
               }}
             >
               <MenuItem
-                sx={{ fontFamily: "Catamaran, sans-serif", fontSize: "17px" }}
+                sx={{ fontFamily: "Montserrat, sans-serif", fontSize: "17px" }}
                 className="sort-select"
                 value="newest"
               >
                 Newest Arrivals
               </MenuItem>
               <MenuItem
-                sx={{ fontFamily: "Catamaran, sans-serif", fontSize: "17px" }}
+                sx={{ fontFamily: "Montserrat, sans-serif", fontSize: "17px" }}
                 className="sort-select"
                 value="lowest"
               >
                 Price: Low to High
               </MenuItem>
               <MenuItem
-                sx={{ fontFamily: "Catamaran, sans-serif", fontSize: "17px" }}
+                sx={{ fontFamily: "Montserrat, sans-serif", fontSize: "17px" }}
                 className="sort-select"
                 value="highest"
               >
                 Price: High to Low
               </MenuItem>
               <MenuItem
-                sx={{ fontFamily: "Catamaran, sans-serif", fontSize: "17px" }}
+                sx={{ fontFamily: "Montserrat, sans-serif", fontSize: "17px" }}
                 className="sort-select"
                 value="toprated"
               >

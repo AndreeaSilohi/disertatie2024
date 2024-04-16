@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import Navbar from "../navbar/Navbar";
-import "./About.css";
+import React, { useState, useEffect } from 'react';
+import Navbar from '../navbar/Navbar';
+import './About.css';
 
 function About() {
   const [scrollOpacity, setScrollOpacity] = useState(1);
@@ -12,29 +12,25 @@ function About() {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
-    <div className="container-about">
-      {/* <div className="about-navbar">
-        <Navbar />
-      </div> */}
-      <div className="div-photo">
-        <img
-          className="background-about"
-          src="https://cdn.pixabay.com/photo/2019/02/28/22/44/bee-colonies-4027005_1280.jpg"
-          alt="Background"
-          style={{ opacity: scrollOpacity }}
-        />
-      </div>
+    <div>
+      <header className="header-about">
+        <div className="container-about">
+          <div className="div-photo">
+            <h1 className="h1-title-about">Despre noi</h1>
+          </div>
+        </div>
+      </header>
+
       <div className="about-us">
         <div className="text-title">
-          <h2>Despre noi</h2>
           <div className="about-us-grid-item">
             După o experiență de peste 30 de ani în creșterea albinelor și
             folosirea produselor stupului în scopul prevenirii sau tratării unor

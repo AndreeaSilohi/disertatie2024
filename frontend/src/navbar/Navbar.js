@@ -1,22 +1,26 @@
-import * as React from "react";
-import { useContext, useState, useEffect } from "react";
-import { NavLink, Link } from "react-router-dom";
+import * as React from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import {
   ShoppingCart,
   HeartStraight,
   List,
-  UserCircle,
-  User,
   ListBullets,
   SignOut,
   SignIn,
-} from "phosphor-react";
-import "./Navbar.css";
-import logo from "../assets/logo.png";
-import Badge from "@mui/material/Badge";
-import { Store } from "../Store";
-import MenuItem from "@mui/material/MenuItem";
-import { Wishlist } from "../W";
+  UploadSimple,
+  UserCircle,
+  Users,
+  ChartLine
+} from 'phosphor-react';
+import './Navbar.css';
+import logo from '../assets/logo.png';
+import Badge from '@mui/material/Badge';
+import { Store } from '../Store';
+import MenuItem from '@mui/material/MenuItem';
+import Avatar from '@mui/material/Avatar';
+import { Wishlist } from '../W';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import {
   Divider,
   Drawer,
@@ -26,9 +30,21 @@ import {
   Typography,
   IconButton,
   Menu,
-} from "@mui/material";
-import { getError } from "../utils";
-import axios from "axios";
+} from '@mui/material';
+import { getError } from '../utils';
+import axios from 'axios';
+import { styled } from '@mui/material/styles';
+
+const LightTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+}));
 function Navbar() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
@@ -66,13 +82,13 @@ function Navbar() {
   }, []);
 
   const signoutHandler = () => {
-    ctxDispatch({ type: "USER_SIGNOUT" });
-    ctxDispatchW({ type: "USER_SIGNOUT" });
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("shippingAddress");
-    localStorage.removeItem("paymentMethod");
-    localStorage.removeItem("profilePhoto");
-    window.location.href = "/signin";
+    ctxDispatch({ type: 'USER_SIGNOUT' });
+    ctxDispatchW({ type: 'USER_SIGNOUT' });
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAddress');
+    localStorage.removeItem('paymentMethod');
+    localStorage.removeItem('profilePhoto');
+    window.location.href = '/signin';
   };
 
   const toggleSidebar = () => {
@@ -89,52 +105,21 @@ function Navbar() {
     setAnchorEl(null);
   };
   let urlProfile;
-  
+
   const handlePhotoUpload = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append('file', file);
 
     try {
-      const { data } = await axios.post("/api/upload/profile", formData, {
+      const { data } = await axios.post('/api/upload/profile', formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
           authorization: `Bearer ${userInfo.token}`,
         },
       });
 
       urlProfile = data.url;
-      console.log(urlProfile);
-      localStorage.setItem("profilePhoto", urlProfile);//UPDATEZ LOCAL STORAGE CU FOTOGRAFIA PENTRU CA ACUM AFISEZ FOTOGRAFIA DIN LOCALSTORAGE VEZI SIGN IN 71
-      window.alert("Image uploaded successfully");
-      console.log("Uploaded photo URL:", data.url);
-    } catch (error) {
-      console.error("Error uploading photo:", error);
-    }
-  };
-
-
-  const handleSubmit = async () => {
-    try {
-      const fileInput = document.getElementById("photoInput");
-      if (fileInput.files.length === 0) {
-        window.alert("Please select a file.");
-        return;
-      }
-
-      const file = fileInput.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const { data } = await axios.post("/api/upload/profile", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          authorization: `Bearer ${userInfo.token}`,
-        },
-      });
-
-      const urlProfile = data.url;
-      console.log(urlProfile);
       await axios.put(
         `/api/users/update-photo/${userInfo._id}`,
         { profilePhoto: urlProfile },
@@ -144,20 +129,61 @@ function Navbar() {
           },
         }
       );
-      window.alert("Image uploaded successfully");
-
+      window.alert('Image uploaded successfully');
       // Update user state with the new profile photo URL
       setUser({ ...user, profilePhoto: urlProfile });
+      localStorage.setItem('profilePhoto', urlProfile); //UPDATEZ LOCAL STORAGE CU FOTOGRAFIA PENTRU CA ACUM AFISEZ FOTOGRAFIA DIN LOCALSTORAGE VEZI SIGN IN 71
 
-      console.log("Uploaded photo URL:", data.url);
+      console.log('Uploaded photo URL:', data.url);
     } catch (error) {
-      console.error("Error uploading photo:", error);
+      console.error('Error uploading photo:', error);
     }
   };
 
-  const profilePhoto = localStorage.getItem("profilePhoto");
+  // const handleSubmit = async () => {
+  //   try {
+  //     const fileInput = document.getElementById('photoInput');
+  //     if (fileInput.files.length === 0) {
+  //       window.alert('Please select a file.');
+  //       return;
+  //     }
+
+  //     const file = fileInput.files[0];
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+
+  //     const { data } = await axios.post('/api/upload/profile', formData, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //         authorization: `Bearer ${userInfo.token}`,
+  //       },
+  //     });
+
+  //     const urlProfile = data.url;
+  //     console.log(urlProfile);
+  //     await axios.put(
+  //       `/api/users/update-photo/${userInfo._id}`,
+  //       { profilePhoto: urlProfile },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${userInfo.token}`,
+  //         },
+  //       }
+  //     );
+  //     window.alert('Image uploaded successfully');
+
+  //     // Update user state with the new profile photo URL
+  //     setUser({ ...user, profilePhoto: urlProfile });
+
+  //     console.log('Uploaded photo URL:', data.url);
+  //   } catch (error) {
+  //     console.error('Error uploading photo:', error);
+  //   }
+  // };
+
+  const profilePhoto = localStorage.getItem('profilePhoto');
   return (
-    <div className={sidebarIsOpen ? "navbar active-cont" : "navbar"}>
+    <div className={sidebarIsOpen ? 'navbar active-cont' : 'navbar'}>
       <div className="div-logo-menu">
         <div className="burger-menu" onClick={toggleSidebar}>
           <List size={28} />
@@ -171,7 +197,7 @@ function Navbar() {
           exact
           className="nav-link"
           style={({ isActive }) =>
-            isActive ? { color: "orange" } : { color: "black" }
+            isActive ? { color: 'orange' } : { color: 'black' }
           }
         >
           Acasa
@@ -180,7 +206,7 @@ function Navbar() {
           to="/shop"
           className="nav-link"
           style={({ isActive }) =>
-            isActive ? { color: "orange" } : { color: "black" }
+            isActive ? { color: 'orange' } : { color: 'black' }
           }
         >
           Magazinul nostru
@@ -189,7 +215,7 @@ function Navbar() {
           to="/about"
           className="nav-link"
           style={({ isActive }) =>
-            isActive ? { color: "orange" } : { color: "black" }
+            isActive ? { color: 'orange' } : { color: 'black' }
           }
         >
           Despre
@@ -198,7 +224,7 @@ function Navbar() {
           to="/curiosities"
           className="nav-link"
           style={({ isActive }) =>
-            isActive ? { color: "orange" } : { color: "black" }
+            isActive ? { color: 'orange' } : { color: 'black' }
           }
         >
           Curiozitati
@@ -207,185 +233,210 @@ function Navbar() {
           to="/contact-form"
           className="nav-link"
           style={({ isActive }) =>
-            isActive ? { color: "orange" } : { color: "black" }
+            isActive ? { color: 'orange' } : { color: 'black' }
           }
         >
           Contact
         </NavLink>
       </ul>
       <div className="icons">
-        <NavLink to="/wishlist">
-          <IconButton color="inherit">
-            <Badge badgeContent={wishlistCount} color="secondary">
-              <HeartStraight style={{ color: "black" }} size={30} />
-            </Badge>
-          </IconButton>
-        </NavLink>
+        <div className="icons-wishlist-cart">
+          <NavLink to="/wishlist">
+            <IconButton color="inherit">
+              <Badge badgeContent={wishlistCount} color="success">
+                <HeartStraight style={{ color: 'black' }} size={30} />
+              </Badge>
+            </IconButton>
+          </NavLink>
 
-        <NavLink to="/cart">
-          <Badge
-            badgeContent={cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-            color="secondary" //daca vreau cu rosu trebuie sa fie error
-          >
-            {/* <IconButton color="inherit"> */}
-            <ShoppingCart style={{ color: "black" }} size={30} />
-            {/* </IconButton> */}
-          </Badge>
-        </NavLink>
-        {userInfo ? (
-          <>
-            {userInfo.isAdmin ? (
-              // Render admin menu
-              <div>
-                <IconButton
-                  color="inherit"
-                  aria-controls="admin-menu"
-                  aria-haspopup="true"
-                  onClick={handleMenuOpen}
-                >
-                  <UserCircle style={{ color: "black" }} size={30} />
-                </IconButton>
-                <Menu
-                  id="admin-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleMenuClose}
-                >
-                  <MenuItem
-                    style={{ display: "flex", alignItems: "center" }}
-                    value={1}
-                    component={Link}
-                    to="/admin/dashboard"
-                    onClick={handleMenuClose}
+          <NavLink to="/cart">
+            <IconButton color="inherit">
+              <Badge
+                badgeContent={cart.cartItems.reduce(
+                  (a, c) => a + c.quantity,
+                  0
+                )}
+                color="success"
+              >
+                <ShoppingCart style={{ color: 'black' }} size={30} />
+              </Badge>
+            </IconButton>
+          </NavLink>
+        </div>
+        <div className="icons-profile">
+          {userInfo ? (
+            <>
+              {userInfo.isAdmin ? (
+                // Render admin menu
+                <div className='admin-menu'>
+                  <LightTooltip title="Panou de administrare">
+                    <IconButton
+                      color="inherit"
+                      aria-controls="admin-menu"
+                      aria-haspopup="true"
+                      onClick={handleMenuOpen}
+                    >
+                      <UserCircle style={{ color: 'black' }} size={40} />
+                    </IconButton>
+                  </LightTooltip>
+                  <Menu
+                    id="admin-menu"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
                   >
-                    <User size={20} style={{ marginRight: "2px" }} />
-                    <span style={{ marginLeft: "4px" }}>Dashboard</span>
-                  </MenuItem>
-                  <Divider />
-                  <MenuItem
-                    style={{ display: "flex", alignItems: "center" }}
-                    value={2}
-                    component={Link}
-                    to="/admin/products"
-                    onClick={handleMenuClose}
-                  >
-                    <ListBullets size={20} style={{ marginRight: "2px" }} />
-                    <span style={{ marginLeft: "4px" }}>Products</span>
-                  </MenuItem>
+                    <MenuItem
+                      style={{ display: 'flex', alignItems: 'center' }}
+                      value={1}
+                      component={Link}
+                      to="/admin/dashboard"
+                      onClick={handleMenuClose}
+                    >
+                      <ChartLine size={20} style={{ marginRight: '2px' }}/>
+                     
+                      <span className="span-menu">Monitorizare vânzări</span>
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem
+                      style={{ display: 'flex', alignItems: 'center' }}
+                      value={2}
+                      component={Link}
+                      to="/admin/products"
+                      onClick={handleMenuClose}
+                    >
+                      <ListBullets size={20} style={{ marginRight: '2px' }} />
+                      <span className="span-menu" >Produse</span>
+                    </MenuItem>
 
-                  <Divider />
-                  <MenuItem
-                    style={{ display: "flex", alignItems: "center" }}
-                    value={3}
-                    component={Link}
-                    to="/admin/orders"
-                    onClick={handleMenuClose}
-                  >
-                    <span style={{ marginLeft: "4px" }}>Orders</span>
-                  </MenuItem>
+                    <Divider />
+                    <MenuItem
+                      style={{ display: 'flex', alignItems: 'center' }}
+                      value={3}
+                      component={Link}
+                      to="/admin/orders"
+                      onClick={handleMenuClose}
+                    >
+                      <List size={20} style={{ marginRight: '2px' }} />
+                      <span className="span-menu" >Comenzi</span>
+                    </MenuItem>
 
-                  <Divider />
-                  <MenuItem
-                    style={{ display: "flex", alignItems: "center" }}
-                    value={4}
-                    component={Link}
-                    to="/admin/users"
-                    onClick={handleMenuClose}
-                  >
-                    <span style={{ marginLeft: "4px" }}>Users</span>
-                  </MenuItem>
+                    <Divider />
+                    <MenuItem
+                      style={{ display: 'flex', alignItems: 'center' }}
+                      value={4}
+                      component={Link}
+                      to="/admin/users"
+                      onClick={handleMenuClose}
+                    >
+                      <Users size={20} style={{ marginRight: '2px' }} />
+                      <span className="span-menu" >Utilizatori</span>
+                    </MenuItem>
 
-                  <Divider />
-                  <MenuItem
-                    onClick={signoutHandler}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <SignOut size={20} style={{ marginRight: "2px" }} />
-                    <span style={{ marginLeft: "4px" }}>Sign out</span>
-                  </MenuItem>
-                </Menu>
-              </div>
-            ) : (
-              // Render user menu
-              <div>
-                <img
-                  src={profilePhoto }
-                  alt="user"
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "50%",
-                    marginTop: "20px",
-                  }}
-                  aria-controls="user-menu"
-                  onClick={handleMenuOpen}
-                />
-
-                <Menu
-                  id="user-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleMenuClose}
-                >
-                  <MenuItem style={{ display: "flex", alignItems: "center" }}>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handlePhotoUpload}
-                      id="photoInput"
+                    <Divider />
+                    <MenuItem
+                      onClick={signoutHandler}
+                      style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                      <SignOut size={20} style={{ marginRight: '2px' }} />
+                      <span className="span-menu">Delogare</span>
+                    </MenuItem>
+                  </Menu>
+                </div>
+              ) : (
+                // Render user menu
+                <div className="user-menu">
+                  <LightTooltip title="Contul meu">
+                    <Avatar
+                      alt="user"
+                      src={profilePhoto}
+                      sx={{ width: 40, height: 40 }}
+                      onClick={handleMenuOpen}
                     />
-                  </MenuItem>
-                  <button onClick={handleSubmit}>Submit</button>
-                  <Divider />
-                  <MenuItem
-                    style={{ display: "flex", alignItems: "center" }}
-                    value={1}
-                    component={Link}
-                    to="/profile"
-                    onClick={handleMenuClose}
+                  </LightTooltip>
+                  <Menu
+                    id="user-menu"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
                   >
-                    <User size={20} style={{ marginRight: "2px" }} />
-                    <span style={{ marginLeft: "4px" }}>Profile</span>
-                  </MenuItem>
-                  <Divider />
-                  <MenuItem
-                    style={{ display: "flex", alignItems: "center" }}
-                    value={2}
-                    component={Link}
-                    to="/orderhistory"
-                    onClick={handleMenuClose}
-                  >
-                    <ListBullets size={20} style={{ marginRight: "2px" }} />
-                    <span style={{ marginLeft: "4px" }}>Order history</span>
-                  </MenuItem>
+                    <MenuItem style={{ display: 'flex', alignItems: 'center' }}>
+                      <label htmlFor="photoInput" style={{ cursor: 'pointer' }}>
+                        <UploadSimple
+                          size={20}
+                          style={{ marginRight: '2px' }}
+                        />
+                        <span className="span-menu" >
+                          Încarcă fotografie
+                        </span>
+                      </label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        id="photoInput"
+                        style={{ display: 'none' }}
+                      />
+                    </MenuItem>
 
-                  <Divider />
-                  <MenuItem
-                    onClick={signoutHandler}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <SignOut size={20} style={{ marginRight: "2px" }} />
-                    <span style={{ marginLeft: "4px" }}>Sign out</span>
-                  </MenuItem>
-                </Menu>
-              </div>
-            )}
-          </>
-        ) : (
-          <Link to="/signin">
-            <SignIn
-              size={32}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginRight: "2px",
-                color: "black",
-              }}
-            />
-          </Link>
-        )}
+                    <Divider />
+                    <MenuItem
+                      style={{ display: 'flex', alignItems: 'center' }}
+                      value={1}
+                      component={Link}
+                      to="/profile"
+                      onClick={handleMenuClose}
+                    >
+                      <UserCircle size={25} style={{ marginRight: '5px' }} />
+                      <span className="span-menu" >Profilul meu</span>
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem
+                      style={{ display: 'flex', alignItems: 'center' }}
+                      value={2}
+                      component={Link}
+                      to="/orderhistory"
+                      onClick={handleMenuClose}
+                    >
+                      <ListBullets size={20} style={{ marginRight: '2px' }} />
+                      <span className="span-menu" >Istoric comenzi</span>
+                    </MenuItem>
+
+                    <Divider />
+                    <MenuItem
+                      onClick={signoutHandler}
+                      style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                      <SignOut size={20} style={{ marginRight: '2px' }} />
+                      <span className="span-menu" >Delogare</span>
+                    </MenuItem>
+                  </Menu>
+                </div>
+              )}
+            </>
+          ) : (
+            <Link to="/signin">
+              <SignIn
+                size={32}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginRight: '2px',
+                  color: 'black',
+                }}
+              />
+            </Link>
+          )}
+        </div>
       </div>
       {/* Sidebar */}
       <Drawer anchor="left" open={sidebarIsOpen} onClose={toggleSidebar}>
@@ -406,5 +457,5 @@ function Navbar() {
       </Drawer>
     </div>
   );
-          }
+}
 export default Navbar;

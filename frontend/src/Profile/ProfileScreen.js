@@ -115,7 +115,7 @@ export default function ProfileScreen() {
                   type="submit"
                   style={{
                     backgroundColor: "#F08000",
-                    fontFamily: "Catamaran, sans-serif",
+                    fontFamily: "Montserrat, sans-serif",
                     fontSize: "15px",
                     width: "200px",
                   }}

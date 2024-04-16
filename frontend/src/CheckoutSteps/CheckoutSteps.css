@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 
 .checkout-steps {
@@ -23,12 +23,12 @@
 
 .active-step {
   background-color: 	#353935 !important;
-  font-family: "Catamaran", sans-serif !important;
+  font-family: "Montserrat", sans-serif;
   color: #fff;
 }
 
 
 .step{
-  font-family: "Catamaran", sans-serif !important;
+  font-family: "Montserrat", sans-serif;
   /* font-size: 45px; */
 }

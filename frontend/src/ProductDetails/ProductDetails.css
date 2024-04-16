@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 .detalii-page {
   background-color:white;
@@ -6,7 +6,7 @@
 }
 .detalii-titlu {
   font-size: 20px;
-  font-family: "Catamaran", sans-serif;
+  font-family: "Montserrat", sans-serif;
   display: flex;
   justify-content: flex-start;
 }
@@ -41,7 +41,7 @@
   color: rgb(215, 126, 43);
   display: flex;
   margin-left: 20px;
-  font-family: "Catamaran", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .detalii-quantity {
@@ -77,7 +77,7 @@
 }
 
 .accordion-detalii {
-  font-family: "Catamaran", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .group-btn {
@@ -90,7 +90,7 @@
 }
 
 .info-review {
-  font-family: "Catamaran", sans-serif;
+  font-family: "Montserrat", sans-serif;
   color: "black";
   font-size: 20px;
   cursor: pointer;
@@ -118,7 +118,7 @@
 
 .status{
   padding: 14px;
-  font-family: "Catamaran", sans-serif;
+  font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
 }
 .in-stock {
@@ -132,7 +132,7 @@
 }
 
 .review-form{
-    font-family: "Catamaran", sans-serif !important;
+    font-family: "Montserrat", sans-serif !important;
     padding: 40px;
 }
 

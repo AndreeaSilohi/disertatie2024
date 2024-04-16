@@ -326,7 +326,7 @@ const ProductDetails = () => {
                 <div className="additional-info">
                   <Typography
                     sx={{
-                      fontFamily: "Catamaran, sans-serif",
+                      fontFamily: "Montserrat, sans-serif",
                       fontSize: "20px",
                       lineHeight: "25px",
                       padding: "60px",
@@ -350,7 +350,7 @@ const ProductDetails = () => {
                       <ListItem key={review._id}>
                         <ListItemText
                           sx={{
-                            fontFamily: "Catamaran, sans-serif !important",
+                            fontFamily: "Montserrat, sans-serif !important",
                             fontSize: "25px",
                           }}
                         >
@@ -467,7 +467,7 @@ const ProductDetails = () => {
                   variant="h4"
                   component="div"
                   sx={{
-                    fontFamily: "Catamaran, sans-serif",
+                    fontFamily: "Montserrat, sans-serif",
                     fontSize: "35px",
                     textTransform: "uppercase",
                   }}
@@ -479,7 +479,7 @@ const ProductDetails = () => {
                 <Typography
                   variant="h4"
                   sx={{
-                    fontFamily: "Catamaran, sans-serif",
+                    fontFamily: "Montserrat, sans-serif",
                     fontSize: "35px",
                     textTransform: "uppercase",
                   }}
@@ -498,7 +498,7 @@ const ProductDetails = () => {
                 <Box
                   sx={{
                     "& > legend": { mt: 2 },
-                    fontFamily: "Catamaran, sans-serif",
+                    fontFamily: "Montserrat, sans-serif",
                   }}
                 >
                   {/* <Rating
@@ -521,7 +521,7 @@ const ProductDetails = () => {
                   <Button
                     variant="contained"
                     sx={{
-                      fontFamily: "Catamaran, sans-serif",
+                      fontFamily: "Montserrat, sans-serif",
                       fontSize: "15px",
                       textTransform: "uppercase",
                     }}
@@ -534,7 +534,7 @@ const ProductDetails = () => {
                     variant="contained"
                     style={{ backgroundColor: "#d77e2b" }}
                     sx={{
-                      fontFamily: "Catamaran, sans-serif",
+                      fontFamily: "Montserrat, sans-serif",
                       fontSize: "15px",
                       textTransform: "uppercase",
                     }}

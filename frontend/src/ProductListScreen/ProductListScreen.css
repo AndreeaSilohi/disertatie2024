@@ -1,7 +1,41 @@
-.pagination{
-    margin-top: 20px;
-    text-decoration: none;
-    color: #333;
-    padding: 5px 10px;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+.table-container {
+    position: relative;
+  }
+.pagination {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
+  }
+.container-products {
+    font-family: "Montserrat", sans-serif;
+    background-color: whitesmoke;
+    color:rgba(0, 0, 0, 0.608);
+}
+.table-container{
+    font-family: "Montserrat", sans-serif !important;
+}
+.table-cell{
+    font-family: "Montserrat", sans-serif !important;
+}
+
+.title-products{
+    padding:40px;
+}
+
+.button-actions{
+    font-family: "Montserrat", sans-serif !important;
+}
+
+.button-create{
+    font-family: "Montserrat", sans-serif !important;
+   
+    color: #064420;
+}
+
+.div-button-create{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end; 
 }

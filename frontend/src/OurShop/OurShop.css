@@ -1,5 +1,6 @@
 /* OurShop.css */
-@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 .notification {
   position: fixed;
   top: 10px;
@@ -24,7 +25,8 @@
   margin-top: 50%;
   font-size: 3rem;
   white-space: nowrap;
-  font-family: "Catamaran", sans-serif;
+  font-family: "Montserrat", sans-serif;
+
 }
 
 .overlay-text-shop {
@@ -35,7 +37,8 @@
   transform: translate(-50%, -50%);
   color: white;
   text-align: center;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Montserrat", sans-serif;
+
 }
 
 .shop {
@@ -50,17 +53,6 @@
 .cards-shop {
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: center; */
-
   gap: 20px;
 }
 
-/* .ourshop-navbar{
-  background-color: blue;
-  position: fixed;
-  left: 2%;
-  right: 2%;
-  display: flex;
-  align-items: center;
- 
-} */
