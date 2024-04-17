@@ -1,20 +1,45 @@
 import React, { useContext, useEffect, useReducer } from "react";
+import './UserListScreen.css';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
 import { Store } from "../Store";
 import { getError } from "../utils";
+import LoadingBox from "../LoadingBox";
+import MessageBox from "../MessageBox";
 import axios from "axios";
-import Navbar from "../navbar/Navbar";
 import {
   Button,
   Table,
   TableBody,
   TableCell,
+  tableCellClasses,
   TableContainer,
   TableHead,
   TableRow,
 } from "@mui/material";
-import LoadingBox from "../LoadingBox";
-import MessageBox from "../MessageBox";
+
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: 'rgb(215, 126, 43)',
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -97,57 +122,85 @@ export default function UserListScreen() {
       }
     }
   };
+
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
   return (
-    <div className="container-order">
-      {/* <div className="navbar-place-order">
-        <Navbar />
-      </div> */}
+    <div className="container-users">
       <div className="order-history-content">
-        <h1>Users</h1>
+        <h1 className="title-users">Utilizatori</h1>
         {loadingDelete && <LoadingBox></LoadingBox>}
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
           <MessageBox>{error}</MessageBox>
         ) : (
-          <TableContainer>
-            <Table>
+          <TableContainer  className="table-container" component={Paper}>
+            <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>NAME</TableCell>
-                  <TableCell>EMAIL</TableCell>
-                  <TableCell>IS ADMIN</TableCell>
-                  <TableCell>ACTIONS</TableCell>
+                  {/* <StyledTableCell>ID</StyledTableCell> */}
+                  <StyledTableCell align="center" className="table-cell">NUME</StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">EMAIL</StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">ADMIN</StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">ACȚIUNI</StyledTableCell>
                 </TableRow>
               </TableHead>
 
               <TableBody>
                 {users.map((user) => (
-                  <TableRow key={user._id}>
-                    <TableCell>{user._id}</TableCell>
-                    <TableCell>{user.name}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.isAdmin ? "YES" : "NO"}</TableCell>
+                  <StyledTableRow key={user._id}>
+                    {/* <StyledTableCell>{user._id}</StyledTableCell> */}
+                    <StyledTableCell align="center" className="table-cell">{user.name}</StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">{user.email}</StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">{user.isAdmin ? "YES" : "NO"}</StyledTableCell>
 
-                    <TableCell>
+                    <StyledTableCell align="center" className="table-cell">
                       <Button
+                       className="button-actions"
                         type="button"
-                        variant="light"
+                        variant="outlined"
+                        style={{
+                          color: 'rgb(215, 126, 43)',
+                          borderColor: 'rgb(215, 126, 43)',
+                          padding: '5px',
+                          marginRight: '5px',
+                          fontSize: '12px',
+                        }}
                         onClick={() => navigate(`/admin/user/${user._id}`)}
                       >
                         Edit
                       </Button>
                       &nbsp;
                       <Button
+                      className="button-actions"
                         type="button"
-                        variant="light"
+                        variant="outlined"
+                        style={{
+                          color: 'red',
+                          borderColor: 'red',
+                          padding: '5px',
+                          marginRight: '5px',
+                          fontSize: '12px',
+                        }}
                         onClick={() => deleteHandler(user)}
                       >
                         Delete
                       </Button>
-                    </TableCell>
-                  </TableRow>
+                    </StyledTableCell>
+                  </StyledTableRow>
                 ))}
               </TableBody>
             </Table>

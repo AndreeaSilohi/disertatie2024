@@ -32,9 +32,6 @@ function ContactForm() {
   };
   return (
     <div>
-      {/* <div className="contact-form-navbar">
-        <Navbar />
-      </div> */}
       <div className="container-form">
         <div className="div-img">
           <img

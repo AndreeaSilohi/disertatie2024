@@ -1,0 +1,23 @@
+.table-container {
+    position: relative;
+  }
+
+  .title-users {
+    padding: 40px;
+    text-align: center;
+
+  }
+  .table-container {
+    font-family: 'Montserrat', sans-serif !important;
+  }
+  .table-cell {
+    font-family: 'Montserrat', sans-serif !important;
+  }
+  .button-actions {
+    font-family: 'Montserrat', sans-serif !important;
+  }
+  .container-users {
+    font-family: 'Montserrat', sans-serif;
+    background-color: whitesmoke;
+    color: rgba(0, 0, 0, 0.608);
+  }

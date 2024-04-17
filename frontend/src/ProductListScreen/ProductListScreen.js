@@ -18,9 +18,10 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
+ 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: 'rgb(215, 126, 43)',
@@ -30,17 +31,16 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }));
-
+ 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
 }));
-
+ 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -63,15 +63,13 @@ const reducer = (state, action) => {
         loadingCreate: false,
         openCreateDialog: false,
       };
-
     case 'ADD_PRODUCT':
       return {
         ...state,
-        products: [action.payload, ...state.products], // Add the new product to the beginning of the products array
+        products: [action.payload, ...state.products],
       };
     case 'CREATE_FAIL':
       return { ...state, loadingCreate: false };
-
     case 'DELETE_REQUEST':
       return { ...state, loadingDelete: true, successDelete: false };
     case 'DELETE_SUCCESS':
@@ -84,17 +82,15 @@ const reducer = (state, action) => {
       return { ...state, loadingDelete: false, successDelete: false };
     case 'DELETE_RESET':
       return { ...state, loadingDelete: false, successDelete: false };
-
     case 'OPEN_CREATE_DIALOG':
-      return { ...state, openCreateDialog: true }; // Open the create product dialog
+      return { ...state, openCreateDialog: true };
     case 'CLOSE_CREATE_DIALOG':
-      return { ...state, openCreateDialog: false }; // Close the create product dialog
-
+      return { ...state, openCreateDialog: false };
     default:
       return state;
   }
 };
-
+ 
 export default function ProductListScreen() {
   const [
     {
@@ -117,37 +113,37 @@ export default function ProductListScreen() {
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const page = sp.get('page') || 1;
-
   const { state } = useContext(Store);
   const { userInfo } = state;
-
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`/api/products/admin?page=${page} `, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
-      } catch (err) {}
+      } catch (err) {
+        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+      }
     };
-
+ 
     if (successDelete) {
       dispatch({ type: 'DELETE_RESET' });
     } else {
       fetchData();
     }
   }, [page, userInfo, successDelete]);
-
+ 
   const createHandler = () => {
     dispatch({ type: 'CREATE_REQUEST' });
-    dispatch({ type: 'OPEN_CREATE_DIALOG' }); // Open the create product dialog
+    dispatch({ type: 'OPEN_CREATE_DIALOG' });
   };
-
+ 
   const closeCreateDialog = () => {
-    dispatch({ type: 'CLOSE_CREATE_DIALOG' }); // Close the create product dialog
+    dispatch({ type: 'CLOSE_CREATE_DIALOG' });
   };
-
+ 
   const submitCreateForm = async (productData) => {
     try {
       const { data } = await axios.post('/api/products', productData, {
@@ -162,27 +158,32 @@ export default function ProductListScreen() {
       dispatch({ type: 'CREATE_FAIL' });
     }
   };
-
+ 
   const deleteHandler = async (product) => {
-    if (window.confirm('Are you sure to delete?')) {
-      try {
-        await axios.delete(`/api/products/${product._id}`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
-        window.alert('Product delete successfully');
-        dispatch({ type: 'DELETE_SUCCESS' });
-      } catch (err) {
-        window.alert(getError(error));
-        dispatch({
-          type: 'DELETE_FAIL',
-        });
-      }
+    setDeletingProduct(product);
+    setConfirmDelete(true);
+  };
+ 
+  const deleteProduct = async () => {
+    try {
+      await axios.delete(`/api/products/${deletingProduct._id}`, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
+      // window.alert('Product deleted successfully');
+      dispatch({ type: 'DELETE_SUCCESS' });
+    } catch (err) {
+      window.alert(getError(err));
+      dispatch({ type: 'DELETE_FAIL' });
     }
   };
+ 
+  const [confirmDelete, setConfirmDelete] = React.useState(false);
+  const [deletingProduct, setDeletingProduct] = React.useState(null);
+ 
   return (
     <div className="container-products">
       <div className="order-history-content">
-        <h1 className="title-products">Produse</h1>
+        <h1 className="title-products">Products</h1>
         <div className="div-button-create">
           <Button
             className="button-create"
@@ -197,10 +198,9 @@ export default function ProductListScreen() {
             Create product
           </Button>
         </div>
-        {/* {loadingCreate && <LoadingBox></LoadingBox>} */}
-        {loadingDelete && <LoadingBox></LoadingBox>}
+        {loadingDelete && <LoadingBox />}
         {loading ? (
-          <LoadingBox></LoadingBox>
+          <LoadingBox />
         ) : error ? (
           <MessageBox>{error}</MessageBox>
         ) : (
@@ -208,54 +208,36 @@ export default function ProductListScreen() {
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  {/* <StyledTableCell className="table-cell">ID</StyledTableCell> */}
-                  <StyledTableCell align="center" className="table-cell">
-                    NUME
-                  </StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">
-                    PREȚ
-                  </StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">
-                    CATEGORIE
-                  </StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">
-                    ACȚIUNI
-                  </StyledTableCell>
+                  <StyledTableCell align="center">Name</StyledTableCell>
+                  <StyledTableCell align="center">Price</StyledTableCell>
+                  <StyledTableCell align="center">Category</StyledTableCell>
+                  <StyledTableCell align="center">Actions</StyledTableCell>
                 </TableRow>
               </TableHead>
-
+ 
               <TableBody>
                 {products.map((product) => (
                   <StyledTableRow key={product._id}>
-                    {/* <StyledTableCell>{product._id}</StyledTableCell> */}
-                    <StyledTableCell align="center" className="table-cell">
-                      {String(product.name)}
-                    </StyledTableCell>
-                    <StyledTableCell align="center" className="table-cell">
-                      {product.price}&nbsp;lei
-                    </StyledTableCell>
-                    <StyledTableCell align="center" className="table-cell">
-                      {product.category}
-                    </StyledTableCell>
-                    <StyledTableCell align="center" className="table-cell">
+                    <StyledTableCell align="center">{String(product.name)}</StyledTableCell>
+                    <StyledTableCell align="center">{product.price}&nbsp;lei</StyledTableCell>
+                    <StyledTableCell align="center">{product.category}</StyledTableCell>
+                    <StyledTableCell align="center">
                       <Button
                         className="button-actions"
                         variant="outlined"
                         type="button"
                         style={{
-                          color: '#2E7D32',
-                          borderColor: '#2E7D32',
+                          color: 'rgb(215, 126, 43)',
+                          borderColor: 'rgb(215, 126, 43)',
                           padding: '5px',
                           marginRight: '5px',
                           fontSize: '12px',
                         }}
-                        onClick={() =>
-                          navigate(`/admin/product/${product._id}`)
-                        }
+                        onClick={() => navigate(`/admin/product/${product._id}`)}
                       >
                         Edit
                       </Button>
-
+ 
                       <Button
                         className="button-actions"
                         variant="outlined"
@@ -276,7 +258,7 @@ export default function ProductListScreen() {
                 ))}
               </TableBody>
             </Table>
-
+ 
             <div className="pagination">
               {[...Array(pages).keys()].map((x) => (
                 <Link
@@ -295,7 +277,20 @@ export default function ProductListScreen() {
           onClose={closeCreateDialog}
           onSubmit={submitCreateForm}
         />
+        <ConfirmationDialog
+          open={confirmDelete}
+          onClose={() => setConfirmDelete(false)}
+          onConfirm={() => {
+            setConfirmDelete(false);
+            if (deletingProduct) {
+              deleteProduct(deletingProduct);
+            }
+          }}
+          title="Confirm Delete"
+          message="Are you sure you want to delete this product?"
+        />
       </div>
     </div>
   );
 }
+ 

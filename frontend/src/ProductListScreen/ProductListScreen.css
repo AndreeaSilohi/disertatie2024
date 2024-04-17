@@ -1,41 +1,41 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 .table-container {
-    position: relative;
-  }
+  position: relative;
+}
 .pagination {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-
-  }
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
 .container-products {
-    font-family: "Montserrat", sans-serif;
-    background-color: whitesmoke;
-    color:rgba(0, 0, 0, 0.608);
+  font-family: 'Montserrat', sans-serif;
+  background-color: whitesmoke;
+  color: rgba(0, 0, 0, 0.608);
 }
-.table-container{
-    font-family: "Montserrat", sans-serif !important;
+.table-container {
+  font-family: 'Montserrat', sans-serif !important;
 }
-.table-cell{
-    font-family: "Montserrat", sans-serif !important;
-}
-
-.title-products{
-    padding:40px;
+.table-cell {
+  font-family: 'Montserrat', sans-serif !important;
 }
 
-.button-actions{
-    font-family: "Montserrat", sans-serif !important;
+.title-products {
+  padding: 40px;
+  text-align: center;
 }
 
-.button-create{
-    font-family: "Montserrat", sans-serif !important;
-   
-    color: #064420;
+.button-actions {
+  font-family: 'Montserrat', sans-serif !important;
 }
 
-.div-button-create{
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: flex-end; 
+.button-create {
+  font-family: 'Montserrat', sans-serif !important;
+
+  color: #064420;
+}
+
+.div-button-create {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
 }

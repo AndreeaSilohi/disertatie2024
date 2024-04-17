@@ -13,12 +13,11 @@
 
 .contact-image {
   margin-top: 20px;
-}
-
-.contact-image {
   height: 800px;
   margin-left: 40px;
 }
+
+
 
 .contact-image:hover {
   transform: scale(1.05);
@@ -41,6 +40,6 @@
   align-items: center;
   padding: 20px 20px 20px 10px;
 }
-contact-form-navbar {
+/* contact-form-navbar {
   width: 100%;
-}
+} */

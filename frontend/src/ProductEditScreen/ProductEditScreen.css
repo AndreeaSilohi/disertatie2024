@@ -1,22 +1,52 @@
-/* .product-edit-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-h1 {
-    text-align: center;
+.edit-screen-container {
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  display: flex;
+  margin-bottom: 40px;
+  background-color: whitesmoke;
 }
 
+.form-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 40px;
+  padding-bottom: 40px;
+}
 .form-product-edit-content {
-  width: 60%;
+  /* padding-top: 10px; */
+  width: 90%;
+  max-width: 700px; /* Adjust as needed */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .form-alignment {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
+.product-edit-image:hover {
+  transform: scale(1.05);
+}
+.product-edit-image {
+  padding-top: 50px;
+  padding-left: 20px;
+  height: 850px;
+}
+
+.typography-title{
+  font-family: 'Montserrat', sans-serif;
+}
+/* ProductEditScreen.css */
+.snackbar-container {
+  position: fixed;
+  bottom: 20px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(220%);
+  z-index: 9999;
+}
+

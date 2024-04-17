@@ -7,7 +7,10 @@ import {
   DialogTitle,
   TextField,
   DialogContentText,
+  Typography,
+  Box,
 } from '@mui/material';
+
 import { Upload } from 'phosphor-react';
 import './CreateProduct.css';
 import { Store } from '../Store';
@@ -96,39 +99,36 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
   };
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle
+      {/* <DialogTitle
         sx={{
           fontFamily: 'Montserrat, sans-serif',
           fontSize: '25px',
-          paddingTop: '30px',
+          paddingTop: '40px',
           display: 'flex',
           justifyContent: 'center',
         }}
       >
         Creare produs
-      </DialogTitle>
+      </DialogTitle> */}
 
       <div className="dialog-content">
         <DialogContent>
           <TextField
-            autoFocus
-            margin="dense"
+            fullWidth
+            margin="normal"
             id="name"
             name="name"
             label="Denumire produs"
-            fullWidth
-            variant="standard"
             value={productData.name}
             onChange={handleChange}
             sx={{ fontFamily: 'Montserrat, sans-serif' }}
           />
           <TextField
-            margin="dense"
+            fullWidth
+            margin="normal"
             id="slug"
             name="slug"
             label="Slug"
-            fullWidth
-            variant="standard"
             value={productData.slug}
             onChange={handleChange}
           />
@@ -168,7 +168,6 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
             name="image"
             label="Link imagine"
             fullWidth
-            variant="standard"
             value={productData.image}
             onChange={handleChange}
           />
@@ -180,7 +179,6 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
             label="Preț"
             type="number"
             fullWidth
-            variant="standard"
             inputProps={{ min: 1 }}
             value={productData.price}
             onChange={handleChange}
@@ -191,7 +189,6 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
             name="category"
             label="Categorie"
             fullWidth
-            variant="standard"
             value={productData.category}
             onChange={handleChange}
           />
@@ -203,7 +200,6 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
             type="number"
             inputProps={{ min: 0 }}
             fullWidth
-            variant="standard"
             value={productData.stoc}
             onChange={handleChange}
           />
@@ -213,7 +209,6 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
             name="rating"
             label="Rating"
             fullWidth
-            variant="standard"
             value={productData.rating}
             onChange={handleChange}
           />
@@ -223,7 +218,6 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
             name="numReviews"
             label="Număr de recenzii"
             fullWidth
-            variant="standard"
             value={productData.numReviews}
             onChange={handleChange}
           />
@@ -233,7 +227,6 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
             name="description"
             label="Descriere"
             fullWidth
-            variant="standard"
             value={productData.description}
             onChange={handleChange}
           />
@@ -243,7 +236,6 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
             name="additional"
             label="Informații adiționale"
             fullWidth
-            variant="standard"
             value={productData.additional}
             onChange={handleChange}
           />
@@ -337,41 +329,39 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
         </DialogContent>
       </div>
 
-      
-        <div className='dialog-actions'>
+      <div className="dialog-actions">
         <DialogActions>
-        <Button
-          type="button"
-          variant="outlined"
-          onClick={onClose}
-          sx={{
-            color: 'red',
-            borderColor: 'red',
-            padding: '5px',
-            marginRight: '5px',
-            fontSize: '15px',
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          className="button-actions"
-          type="button"
-          variant="outlined"
-          onClick={handleSubmit}
-          sx={{
-            color: '#2E7D32',
-            borderColor: '#2E7D32',
-            padding: '5px',
-            marginRight: '5px',
-            fontSize: '15px',
-          }}
-        >
-          Save
-        </Button>
-      </DialogActions>
-        </div>
-        
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={onClose}
+            sx={{
+              color: 'red',
+              borderColor: 'red',
+              padding: '5px',
+              marginRight: '5px',
+              fontSize: '15px',
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            className="button-actions"
+            type="button"
+            variant="outlined"
+            onClick={handleSubmit}
+            sx={{
+              color: '#2E7D32',
+              borderColor: '#2E7D32',
+              padding: '5px',
+              marginRight: '5px',
+              fontSize: '15px',
+            }}
+          >
+            Save
+          </Button>
+        </DialogActions>
+      </div>
     </Dialog>
   );
 };

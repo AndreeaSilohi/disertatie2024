@@ -1,4 +1,5 @@
 import React from 'react';
+import './OrderListScreen.css';
 import { getError } from '../utils';
 import Navbar from '../navbar/Navbar';
 import LoadingBox from '../LoadingBox';
@@ -123,16 +124,16 @@ export default function OrderListScreen() {
     }
   };
   return (
-    <div className="container-order">
+    <div className="container-orders">
       <div className="order-history-content">
-        <h1>Orders</h1>
+        <h1 className="title-orders">Comenzi</h1>
         {loadingDelete && <LoadingBox></LoadingBox>}
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
           <MessageBox>{error}</MessageBox>
         ) : (
-          <TableContainer component={Paper}>
+          <TableContainer className="table-container" component={Paper}>
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
@@ -164,33 +165,49 @@ export default function OrderListScreen() {
                 {orders.map((order) => (
                   <StyledTableRow key={order._id}>
                     {/* <StyledTableCell>{order._id}</StyledTableCell> */}
-                    <StyledTableCell align="center">
+                    <StyledTableCell align="center" className="table-cell">
                       {order.user ? order.user.name : 'DELETED USER'}
                     </StyledTableCell>
-                    <StyledTableCell align="center">
+                    <StyledTableCell align="center" className="table-cell">
                       {order.createdAt.substring(0, 10)}
                     </StyledTableCell>
-                    <StyledTableCell align="center">
+                    <StyledTableCell align="center" className="table-cell">
                       {order.totalPrice}&nbsp;lei
                     </StyledTableCell>
-                    <StyledTableCell align="center">
+                    <StyledTableCell align="center" className="table-cell">
                       {order.isPaid ? order.paidAt.substring(0, 10) : 'No'}
                     </StyledTableCell>
-                    <StyledTableCell align="center">
+                    <StyledTableCell align="center" className="table-cell">
                       {order.isDelivered ? order.deliveredAt : 'No'}
                     </StyledTableCell>
-                    <StyledTableCell align="center">
+                    <StyledTableCell align="center" className="table-cell">
                       <Button
+                        className="button-actions"
                         type="button"
-                        variant="light"
+                        variant="outlined"
+                        style={{
+                          color: 'rgb(215, 126, 43)',
+                          borderColor: 'rgb(215, 126, 43)',
+                          padding: '5px',
+                          marginRight: '5px',
+                          fontSize: '12px',
+                        }}
                         onClick={() => navigate(`/order/${order._id}`)}
                       >
                         Details
                       </Button>
                       &nbsp;
                       <Button
+                        className="button-actions"
                         type="button"
-                        variant="light"
+                        variant="outlined"
+                        style={{
+                          color: 'red',
+                          borderColor: 'red',
+                          padding: '5px',
+                          marginRight: '5px',
+                          fontSize: '12px',
+                        }}
                         onClick={() => deleteHandler(order)}
                       >
                         Delete
