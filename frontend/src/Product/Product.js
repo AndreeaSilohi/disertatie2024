@@ -156,7 +156,7 @@ function Product(props) {
       console.log(!isInWishlist);
       setIsInWishlist(true);
       ctxDispatchW({ type: "CREATE_SUCCESS" });
-      setNotification(`${item.name} was added to the wishlist`);
+      setNotification(`${item.name} a fost adăugat în lista de favorite`);
       setTimeout(() => {
         setNotification(null);
       }, 3000);
@@ -184,7 +184,7 @@ function Product(props) {
       ctxDispatchW({ type: "WISHLIST_REMOVE_ITEM", payload: item });
       setIsInWishlist(false); // Set isInWishlist to false locally
       ctxDispatchW({ type: "CREATE_SUCCESS" });
-      setNotification(`${item.name} was removed from the wishlist`);
+      setNotification(`${item.name}a fost eliminat din lista de favorite`);
       setTimeout(() => {
         setNotification(null);
       }, 3000);

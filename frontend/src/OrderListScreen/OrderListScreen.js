@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './OrderListScreen.css';
 import { getError } from '../utils';
-import Navbar from '../navbar/Navbar';
 import LoadingBox from '../LoadingBox';
 import MessageBox from '../MessageBox';
 import { Store } from '../Store';
@@ -18,7 +17,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useReducer } from 'react';
-
+import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
@@ -68,6 +67,10 @@ const reducer = (state, action) => {
 
     case 'DELETE_RESET':
       return { ...state, loadingDelete: false, successDelete: false };
+    case 'OPEN_MODAL':
+      return { ...state, modalOpen: true, selectedOrder: action.payload };
+    case 'CLOSE_MODAL':
+      return { ...state, modalOpen: false, selectedOrder: null };
 
     default:
       return state;
@@ -78,12 +81,27 @@ export default function OrderListScreen() {
   const { state } = useContext(Store);
   const { userInfo } = state;
 
-  const [{ loading, error, orders, loadingDelete, successDelete }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: '',
-    });
+  const [
+    {
+      loading,
+      error,
+      orders,
+      loadingDelete,
+      openCreateDialog,
+      successDelete,
+      selectedOrder,
+    },
+    dispatch,
+  ] = useReducer(reducer, {
+    loading: true,
+    error: '',
+    selectedOrder: null,
+    openCreateDialog: false,
+  });
 
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deletingOrder, setDeletingOrder] = useState(null);
+  const [notification, setNotification] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -106,23 +124,36 @@ export default function OrderListScreen() {
     }
   }, [userInfo, successDelete]);
 
+  const deleteOrder = async (order) => {
+    setDeletingOrder(order);
+    setConfirmDelete(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deletingOrder) {
+      deleteHandler(deletingOrder);
+    }
+    setConfirmDelete(false);
+  };
   const deleteHandler = async (order) => {
-    if (window.confirm('Are you sure to delete?')) {
-      try {
-        dispatch({ type: 'DELETE_REQUEST' });
-        await axios.delete(`/api/orders/${order._id}`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
-        window.alert('Order deleted successfully');
-        dispatch({ type: 'DELETE_SUCCESS' });
-      } catch (err) {
-        window.alert(getError(error));
-        dispatch({
-          type: 'DELETE_FAIL',
-        });
-      }
+    try {
+      dispatch({ type: 'DELETE_REQUEST' });
+      await axios.delete(`/api/orders/${order._id}`, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
+      dispatch({ type: 'DELETE_SUCCESS' });
+      setNotification('Comanda a fost ștearsă cu succes');
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+    } catch (err) {
+      window.alert(getError(error));
+      dispatch({
+        type: 'DELETE_FAIL',
+      });
     }
   };
+
   return (
     <div className="container-orders">
       <div className="order-history-content">
@@ -194,7 +225,7 @@ export default function OrderListScreen() {
                         }}
                         onClick={() => navigate(`/order/${order._id}`)}
                       >
-                        Details
+                        Detalii
                       </Button>
                       &nbsp;
                       <Button
@@ -208,9 +239,9 @@ export default function OrderListScreen() {
                           marginRight: '5px',
                           fontSize: '12px',
                         }}
-                        onClick={() => deleteHandler(order)}
+                        onClick={() => deleteOrder(order)}
                       >
-                        Delete
+                       Șterge
                       </Button>
                     </StyledTableCell>
                   </StyledTableRow>
@@ -218,6 +249,16 @@ export default function OrderListScreen() {
               </TableBody>
             </Table>
           </TableContainer>
+        )}
+        <ConfirmationDialog
+          open={confirmDelete}
+          onClose={() => setConfirmDelete(false)}
+          onConfirm={handleConfirmDelete}
+          title="Confirmare ștergere"
+          message="Ești sigur că vrei să ștergi această comandă?"
+        />
+        {notification && (
+          <div className="notification-delete-order">{notification}</div>
         )}
       </div>
     </div>

@@ -118,7 +118,7 @@ export default function OrderHistory() {
                           width: "100px",
                         }}
                       >
-                        Details
+                        Detalii
                       </Button>
                     </TableCell>
                   </TableRow>

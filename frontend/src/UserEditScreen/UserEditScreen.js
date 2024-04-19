@@ -1,32 +1,29 @@
-import React, {
-  useContext,
-  useReducer,
-  useState,
-  useEffect,
-} from "react";
-import { useNavigate ,useParams} from "react-router-dom";
-import { Store } from "../Store";
-import { getError } from "../utils";
-import axios from "axios";
-import Navbar from "../navbar/Navbar";
-import LoadingBox from "../LoadingBox";
-import MessageBox from "../MessageBox";
-import { Button } from "@mui/material";
+import React, { useContext, useReducer, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Store } from '../Store';
+import { getError } from '../utils';
+import axios from 'axios';
+import LoadingBox from '../LoadingBox';
+import MessageBox from '../MessageBox';
+import { Button, TextField, Typography, Box } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import './UserEditScreen.css';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "FETCH_REQUEST":
+    case 'FETCH_REQUEST':
       return { ...state, loading: true };
-    case "FETCH_SUCCESS":
+    case 'FETCH_SUCCESS':
       return { ...state, loading: false };
-    case "FETCH_FAIL":
+    case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
 
-    case "UPDATE_REQUEST":
+    case 'UPDATE_REQUEST':
       return { ...state, loadingUpdate: true };
-    case "UPDATE_SUCCESS":
-      return { ...state, loadingUpdate: false };
-    case "UPDATE_FAIL":
+    case 'UPDATE_SUCCESS':
+      return { ...state, loadingUpdate: false, openToast: true };
+    case 'UPDATE_FAIL':
       return { ...state, loadingUpdate: false };
 
     default:
@@ -34,37 +31,50 @@ const reducer = (state, action) => {
   }
 };
 
-export default function UserEditScreen() {
-  const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
-    loading: true,
-    error: "",
-  });
+export default function UserEditScreen({ userId, onClose, updateUserList }) {
+  // const [openToast, setOpenToast] = useState(false);
+  // const [toastMessage, setToastMessage] = useState('');
+  // const [toastSeverity, setToastSeverity] = useState('success');
+
+  const handleToastCloseUser = () => {
+    dispatch({ type: 'UPDATE_SUCCESS' }); // Close Snackbar when the user closes it.
+  };
+  const [{ loading, error, loadingUpdate, openToast }, dispatch] = useReducer(
+    reducer,
+    {
+      loading: true,
+      error: '',
+      openToast: false,
+    }
+  );
 
   const { state } = useContext(Store);
   const { userInfo } = state;
 
-  const params = useParams();
-  const { id: userId } = params;
+  // const params = useParams();
+  // const { id: userId } = params;
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        dispatch({ type: "FETCH_REQUEST" });
+        dispatch({ type: 'FETCH_REQUEST' });
+
         const { data } = await axios.get(`/api/users/${userId}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
+        console.log(data);
         setName(data.name);
         setEmail(data.email);
         setIsAdmin(data.isAdmin);
-        dispatch({ type: "FETCH_SUCCESS" });
+        dispatch({ type: 'FETCH_SUCCESS' });
       } catch (err) {
         dispatch({
-          type: "FETCH_FAIL",
+          type: 'FETCH_FAIL',
           payload: getError(err),
         });
       }
@@ -76,7 +86,7 @@ export default function UserEditScreen() {
     e.preventDefault();
 
     try {
-      dispatch({ type: "UPDATE_REQUEST" });
+      dispatch({ type: 'UPDATE_REQUEST' });
       await axios.put(
         `/api/users/${userId}`,
         {
@@ -90,61 +100,136 @@ export default function UserEditScreen() {
         }
       );
 
-      dispatch({ type: "UPDATE_SUCCESS" });
-      window.alert("User updated successfully");
+      dispatch({ type: 'UPDATE_SUCCESS' });
 
-      navigate("/admin/users");
+      updateUserList();
+      onClose();
+      navigate('/admin/users');
     } catch (error) {
       window.alert(getError(error));
-      dispatch({ type: "UPDATE_FAIL" });
+      dispatch({ type: 'UPDATE_FAIL' });
     }
   };
 
   return (
-    <div className="edit-screen-container">
-      {/* <div>
-        <Navbar />
-      </div> */}
+    <div className="edit-screen-user-container">
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <div className="product-edit-form">
-          <h1>Edit user</h1>
-          <form onSubmit={submitHandler} className="form-alignment">
-            <div className="form-product-edit-content">
-              <input
-                className="input-field"
-                name="name"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                className="input-field"
-                name="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="checkbox"
-                className="input-field"
-                name="isAdmin"
-                checked={isAdmin} // Assuming email is a boolean value determining whether the checkbox is checked or not
-                onChange={(e) => setIsAdmin(e.target.checked)}
-              />
-              <Button
-                disbled={loadingUpdate}
-                type="submit"
-                // onClick={() => deleteHandler(order)}
+        <div>
+          <div className="user-edit-form">
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: '40px',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  maxWidth: 800,
+                  mx: 'auto',
+                  p: 2,
+                }}
               >
-                Update
-              </Button>
-              {loadingUpdate&& <LoadingBox></LoadingBox>}
-            </div>
-          </form>
+                <Typography
+                  variant="h5"
+                  align="center"
+                  mb={2}
+                  className="typography-title"
+                  sx={{
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                >
+                  Editare informații utilizator
+                </Typography>
+                <form onSubmit={submitHandler}>
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    className="input-field"
+                    name="name"
+                    placeholder="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    className="input-field"
+                    name="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <div className="checkbox-container">
+                    <label className="checkbox-label" htmlFor="isAdminCheckbox">
+                      Este administrator
+                    </label>
+                    <input
+                      type="checkbox"
+                      margin="normal"
+                      name="isAdmin"
+                      checked={isAdmin}
+                      onChange={(e) => setIsAdmin(e.target.checked)}
+                      id="isAdminCheckbox"
+                    />
+                    {/* <span className="checkmark"></span> */}
+                  </div>
+                  {/* <Button
+                    disbled={loadingUpdate}
+                    type="submit"
+                    // onClick={() => deleteHandler(order)}
+                  >
+                    Update
+                  </Button> */}
+
+                  <div className="button-submit">
+                    <Button
+                      disabled={loadingUpdate}
+                      fullWidth
+                      type="submit"
+                      sx={{
+                        mt: 2,
+                        backgroundColor: '#064420',
+                        color: '#fff',
+                        '&:hover': {
+                          backgroundColor: '#52616B',
+                        },
+                      }}
+                    >
+                      {loading ? 'Sending...' : 'Actualizare'}
+                    </Button>
+                  </div>
+                  {loadingUpdate && <LoadingBox></LoadingBox>}
+                </form>
+              </Box>
+              <Snackbar
+                open={openToast} // Open Snackbar based on openToast state.
+                autoHideDuration={6000}
+                onClose={handleToastCloseUser}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+              >
+                <MuiAlert
+                  elevation={6}
+                  variant="filled"
+                  onClose={handleToastCloseUser}
+                  severity="success" // Set the severity to success for successful updates.
+                >
+                  User updated successfully
+                </MuiAlert>
+              </Snackbar>
+            </Box>
+          </div>
         </div>
       )}
     </div>

@@ -24,3 +24,14 @@
 .button-actions{
     font-family: "Montserrat", sans-serif !important;
 }
+.notification-delete-order {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+}

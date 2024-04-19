@@ -33,13 +33,17 @@
   transform: scale(1.05);
 }
 .product-edit-image {
-  padding-top: 50px;
-  padding-left: 20px;
-  height: 850px;
+  margin-top: 100px;
+  margin-left: 60px;
+  height: 600px;
+  width: 600px;
+  /* background-color: aqua; */
+  align-items: center;
 }
 
 .typography-title{
   font-family: 'Montserrat', sans-serif;
+  color:#064420;
 }
 /* ProductEditScreen.css */
 .snackbar-container {
@@ -50,3 +54,6 @@
   z-index: 9999;
 }
 
+.input-field{
+  font-family: 'Montserrat', sans-serif !important;
+}

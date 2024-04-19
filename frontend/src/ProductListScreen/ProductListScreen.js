@@ -183,7 +183,7 @@ export default function ProductListScreen() {
   return (
     <div className="container-products">
       <div className="order-history-content">
-        <h1 className="title-products">Products</h1>
+        <h1 className="title-products">Produse</h1>
         <div className="div-button-create">
           <Button
             className="button-create"
@@ -195,7 +195,7 @@ export default function ProductListScreen() {
               padding: '5px',
             }}
           >
-            Create product
+            ADAUGĂ PRODUS NOU
           </Button>
         </div>
         {loadingDelete && <LoadingBox />}
@@ -208,20 +208,20 @@ export default function ProductListScreen() {
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align="center">Name</StyledTableCell>
-                  <StyledTableCell align="center">Price</StyledTableCell>
-                  <StyledTableCell align="center">Category</StyledTableCell>
-                  <StyledTableCell align="center">Actions</StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">NUME</StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">PREȚ</StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">CATEGORIE</StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">ACȚIUNI</StyledTableCell>
                 </TableRow>
               </TableHead>
  
               <TableBody>
                 {products.map((product) => (
                   <StyledTableRow key={product._id}>
-                    <StyledTableCell align="center">{String(product.name)}</StyledTableCell>
-                    <StyledTableCell align="center">{product.price}&nbsp;lei</StyledTableCell>
-                    <StyledTableCell align="center">{product.category}</StyledTableCell>
-                    <StyledTableCell align="center">
+                    <StyledTableCell align="center" className="table-cell">{String(product.name)}</StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">{product.price}&nbsp;lei</StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">{product.category}</StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">
                       <Button
                         className="button-actions"
                         variant="outlined"
@@ -235,7 +235,7 @@ export default function ProductListScreen() {
                         }}
                         onClick={() => navigate(`/admin/product/${product._id}`)}
                       >
-                        Edit
+                        Editează
                       </Button>
  
                       <Button
@@ -251,7 +251,7 @@ export default function ProductListScreen() {
                         }}
                         onClick={() => deleteHandler(product)}
                       >
-                        Delete
+                        Șterge
                       </Button>
                     </StyledTableCell>
                   </StyledTableRow>

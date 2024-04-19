@@ -1,13 +1,15 @@
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useState,useContext, useEffect, useReducer } from 'react';
 import './UserListScreen.css';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { useNavigate } from "react-router-dom";
-import { Store } from "../Store";
-import { getError } from "../utils";
-import LoadingBox from "../LoadingBox";
-import MessageBox from "../MessageBox";
-import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import { Store } from '../Store';
+import { getError } from '../utils';
+import LoadingBox from '../LoadingBox';
+import MessageBox from '../MessageBox';
+import axios from 'axios';
+import UserEditScreen from '../UserEditScreen/UserEditScreen';
+import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 import {
   Button,
   Table,
@@ -17,7 +19,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from "@mui/material";
+} from '@mui/material';
 
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
@@ -43,31 +45,35 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "FETCH_REQUEST":
+    case 'FETCH_REQUEST':
       return { ...state, loading: true };
-    case "FETCH_SUCCESS":
+    case 'FETCH_SUCCESS':
       return {
         ...state,
         users: action.payload,
         loading: false,
       };
 
-    case "FETCH_FAIL":
+    case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
 
-    case "DELETE_REQUEST":
+    case 'DELETE_REQUEST':
       return { ...state, loadingDelete: true, successDelete: false };
-    case "DELETE_SUCCESS":
+    case 'DELETE_SUCCESS':
       return {
         ...state,
         loadingDelete: false,
         successDelete: true,
       };
 
-    case "DELETE_FAIL":
+    case 'DELETE_FAIL':
       return { ...state, loadingDelete: false };
-    case "DELETE_RESET":
+    case 'DELETE_RESET':
       return { ...state, loadingDelete: false, successDelete: false };
+    case 'OPEN_MODAL':
+      return { ...state, modalOpen: true, selectedUser: action.payload };
+    case 'CLOSE_MODAL':
+      return { ...state, modalOpen: false, selectedUser: null };
 
     default:
       return state;
@@ -75,14 +81,31 @@ const reducer = (state, action) => {
 };
 export default function UserListScreen() {
   const navigate = useNavigate();
-  const [{ loading, error, users, loadingDelete, successDelete }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: "",
-    });
+  const [
+    {
+      loading,
+      error,
+      users,
+      loadingDelete,
+      openCreateDialog,
+      successDelete,
+      modalOpen,
+      selectedUser,
+    },
+    dispatch,
+  ] = useReducer(reducer, {
+    loading: true,
+    error: '',
+    modalOpen: false,
+    selectedUser: null,
+    openCreateDialog: false,
+  });
 
   const { state } = useContext(Store);
   const { userInfo } = state;
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deletingUser, setDeletingUser] = useState(null);
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,52 +113,70 @@ export default function UserListScreen() {
         const { data } = await axios.get(`/api/users`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        dispatch({ type: "FETCH_SUCCESS", payload: data });
+        dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
         dispatch({
-          type: "FETCH_FAIL",
+          type: 'FETCH_FAIL',
           payload: getError(err),
         });
       }
     };
     if (successDelete) {
-      dispatch({ type: "DELETE_RESET" });
+      dispatch({ type: 'DELETE_RESET' });
     } else {
       fetchData();
     }
   }, [userInfo, successDelete]);
 
+  const deleteUser = async (user) => {
+    setDeletingUser(user);
+    setConfirmDelete(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deletingUser) {
+      deleteHandler(deletingUser);
+    }
+    setConfirmDelete(false);
+  };
   const deleteHandler = async (user) => {
-    if (window.confirm("Are you sure to delete?")) {
-      try {
-        dispatch({ type: "DELETE_REQUEST" });
-        await axios.delete(`/api/users/${user._id}`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
+    try {
+      dispatch({ type: 'DELETE_REQUEST' });
+      await axios.delete(`/api/users/${user._id}`, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
+      dispatch({ type: 'DELETE_SUCCESS' });
+      setNotification("Utilizatorul a fost sters cu succes");
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+    } catch (error) {
+      window.alert(getError(error));
 
-        window.alert("User deleted successfully");
-        dispatch({ type: "DELETE_SUCCESS" });
-      } catch (error) {
-        window.alert(getError(error));
-
-        dispatch({ type: "DELELE_FAIL" });
-      }
+      dispatch({ type: 'DELELE_FAIL' });
     }
   };
 
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
+  const updateUserList = async () => {
+    try {
+      const { data } = await axios.get(`/api/users`, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
+      dispatch({ type: 'FETCH_SUCCESS', payload: data });
+    } catch (err) {
+      dispatch({
+        type: 'FETCH_FAIL',
+        payload: getError(err),
+      });
+    }
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  const openEditModal = (user) => {
+    dispatch({ type: 'OPEN_MODAL', payload: user._id });
+  };
 
-    setOpen(false);
+  const closeEditModal = () => {
+    dispatch({ type: 'CLOSE_MODAL' });
   };
   return (
     <div className="container-users">
@@ -147,15 +188,23 @@ export default function UserListScreen() {
         ) : error ? (
           <MessageBox>{error}</MessageBox>
         ) : (
-          <TableContainer  className="table-container" component={Paper}>
+          <TableContainer className="table-container" component={Paper}>
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
                   {/* <StyledTableCell>ID</StyledTableCell> */}
-                  <StyledTableCell align="center" className="table-cell">NUME</StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">EMAIL</StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">ADMIN</StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">ACȚIUNI</StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">
+                    NUME
+                  </StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">
+                    EMAIL
+                  </StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">
+                    ADMIN
+                  </StyledTableCell>
+                  <StyledTableCell align="center" className="table-cell">
+                    ACȚIUNI
+                  </StyledTableCell>
                 </TableRow>
               </TableHead>
 
@@ -163,13 +212,19 @@ export default function UserListScreen() {
                 {users.map((user) => (
                   <StyledTableRow key={user._id}>
                     {/* <StyledTableCell>{user._id}</StyledTableCell> */}
-                    <StyledTableCell align="center" className="table-cell">{user.name}</StyledTableCell>
-                    <StyledTableCell align="center" className="table-cell">{user.email}</StyledTableCell>
-                    <StyledTableCell align="center" className="table-cell">{user.isAdmin ? "YES" : "NO"}</StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">
+                      {user.name}
+                    </StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">
+                      {user.email}
+                    </StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">
+                      {user.isAdmin ? 'YES' : 'NO'}
+                    </StyledTableCell>
 
                     <StyledTableCell align="center" className="table-cell">
                       <Button
-                       className="button-actions"
+                        className="button-actions"
                         type="button"
                         variant="outlined"
                         style={{
@@ -179,13 +234,14 @@ export default function UserListScreen() {
                           marginRight: '5px',
                           fontSize: '12px',
                         }}
-                        onClick={() => navigate(`/admin/user/${user._id}`)}
+                        onClick={() => openEditModal(user)}
+                        // onClick={() => navigate(`/admin/user/${user._id}`)}
                       >
-                        Edit
+                        Editează
                       </Button>
                       &nbsp;
                       <Button
-                      className="button-actions"
+                        className="button-actions"
                         type="button"
                         variant="outlined"
                         style={{
@@ -195,9 +251,9 @@ export default function UserListScreen() {
                           marginRight: '5px',
                           fontSize: '12px',
                         }}
-                        onClick={() => deleteHandler(user)}
+                        onClick={() => deleteUser(user)}
                       >
-                        Delete
+                       Șterge
                       </Button>
                     </StyledTableCell>
                   </StyledTableRow>
@@ -206,6 +262,28 @@ export default function UserListScreen() {
             </Table>
           </TableContainer>
         )}
+        {modalOpen && selectedUser && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close" onClick={closeEditModal}>
+                &times;
+              </span>
+              <UserEditScreen
+                userId={selectedUser}
+                updateUserList={updateUserList}
+                onClose={closeEditModal}
+              />
+            </div>
+          </div>
+        )}
+        <ConfirmationDialog
+          open={confirmDelete}
+          onClose={() => setConfirmDelete(false)}
+          onConfirm={handleConfirmDelete}
+          title="Confirmare ștergere"
+          message="Ești sigur că vrei să ștergi acest utilizator?"
+        />
+        {notification && <div className="notification-delete-user">{notification}</div>}
       </div>
     </div>
   );

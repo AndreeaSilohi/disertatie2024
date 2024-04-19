@@ -199,6 +199,7 @@ export default function ProductEditScreen() {
                 </Typography>
                 <form onSubmit={submitHandler}>
                   <TextField
+                    sx={{ fontFamily: 'Montserrat, sans-serif !important' }}
                     fullWidth
                     margin="normal"
                     className="input-field"
@@ -323,7 +324,7 @@ export default function ProductEditScreen() {
         </div>
       )}
       <Snackbar
-       className="snackbar-container"
+        className="snackbar-container"
         open={openToast}
         autoHideDuration={6000}
         onClose={handleToastClose}
@@ -338,6 +339,5 @@ export default function ProductEditScreen() {
         </MuiAlert>
       </Snackbar>
     </div>
-    
   );
 }

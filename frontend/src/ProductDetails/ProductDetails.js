@@ -6,17 +6,17 @@ import React, {
   useReducer,
   useEffect,
   useRef,
-} from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
-import Navbar from "../navbar/Navbar";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import productSingle from "../assets/productSingle.png";
-import { Link } from "react-router-dom";
+} from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
+import Navbar from '../navbar/Navbar';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import productSingle from '../assets/productSingle.png';
+import { Link } from 'react-router-dom';
 import {
   List,
   ListItem,
@@ -27,31 +27,31 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-} from "@mui/material";
-import Box from "@mui/material/Box";
-import "./ProductDetails.css";
-import axios from "axios";
-import LoadingBox from "../LoadingBox";
-import MessageBox from "../MessageBox";
-import { Store } from "../Store";
-import RatingComponent from "../Rating/RatingComponent";
-import { getError } from "../utils";
+} from '@mui/material';
+import Box from '@mui/material/Box';
+import './ProductDetails.css';
+import axios from 'axios';
+import LoadingBox from '../LoadingBox';
+import MessageBox from '../MessageBox';
+import { Store } from '../Store';
+import RatingComponent from '../Rating/RatingComponent';
+import { getError } from '../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "REFRESH_PRODUCT":
+    case 'REFRESH_PRODUCT':
       return { ...state, product: action.payload };
-    case "CREATE_REQUEST":
+    case 'CREATE_REQUEST':
       return { ...state, loadingCreateReview: true };
-    case "CREATE_SUCCESS":
+    case 'CREATE_SUCCESS':
       return { ...state, loadingCreateReview: false };
-    case "CREATE_FAIL":
+    case 'CREATE_FAIL':
       return { ...state, loadingCreateReview: false };
-    case "FETCH_REQUEST":
+    case 'FETCH_REQUEST':
       return { ...state, loading: true };
-    case "FETCH_SUCCESS":
+    case 'FETCH_SUCCESS':
       return { ...state, product: action.payload, loading: false };
-    case "FETCH_FAIL":
+    case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
@@ -64,22 +64,21 @@ const ProductDetails = () => {
   const { slug } = params;
 
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const [value, setValue] = React.useState(0);
   const [notification, setNotification] = useState(null);
-
 
   const [{ loading, error, product, loadingCreateReview }, dispatch] =
     useReducer(reducer, {
       product: [],
       loading: true,
-      error: "",
+      error: '',
     });
 
   const [{ ordersLoading, ordersError, orders }, setOrders] = useState({
     orders: [],
     ordersLoading: true,
-    ordersError: "",
+    ordersError: '',
   });
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -91,14 +90,13 @@ const ProductDetails = () => {
 
   const [user, setUser] = useState(null);
 
-
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
+      dispatch({ type: 'FETCH_REQUEST' });
       try {
         const result = await axios.get(`/api/products/slug/${slug}`);
 
-        dispatch({ type: "FETCH_SUCCESS", payload: result.data });
+        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
 
         // Fetch user data
         if (userInfo) {
@@ -111,16 +109,16 @@ const ProductDetails = () => {
           setUser(userResult.data);
         }
       } catch (err) {
-        dispatch({ type: "FETCH_FAIL", payload: err.message });
+        dispatch({ type: 'FETCH_FAIL', payload: err.message });
       }
     };
     fetchData();
     const fetchOrders = async () => {
       try {
-        const { data } = await axios.get("/api/orders/mine", {
+        const { data } = await axios.get('/api/orders/mine', {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        setOrders({ orders: data, ordersLoading: false, ordersError: "" });
+        setOrders({ orders: data, ordersLoading: false, ordersError: '' });
       } catch (error) {
         setOrders({
           orders: [],
@@ -151,7 +149,7 @@ const ProductDetails = () => {
 
   const handleClickAdditionalInfo = (tab) => {
     setSelectedTab(tab);
-    setAdditionalInfoVisible(tab === "info" ? true : false);
+    setAdditionalInfoVisible(tab === 'info' ? true : false);
     setAdditionalInfoVisibleReviews(false);
 
     setSelectedTabReviews(null); //pt a reveni la culoarea initiala
@@ -159,7 +157,7 @@ const ProductDetails = () => {
 
   const handleClickReviews = (tab) => {
     setSelectedTabReviews(tab);
-    setAdditionalInfoVisibleReviews(tab === "reviews" ? true : false);
+    setAdditionalInfoVisibleReviews(tab === 'reviews' ? true : false);
     setAdditionalInfoVisible(false);
 
     setSelectedTab(null);
@@ -171,7 +169,7 @@ const ProductDetails = () => {
     event.stopPropagation();
 
     if (!user) {
-      alert("You are not logged in. Please log in to add items to the cart.");
+      alert('You are not logged in. Please log in to add items to the cart.');
       return;
     }
 
@@ -183,7 +181,7 @@ const ProductDetails = () => {
       const quantity = existItem ? existItem.quantity + 1 : 1;
 
       if (data.stoc < quantity) {
-        window.alert("Sorry. Product is out of stock");
+        window.alert('Sorry. Product is out of stock');
         return;
       }
 
@@ -198,7 +196,7 @@ const ProductDetails = () => {
         );
       } else {
         const response = await axios.post(
-          "/api/cart",
+          '/api/cart',
           {
             quantity: quantity,
             slug: product.slug,
@@ -215,7 +213,7 @@ const ProductDetails = () => {
 
       // Dispatch action to update the cart in the context/state
       ctxDispatch({
-        type: "CART_ADD_ITEM",
+        type: 'CART_ADD_ITEM',
         payload: { ...product, quantity }, // Assuming the server responds with the updated cart data
       });
       // ctxDispatch({ type: "CREATE_SUCCESS" });
@@ -227,15 +225,15 @@ const ProductDetails = () => {
       // Show notification or handle success
       // console.log(`${product.name} was added to the cart`);
     } catch (error) {
-      console.error("Error adding to cart:", error);
-      window.alert("Failed to add to cart. Please try again later.");
+      console.error('Error adding to cart:', error);
+      window.alert('Failed to add to cart. Please try again later.');
     }
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!comment || !rating) {
-      window.alert("Please enter a comment and rating");
+      window.alert('Please enter a comment and rating');
       return;
     }
     try {
@@ -255,20 +253,20 @@ const ProductDetails = () => {
       // console.log(user);
 
       dispatch({
-        type: "CREATE_SUCCESS",
+        type: 'CREATE_SUCCESS',
       });
-      window.alert("Review submitted successfully!");
+      window.alert('Review submitted successfully!');
       product.reviews.unshift(data.review);
       product.numReviews = data.numReviews;
       product.rating = data.rating;
-      dispatch({ type: "REFRESH_PRODUCT", payload: product });
+      dispatch({ type: 'REFRESH_PRODUCT', payload: product });
       window.scrollTo({
-        behavior: "smooth",
+        behavior: 'smooth',
         top: reviewsRef.current.offsetTop,
       });
     } catch (error) {
       window.alert(getError(error));
-      dispatch({ type: "CREATE_FAIL" });
+      dispatch({ type: 'CREATE_FAIL' });
     }
   };
   return (
@@ -278,7 +276,7 @@ const ProductDetails = () => {
       </div> */}
 
       {error ? (
-        <div style={{ height: "100vh" }}>
+        <div style={{ height: '100vh' }}>
           <MessageBox severity="error">{error}</MessageBox>
         </div>
       ) : (
@@ -297,7 +295,7 @@ const ProductDetails = () => {
                   style={{
                     maxWidth: 400,
                     maxHeight: 400,
-                    width: "100%",
+                    width: '100%',
                   }}
                 />
               </div>
@@ -305,17 +303,17 @@ const ProductDetails = () => {
               <div className="group-btn">
                 <div
                   className={`info-review ${
-                    selectedTab === "info" ? "selected" : ""
+                    selectedTab === 'info' ? 'selected' : ''
                   }`}
-                  onClick={() => handleClickAdditionalInfo("info")}
+                  onClick={() => handleClickAdditionalInfo('info')}
                 >
                   ADDITIONAL INFORMATIONS
                 </div>
                 <div
                   className={`info-review ${
-                    selectedTabReviews === "reviews" ? "selected" : ""
+                    selectedTabReviews === 'reviews' ? 'selected' : ''
                   }`}
-                  onClick={() => handleClickReviews("reviews")}
+                  onClick={() => handleClickReviews('reviews')}
                 >
                   REVIEWS {product.numReviews}
                 </div>
@@ -326,10 +324,10 @@ const ProductDetails = () => {
                 <div className="additional-info">
                   <Typography
                     sx={{
-                      fontFamily: "Montserrat, sans-serif",
-                      fontSize: "20px",
-                      lineHeight: "25px",
-                      padding: "60px",
+                      fontFamily: 'Montserrat, sans-serif',
+                      fontSize: '20px',
+                      lineHeight: '25px',
+                      padding: '60px',
                     }}
                   >
                     {product.additional}
@@ -350,18 +348,18 @@ const ProductDetails = () => {
                       <ListItem key={review._id}>
                         <ListItemText
                           sx={{
-                            fontFamily: "Montserrat, sans-serif !important",
-                            fontSize: "25px",
+                            fontFamily: 'Montserrat, sans-serif !important',
+                            fontSize: '25px',
                           }}
                         >
                           <img
                             src={review.profilePhoto}
                             alt="User Avatar"
                             style={{
-                              width: "30px", // Set the width of the image
-                              height: "30px", // Set the height of the image
-                              borderRadius: "50%", // Make the image circular
-                              marginTop: "20px",
+                              width: '30px', // Set the width of the image
+                              height: '30px', // Set the height of the image
+                              borderRadius: '50%', // Make the image circular
+                              marginTop: '20px',
                             }}
                           ></img>
                           <strong>
@@ -433,7 +431,7 @@ const ProductDetails = () => {
                               </form>
                             ) : (
                               <MessageBox>
-                                Please <Link to={"/signin"}>Sign In</Link> to
+                                Please <Link to={'/signin'}>Sign In</Link> to
                                 write a review
                               </MessageBox>
                             )}
@@ -443,11 +441,11 @@ const ProductDetails = () => {
                           <MessageBox>
                             {userInfo ? (
                               // If the user is logged in and the product is not in orders
-                              "This product is not in your orders. You cannot let a review"
+                              'This product is not in your orders. You cannot let a review'
                             ) : (
                               // If the user is not logged in
                               <>
-                                Please <Link to={"/signin"}>Sign In</Link> to
+                                Please <Link to={'/signin'}>Sign In</Link> to
                                 write a review
                               </>
                             )}
@@ -467,9 +465,9 @@ const ProductDetails = () => {
                   variant="h4"
                   component="div"
                   sx={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontSize: "35px",
-                    textTransform: "uppercase",
+                    fontFamily: 'Montserrat, sans-serif',
+                    fontSize: '35px',
+                    textTransform: 'uppercase',
                   }}
                 >
                   {product.name}
@@ -479,9 +477,9 @@ const ProductDetails = () => {
                 <Typography
                   variant="h4"
                   sx={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontSize: "35px",
-                    textTransform: "uppercase",
+                    fontFamily: 'Montserrat, sans-serif',
+                    fontSize: '35px',
+                    textTransform: 'uppercase',
                   }}
                 >
                   {product.price} lei
@@ -497,22 +495,15 @@ const ProductDetails = () => {
               <div className="raiting">
                 <Box
                   sx={{
-                    "& > legend": { mt: 2 },
-                    fontFamily: "Montserrat, sans-serif",
+                    '& > legend': { mt: 2 },
+                    fontFamily: 'Montserrat, sans-serif',
                   }}
                 >
-                  {/* <Rating
-                    name="simple-controlled"
-                    value={value}
-                    onChange={(event, newValue) => {
-                      setValue(newValue);
-                    }}
-                  /> */}
                   <RatingComponent
                     rating={product.rating}
                     numReviews={product.numReviews}
                   >
-                    {" "}
+                    {' '}
                   </RatingComponent>
                 </Box>
               </div>
@@ -521,9 +512,9 @@ const ProductDetails = () => {
                   <Button
                     variant="contained"
                     sx={{
-                      fontFamily: "Montserrat, sans-serif",
-                      fontSize: "15px",
-                      textTransform: "uppercase",
+                      fontFamily: 'Montserrat, sans-serif',
+                      fontSize: '15px',
+                      textTransform: 'uppercase',
                     }}
                     disabled
                   >
@@ -532,15 +523,15 @@ const ProductDetails = () => {
                 ) : (
                   <Button
                     variant="contained"
-                    style={{ backgroundColor: "#d77e2b" }}
+                    style={{ backgroundColor: '#d77e2b' }}
                     sx={{
-                      fontFamily: "Montserrat, sans-serif",
-                      fontSize: "15px",
-                      textTransform: "uppercase",
+                      fontFamily: 'Montserrat, sans-serif',
+                      fontSize: '15px',
+                      textTransform: 'uppercase',
                     }}
                     onClick={(event) => addToCartHandler(product, event)}
                   >
-                    {" "}
+                    {' '}
                     Add to cart
                   </Button>
                 )}
@@ -549,7 +540,7 @@ const ProductDetails = () => {
               <div className="accordion-detalii">
                 <Accordion
                   sx={{
-                    backgroundColor: "#edcea8",
+                    backgroundColor: '#edcea8',
                   }}
                 >
                   <AccordionSummary
@@ -557,7 +548,7 @@ const ProductDetails = () => {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                     sx={{
-                      fontFamily: "YourChosenFont, sans-serif", // Set the desired font
+                      fontFamily: 'YourChosenFont, sans-serif', // Set the desired font
                     }}
                   >
                     <Typography>Detalii despre produs</Typography>
@@ -566,7 +557,7 @@ const ProductDetails = () => {
                     <Typography
                       sx={{
                         // fontFamily: "Quicksand, sans-serif",
-                        fontSize: "15px",
+                        fontSize: '15px',
                       }}
                     >
                       {product.description}
@@ -578,24 +569,21 @@ const ProductDetails = () => {
               <div className="accordion-recenzii">
                 <Accordion
                   sx={{
-                    backgroundColor: "#edcea8",
+                    backgroundColor: '#edcea8',
                   }}
                 >
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
-                    // sx={{
-                    //   fontFamily: "YourChosenFont, sans-serif", // Set the desired font
-                    // }}
                   >
                     <Typography>Recenzii</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography
                       sx={{
-                        fontFamily: "Quicksand, sans-serif",
-                        fontSize: "15px",
+                        fontFamily: 'Quicksand, sans-serif',
+                        fontSize: '15px',
                       }}
                     >
                       {product.description}
@@ -607,25 +595,6 @@ const ProductDetails = () => {
           </div>
           {loading && <LoadingBox />}
           {notification && <div className="notification">{notification}</div>}
-          {/* {ordersLoading ? (
-            <LoadingBox />
-          ) : (
-            <>
-              {ordersError ? (
-                <MessageBox severity="error">{ordersError}</MessageBox>
-              ) : (
-                <>
-                  {isProductInOrders() ? (
-                    <MessageBox>
-                      This product is already in your orders.
-                    </MessageBox>
-                  ) : (
-                    <MessageBox>This product is not in your orders.</MessageBox>
-                  )}
-                </>
-              )}
-            </>
-          )} */}
         </>
       )}
     </div>
