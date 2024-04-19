@@ -134,16 +134,20 @@ export default function OrderHistory() {
                     <StyledTableCell align="center" className="table-cell">
                       <Button
                         type="button"
-                        onClick={() => {
-                          navigate(`/order/${order._id}`);
-                        }}
+                        variant="outlined"
+                       
                         sx={{
-                          fontFamily: 'Montserrat, sans-serif',
+                           fontFamily: 'Montserrat, sans-serif',
                           fontSize: '15px',
                           textTransform: 'uppercase',
-                          color: 'black',
-                          backgroundColor: '#d77e2b',
-                          width: '100px',
+                          color: 'rgb(215, 126, 43)',
+                          borderColor: 'rgb(215, 126, 43)',
+                          padding: '5px',
+                          marginRight: '5px',
+                          fontSize: '12px',
+                        }}
+                        onClick={() => {
+                          navigate(`/order/${order._id}`);
                         }}
                       >
                         Detalii

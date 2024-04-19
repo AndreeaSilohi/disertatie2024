@@ -1,20 +1,20 @@
-import Navbar from "../navbar/Navbar";
-import "./ContactForm.css";
-import { useState } from "react";
-import { TextField, Button, Typography, Box } from "@mui/material";
-import React from "react";
-import axios from "axios";
+import Navbar from '../navbar/Navbar';
+import './ContactForm.css';
+import { useState } from 'react';
+import { TextField, Button, Typography, Box } from '@mui/material';
+import React from 'react';
+import axios from 'axios';
 function ContactForm() {
-  const [subject, setSubject] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [subject, setSubject] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.post("/api/email", {
+      const { data } = await axios.post('/api/email', {
         subject,
         email,
         message,
@@ -51,26 +51,31 @@ function ContactForm() {
           </div>
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: "40px",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: '40px',
             }}
           >
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
                 maxWidth: 600,
-                mx: "auto",
+                mx: 'auto',
                 p: 2,
-                border: "2px solid  #000000",
-                borderRadius: "12px",
+                border: '1px solid   #0000004e',
+                borderRadius: '12px',
                 boxShadow: 1,
               }}
             >
-              <Typography variant="h4" align="center" mb={2} className='typografy'>
+              <Typography
+                variant="h4"
+                align="center"
+                mb={2}
+                className="typografy"
+              >
                 Contactează-ne
               </Typography>
               <form onSubmit={handleSubmit}>
@@ -108,14 +113,14 @@ function ContactForm() {
                     type="submit"
                     sx={{
                       mt: 2,
-                      backgroundColor: "#064420",
-                      color: "#fff",
-                      "&:hover": {
-                        backgroundColor: "#52616B",
+                      backgroundColor: '#064420',
+                      color: '#fff',
+                      '&:hover': {
+                        backgroundColor: '#52616B',
                       },
                     }}
                   >
-                    {loading ? "Sending..." : "Trimite"}
+                    {loading ? 'Sending...' : 'Trimite'}
                   </Button>
                 </div>
               </form>

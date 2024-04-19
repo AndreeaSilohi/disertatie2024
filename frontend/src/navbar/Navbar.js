@@ -200,7 +200,7 @@ function Navbar() {
             isActive ? { color: 'orange' } : { color: 'black' }
           }
         >
-          Acasa
+          Acasă
         </NavLink>
         <NavLink
           to="/shop"
@@ -227,7 +227,7 @@ function Navbar() {
             isActive ? { color: 'orange' } : { color: 'black' }
           }
         >
-          Curiozitati
+          Curiozități
         </NavLink>
         <NavLink
           to="/contact-form"
@@ -397,7 +397,7 @@ function Navbar() {
                       onClick={handleMenuClose}
                     >
                       <UserCircle size={25} style={{ marginRight: '5px' }} />
-                      <span className="span-menu" >Profilul meu</span>
+                      <span className="span-menu" >Actualizare date</span>
                     </MenuItem>
                     <Divider />
                     <MenuItem

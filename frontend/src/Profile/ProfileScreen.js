@@ -1,10 +1,9 @@
-import React, { useContext, useReducer, useState } from 'react';
+import React, { useContext, useReducer, useState, useEffect } from 'react';
 import { Store } from '../Store';
-
+import { useNavigate } from 'react-router-dom';
 import { Typography, Button, Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import './ProfileScreen.css';
-import { getError } from '../utils';
 import axios from 'axios';
 
 const reducer = (state, action) => {
@@ -21,9 +20,11 @@ const reducer = (state, action) => {
   }
 };
 export default function ProfileScreen() {
+  const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
 
+  const [notification, setNotification] = useState(null);
   const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState('');
@@ -32,6 +33,11 @@ export default function ProfileScreen() {
   const [{ loadingUpdate }, dispatch] = useReducer(reducer, {
     loadingUpdate: false,
   });
+
+  // useEffect(() => {
+  //   setName(userInfo.name);
+  //   setEmail(userInfo.email);
+  // }, [userInfo]);
   const submitHandler = async (e) => {
     e.preventDefault();
     dispatch({ type: 'UPDATE_REQUEST' });
@@ -51,9 +57,14 @@ export default function ProfileScreen() {
         },
         config
       );
-
-      ctxDispatch({ type: 'USER_UPDATE_SUCCESS', payload: data });
       dispatch({ type: 'UPDATE_SUCCESS' });
+      ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+      localStorage.setItem('userInfo', JSON.stringify(data));
+      setNotification('Informațiile au fost actualizate cu succes');
+      setTimeout(() => {
+        setNotification(null);
+        // navigate('/contact');
+      }, 3000);
     } catch (error) {
       dispatch({ type: 'UPDATE_FAIL' });
       console.error('Error updating user:', error);
@@ -61,7 +72,7 @@ export default function ProfileScreen() {
   };
 
   return (
-    <div className='general-div'>
+    <div className="general-div">
       <div className="container-profile-screen">
         {/* <div className="div-profile-img">
           <img
@@ -93,8 +104,13 @@ export default function ProfileScreen() {
                 boxShadow: 1,
               }}
             >
-              <Typography variant="h4" align="center" mb={2}className='typografy'>
-                Profil
+              <Typography
+                variant="h5"
+                align="center"
+                mb={2}
+                className="typografy"
+              >
+                Actualizare date personale
               </Typography>
               <form onSubmit={submitHandler} className="form-content-profile">
                 <TextField
@@ -155,6 +171,7 @@ export default function ProfileScreen() {
               </form>
             </Box>
           </Box>
+          {notification && <div className="notification">{notification}</div>}
         </div>
       </div>
     </div>
