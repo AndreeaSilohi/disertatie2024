@@ -1,17 +1,21 @@
+.title-history {
+  padding: 40px;
+  text-align: center;
+}
+
 .place-order {
-    background-color: #d77e2b;
-    display: flex;
-    justify-content: center;
-  }
-  
-  
-  .container-place-order{
-      position: relative;
-  }
-  
-  .order-history-content{
-      padding: 80px;
-      box-sizing: border-box; /* Include padding in the total width */
-      width: 90%; /* Adjust the max-width as needed */
-      margin: auto; /* Center the form horizontally */
-  }
+  background-color: #d77e2b;
+  display: flex;
+  justify-content: center;
+}
+
+.container-place-order {
+  position: relative;
+}
+
+.order-history-content {
+  padding: 80px;
+  box-sizing: border-box;
+  width: 90%;
+  margin: auto;
+}

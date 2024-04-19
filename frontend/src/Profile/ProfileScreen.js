@@ -1,19 +1,19 @@
-import React, { useContext, useReducer, useState } from "react";
-import { Store } from "../Store";
-import Navbar from "../navbar/Navbar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import "./ProfileScreen.css";
-import { getError } from "../utils";
-import axios from "axios";
+import React, { useContext, useReducer, useState } from 'react';
+import { Store } from '../Store';
+
+import { Typography, Button, Box } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import './ProfileScreen.css';
+import { getError } from '../utils';
+import axios from 'axios';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "UPDATE_REQUEST":
+    case 'UPDATE_REQUEST':
       return { ...state, loadingUpdate: true };
-    case "UPDATE_SUCCESS":
+    case 'UPDATE_SUCCESS':
       return { ...state, loadingUpdate: false };
-    case "UPDATE_FAIL":
+    case 'UPDATE_FAIL':
       return { ...state, loadingUpdate: false };
 
     default:
@@ -26,106 +26,136 @@ export default function ProfileScreen() {
 
   const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const [{ loadingUpdate }, dispatch] = useReducer(reducer, {
     loadingUpdate: false,
   });
   const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch({ type: "UPDATE_REQUEST" });
+    dispatch({ type: 'UPDATE_REQUEST' });
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-  
-      const { data } = await axios.put(`/api/users/edit/${userInfo._id}`, {
-        name,
-        email,
-        password,
-      }, config);
-      
-      ctxDispatch({ type: "USER_UPDATE_SUCCESS", payload: data });
-      dispatch({ type: "UPDATE_SUCCESS" });
+
+      const { data } = await axios.put(
+        `/api/users/edit/${userInfo._id}`,
+        {
+          name,
+          email,
+          password,
+        },
+        config
+      );
+
+      ctxDispatch({ type: 'USER_UPDATE_SUCCESS', payload: data });
+      dispatch({ type: 'UPDATE_SUCCESS' });
     } catch (error) {
-      dispatch({ type: "UPDATE_FAIL" });
-      console.error("Error updating user:", error);
+      dispatch({ type: 'UPDATE_FAIL' });
+      console.error('Error updating user:', error);
     }
   };
-  
 
   return (
-    <div className="container-profile-screen">
-      {/* <div className="navbar-shipping">
-        <Navbar />
-      </div> */}
+    <div className='general-div'>
+      <div className="container-profile-screen">
+        {/* <div className="div-profile-img">
+          <img
+            className="profile-image"
+            alt="text"
+            src="https://images.unsplash.com/photo-1628407252041-9304159534a5?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          ></img>
+        </div> */}
+        <div className="form-profile">
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: '40px',
+              maxWidth: 600,
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                maxWidth: 600,
+                mx: 'auto',
+                p: 2,
+                border: '1px solid  #0000004e',
+                borderRadius: '12px',
+                boxShadow: 1,
+              }}
+            >
+              <Typography variant="h4" align="center" mb={2}className='typografy'>
+                Profil
+              </Typography>
+              <form onSubmit={submitHandler} className="form-content-profile">
+                <TextField
+                  style={{ marginBottom: '35px', width: '70%' }}
+                  label="Nume"
+                  variant="outlined"
+                  fullWidth
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
 
-      <div className="form-profile">
-        <form onSubmit={submitHandler}>
-          <h1 className="text-center">User Profile</h1>
-          <div className="form-shipping-content">
-            <div className="form-shipping-fields">
-              <TextField
-                style={{ marginBottom: "35px", width: "70%" }}
-                label="Name"
-                variant="standard"
-                fullWidth
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+                <TextField
+                  style={{ marginBottom: '35px', width: '70%' }}
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
 
-              <TextField
-                style={{ marginBottom: "35px", width: "70%" }}
-                label="Email"
-                variant="standard"
-                fullWidth
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+                <TextField
+                  style={{ marginBottom: '35px', width: '70%' }}
+                  label="Parolă"
+                  variant="outlined"
+                  type="password"
+                  fullWidth
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                />
 
-              <TextField
-                style={{ marginBottom: "35px", width: "70%" }}
-                label="Password"
-                variant="standard"
-                type="password"
-                fullWidth
-                required
-                onChange={(e) => setPassword(e.target.value)}
-              />
+                <TextField
+                  style={{ marginBottom: '35px', width: '70%' }}
+                  label="Confirmă parolă"
+                  variant="outlined"
+                  type="password"
+                  fullWidth
+                  required
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
 
-              <TextField
-                style={{ marginBottom: "35px", width: "70%" }}
-                label="Confirm password"
-                variant="standard"
-                type="password"
-                fullWidth
-                required
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-
-              <div className="form-shipping-content-button">
-                <Button
-                  variant="contained"
-                  className="continue"
-                  type="submit"
-                  style={{
-                    backgroundColor: "#F08000",
-                    fontFamily: "Montserrat, sans-serif",
-                    fontSize: "15px",
-                    width: "200px",
-                  }}
-                >
-                  Update
-                </Button>
-              </div>
-            </div>
-          </div>
-        </form>
+                <div className="form-shipping-content-button">
+                  <Button
+                    variant="contained"
+                    className="button-actulizare"
+                    type="submit"
+                    style={{
+                      backgroundColor: '#F08000',
+                      fontFamily: 'Montserrat, sans-serif',
+                      fontSize: '15px',
+                      width: '200px',
+                    }}
+                  >
+                    Actualizare
+                  </Button>
+                </div>
+              </form>
+            </Box>
+          </Box>
+        </div>
       </div>
     </div>
   );

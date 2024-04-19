@@ -1,20 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
-.background-container {
-  position: relative;
-  z-index: 1;
-}
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 .container-form {
   position: relative;
   display: flex;
-  /* justify-content: space-evenly; */
   margin-bottom: 40px;
-  background-color: #eeebdd;
+  /* background-color: #eeebdd; */
+  background-color: whitesmoke;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 .contact-image {
   margin-top: 20px;
   height: 800px;
   margin-left: 40px;
+  
 }
 
 
@@ -27,7 +27,7 @@
   font-size: 20px;
   padding-left: 250px;
   padding-right: 250px;
-  font-family: "Quicksand", sans-serif;
+  font-family: "Montserrat", sans-serif !important;
 }
 .grid-image {
   display: flex;
@@ -39,7 +39,12 @@
   justify-content: center;
   align-items: center;
   padding: 20px 20px 20px 10px;
+  font-family: "Montserrat", sans-serif !important;
 }
-/* contact-form-navbar {
-  width: 100%;
-} */
+
+.form-contact{
+  margin-left: 140px;
+}
+.typografy{
+  font-family: "Montserrat", sans-serif !important;
+}

@@ -70,13 +70,13 @@ function ContactForm() {
                 boxShadow: 1,
               }}
             >
-              <Typography variant="h4" align="center" mb={2}>
-                Contact Us
+              <Typography variant="h4" align="center" mb={2} className='typografy'>
+                Contactează-ne
               </Typography>
               <form onSubmit={handleSubmit}>
                 <TextField
                   fullWidth
-                  label="Subject"
+                  label="Subiect"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   margin="normal"
@@ -93,7 +93,7 @@ function ContactForm() {
                 />
                 <TextField
                   fullWidth
-                  label="Message"
+                  label="Mesaj"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   margin="normal"
@@ -115,7 +115,7 @@ function ContactForm() {
                       },
                     }}
                   >
-                    {loading ? "Sending..." : "Submit"}
+                    {loading ? "Sending..." : "Trimite"}
                   </Button>
                 </div>
               </form>
