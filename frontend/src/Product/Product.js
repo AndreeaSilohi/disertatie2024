@@ -1,19 +1,20 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Link } from "react-router-dom";
-import ProductDetails from "../ProductDetails/ProductDetails";
-import { Store } from "../Store";
-import Button from "@mui/material/Button";
-import axios from "axios";
-import "./Product.css";
-import { Wishlist } from "../W";
-import MessageBox from "../MessageBox";
-
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Link } from 'react-router-dom';
+import ProductDetails from '../ProductDetails/ProductDetails';
+import { Store } from '../Store';
+import Button from '@mui/material/Button';
+import axios from 'axios';
+import './Product.css';
+import { Wishlist } from '../W';
+import MessageBox from '../MessageBox';
+import { useNavigate } from 'react-router-dom';
 function Product(props) {
+  const navigate = useNavigate();
   let reviewsRef = useRef();
   const { product, userToken } = props;
   const { stateW, dispatch: ctxDispatchW } = useContext(Wishlist);
@@ -27,22 +28,20 @@ function Product(props) {
     userInfoCart,
   } = state;
 
- 
-
   const fetchWishlistItems = async (token) => {
     console.log(token);
     try {
-      const { data } = await axios.get("/api/wishlist", {
+      const { data } = await axios.get('/api/wishlist', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       ctxDispatchW({
-        type: "WISHLIST_SET_ITEMS",
+        type: 'WISHLIST_SET_ITEMS',
         payload: data.wishlistItems,
       });
     } catch (error) {
-      console.error("Error fetching wishlist items:", error);
+      console.error('Error fetching wishlist items:', error);
     }
   };
 
@@ -57,21 +56,20 @@ function Product(props) {
   const addToCartHandler = async (product, event) => {
     event.preventDefault();
     event.stopPropagation();
-   
+
     if (!userToken) {
-      alert("You are not logged in. Please log in to add items to the cart.");
+      alert('You are not logged in. Please log in to add items to the cart.');
+      navigate('/signin');
       return;
     }
 
     try {
       // Check stock availability
       const { data } = await axios.get(`/api/products/${product._id}`);
-
       const existItem = cartItems.find((x) => x._id === product._id);
       const quantity = existItem ? existItem.quantity + 1 : 1;
-
       if (data.stoc < quantity) {
-        window.alert("Sorry. Product is out of stock");
+        window.alert('Sorry. Product is out of stock');
         return;
       }
 
@@ -85,7 +83,7 @@ function Product(props) {
         );
       } else {
         const response = await axios.post(
-          "/api/cart",
+          '/api/cart',
           {
             quantity: quantity,
             slug: product.slug,
@@ -101,17 +99,17 @@ function Product(props) {
       }
 
       ctxDispatch({
-        type: "CART_ADD_ITEM",
+        type: 'CART_ADD_ITEM',
         payload: { ...product, quantity },
       });
-      ctxDispatchW({ type: "CREATE_SUCCESS" });
+      ctxDispatchW({ type: 'CREATE_SUCCESS' });
       setNotification(`${product.name} was added to the cart`);
       setTimeout(() => {
         setNotification(null);
       }, 3000);
     } catch (error) {
-      console.error("Error adding to cart:", error);
-      window.alert("Failed to add to cart. Please try again later.");
+      console.error('Error adding to cart:', error);
+      window.alert('Failed to add to cart. Please try again later.');
     }
   };
 
@@ -121,17 +119,17 @@ function Product(props) {
 
     if (!userToken) {
       alert(
-        "You are not logged in. Please log in to add items to the wihslist."
+        'You are not logged in. Please log in to add items to the wihslist.'
       );
       return;
     }
     try {
-      ctxDispatchW({ type: "CREATE_REQUEST" });
+      ctxDispatchW({ type: 'CREATE_REQUEST' });
       const token = userToken;
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       const { data } = await axios.post(
-        "/api/wishlist",
+        '/api/wishlist',
         {
           wishlistItems: [
             {
@@ -150,20 +148,20 @@ function Product(props) {
 
       fetchWishlistItems(token);
       ctxDispatchW({
-        type: "WISHLIST_ADD_ITEM",
+        type: 'WISHLIST_ADD_ITEM',
         payload: { ...item },
       });
       console.log(!isInWishlist);
       setIsInWishlist(true);
-      ctxDispatchW({ type: "CREATE_SUCCESS" });
+      ctxDispatchW({ type: 'CREATE_SUCCESS' });
       setNotification(`${item.name} a fost adăugat în lista de favorite`);
       setTimeout(() => {
         setNotification(null);
       }, 3000);
     } catch (err) {
-      ctxDispatchW({ type: "CREATE_FAIL" });
-      console.error("Error adding to wishlist:", err);
-      window.alert("Failed to add to wishlist. Please try again later.");
+      ctxDispatchW({ type: 'CREATE_FAIL' });
+      console.error('Error adding to wishlist:', err);
+      window.alert('Failed to add to wishlist. Please try again later.');
     }
   };
 
@@ -172,26 +170,26 @@ function Product(props) {
     event.stopPropagation();
 
     try {
-      ctxDispatchW({ type: "CREATE_REQUEST" });
+      ctxDispatchW({ type: 'CREATE_REQUEST' });
       const token = userToken;
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       await axios.delete(`/api/wishlist/${item._id}`, {
         headers: headers,
       });
-      console.log("Deleted from wishlist:", item._id);
+      console.log('Deleted from wishlist:', item._id);
       fetchWishlistItems(token);
-      ctxDispatchW({ type: "WISHLIST_REMOVE_ITEM", payload: item });
+      ctxDispatchW({ type: 'WISHLIST_REMOVE_ITEM', payload: item });
       setIsInWishlist(false); // Set isInWishlist to false locally
-      ctxDispatchW({ type: "CREATE_SUCCESS" });
+      ctxDispatchW({ type: 'CREATE_SUCCESS' });
       setNotification(`${item.name}a fost eliminat din lista de favorite`);
       setTimeout(() => {
         setNotification(null);
       }, 3000);
     } catch (error) {
-      console.error("Error removing item from wishlist:", error);
+      console.error('Error removing item from wishlist:', error);
       window.alert(
-        "Failed to remove item from wishlist. Please try again later."
+        'Failed to remove item from wishlist. Please try again later.'
       );
     }
   };
@@ -199,7 +197,7 @@ function Product(props) {
   const handleCardClick = (product) => {
     setSelectedProduct(product);
   };
- 
+
   return (
     <div>
       <Link
@@ -210,8 +208,8 @@ function Product(props) {
         <div
           className="card"
           style={{
-            backgroundColor: "#f3f3f3",
-            paddingBottom: "25px",
+            backgroundColor: '#f3f3f3',
+            paddingBottom: '25px',
           }}
           onClick={() => handleCardClick(product)}
         >
@@ -231,7 +229,7 @@ function Product(props) {
               {product.name}
             </Typography>
             <Typography className="typografy-price" color="text.secondary">
-               {product.price} de lei
+              {product.price} de lei
             </Typography>
           </CardContent>
 
@@ -244,8 +242,8 @@ function Product(props) {
               }
               aria-label="Add to Wishlist"
               // color={wishlistItems[product._id] ? "secondary" : "default"}
-              color={isInWishlist ? "secondary" : "default"}
-              sx={{ marginRight: "8px" }}
+              color={isInWishlist ? 'secondary' : 'default'}
+              sx={{ marginRight: '8px' }}
             >
               <FavoriteIcon />
             </IconButton>
@@ -256,15 +254,15 @@ function Product(props) {
             ) : (
               <Button
                 variant="contained"
-                style={{ backgroundColor: "#d77e2b" }}
+                style={{ backgroundColor: '#d77e2b' }}
                 sx={{
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: "15px",
-                  textTransform: "uppercase",
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontSize: '15px',
+                  textTransform: 'uppercase',
                 }}
                 onClick={(event) => addToCartHandler(product, event)}
               >
-                {" "}
+                {' '}
                 Add to cart
               </Button>
             )}
@@ -272,7 +270,7 @@ function Product(props) {
         </div>
       </Link>
       {notification && <div className="notification">{notification}</div>}
-      {selectedProduct && <ProductDetails userToken={userToken}/>}
+      {selectedProduct && <ProductDetails userToken={userToken} />}
     </div>
   );
 }

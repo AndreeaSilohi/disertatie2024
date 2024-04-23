@@ -1,6 +1,5 @@
 import React, { useContext, useReducer, useState, useEffect } from 'react';
 import { Store } from '../Store';
-import { useNavigate } from 'react-router-dom';
 import { Typography, Button, Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import './ProfileScreen.css';
@@ -20,7 +19,7 @@ const reducer = (state, action) => {
   }
 };
 export default function ProfileScreen() {
-  const navigate = useNavigate();
+ 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
 
@@ -34,10 +33,6 @@ export default function ProfileScreen() {
     loadingUpdate: false,
   });
 
-  // useEffect(() => {
-  //   setName(userInfo.name);
-  //   setEmail(userInfo.email);
-  // }, [userInfo]);
   const submitHandler = async (e) => {
     e.preventDefault();
     dispatch({ type: 'UPDATE_REQUEST' });
@@ -63,7 +58,6 @@ export default function ProfileScreen() {
       setNotification('Informațiile au fost actualizate cu succes');
       setTimeout(() => {
         setNotification(null);
-        // navigate('/contact');
       }, 3000);
     } catch (error) {
       dispatch({ type: 'UPDATE_FAIL' });
@@ -135,7 +129,7 @@ export default function ProfileScreen() {
 
                 <TextField
                   style={{ marginBottom: '35px', width: '70%' }}
-                  label="Parolă"
+                  label="Parolă nouă"
                   variant="outlined"
                   type="password"
                   fullWidth
@@ -145,7 +139,7 @@ export default function ProfileScreen() {
 
                 <TextField
                   style={{ marginBottom: '35px', width: '70%' }}
-                  label="Confirmă parolă"
+                  label="Confirmă parolă nouă"
                   variant="outlined"
                   type="password"
                   fullWidth
