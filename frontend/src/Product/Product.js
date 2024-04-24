@@ -57,6 +57,7 @@ function Product(props) {
     event.preventDefault();
     event.stopPropagation();
 
+    console.log(product);
     if (!userToken) {
       alert('You are not logged in. Please log in to add items to the cart.');
       navigate('/signin');
@@ -78,7 +79,7 @@ function Product(props) {
       if (existItem) {
         const response = await axios.put(
           `/api/cart/${existItem._id}`,
-          { quantity: quantity },
+          { quantity: quantity, stoc: product.stoc },
           { headers: headers }
         );
       } else {
@@ -91,11 +92,13 @@ function Product(props) {
             image: product.image,
             price: product.price,
             productId: product._id,
+            stoc: product.stoc,
           },
           {
             headers: headers,
           }
         );
+        console.log(response);
       }
 
       ctxDispatch({
@@ -208,7 +211,7 @@ function Product(props) {
         <div
           className="card"
           style={{
-            backgroundColor: '#f3f3f3',
+            // backgroundColor: '#f3f3f3',
             paddingBottom: '25px',
           }}
           onClick={() => handleCardClick(product)}
@@ -225,11 +228,12 @@ function Product(props) {
               gutterBottom
               variant="h5"
               component="div"
+              sx={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               {product.name}
             </Typography>
-            <Typography className="typografy-price" color="text.secondary">
-              {product.price} de lei
+            <Typography className="typografy-price" color="text.secondary"  sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+              {product.price} lei
             </Typography>
           </CardContent>
 

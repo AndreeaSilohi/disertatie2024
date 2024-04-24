@@ -46,7 +46,7 @@ export default function PlaceOrder() {
   cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
 
   cart.taxPrice = round2(0.15 * cart.itemsPrice);
-  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+  cart.totalPrice = cart.itemsPrice + cart.shippingPrice;
 
   const placeOrderHandler = async () => {
     try {
@@ -208,14 +208,14 @@ export default function PlaceOrder() {
                           </Grid>
                         </ListItem>
                         <ListItem>
-                          <Grid container>
+                          {/* <Grid container>
                             <Grid item xs>
                               Tax
                             </Grid>
                             <Grid item xs>
                               {cart.taxPrice} lei
                             </Grid>
-                          </Grid>
+                          </Grid> */}
                         </ListItem>
                         <ListItem>
                           <Grid container>

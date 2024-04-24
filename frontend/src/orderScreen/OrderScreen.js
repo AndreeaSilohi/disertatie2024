@@ -312,7 +312,7 @@ export default function OrderScreen() {
                       </Grid>
                     </Grid>
                   </ListItem>
-                  <ListItem>
+                  {/* <ListItem>
                     <Grid container>
                       <Grid item xs>
                         Tax
@@ -321,7 +321,7 @@ export default function OrderScreen() {
                         {order.taxPrice}lei
                       </Grid>
                     </Grid>
-                  </ListItem>
+                  </ListItem> */}
                   <ListItem>
                     <Grid container>
                       <Grid item xs>

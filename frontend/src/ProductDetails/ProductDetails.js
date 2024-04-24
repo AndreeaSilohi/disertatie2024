@@ -204,6 +204,7 @@ const ProductDetails = () => {
             image: product.image,
             price: product.price,
             productId: product._id, // Ensure productId is provided correctly
+            stoc:product.stoc
           },
           {
             headers: headers,

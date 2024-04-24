@@ -8,12 +8,11 @@ import expressAsyncHandler from "express-async-handler";
 const cartRouter = express.Router();
 
 // Route to add item to cart
-// Route to add item to cart
 cartRouter.post(
     "/",
     isAuth,
     expressAsyncHandler(async (req, res) => {
-      const { slug, name, quantity, image, price, productId } = req.body;
+      const { slug, name, quantity, image, price, productId,stoc } = req.body;
   
       try {
         let userCart = await Cart.findOne({ user: req.user._id });
@@ -42,7 +41,8 @@ cartRouter.post(
             quantity,
             image,
             price,
-            product: productId, // Ensure product field is assigned correctly
+            product: productId,
+            stoc,
           });
         }
   
@@ -169,4 +169,4 @@ cartRouter.get(
 
 
   
-export default cartRouter;
+export default cartRouter;
