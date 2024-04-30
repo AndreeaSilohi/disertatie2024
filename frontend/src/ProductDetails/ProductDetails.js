@@ -308,7 +308,7 @@ const ProductDetails = () => {
                   }`}
                   onClick={() => handleClickAdditionalInfo('info')}
                 >
-                  ADDITIONAL INFORMATIONS
+                  Informații adiționale
                 </div>
                 <div
                   className={`info-review ${
@@ -316,7 +316,7 @@ const ProductDetails = () => {
                   }`}
                   onClick={() => handleClickReviews('reviews')}
                 >
-                  REVIEWS {product.numReviews}
+                 Recenzii {product.numReviews}
                 </div>
               </div>
               <div className="divider"></div>
@@ -328,7 +328,7 @@ const ProductDetails = () => {
                       fontFamily: 'Montserrat, sans-serif',
                       fontSize: '20px',
                       lineHeight: '25px',
-                      padding: '60px',
+                      padding: '0px 60px 60px 60px',
                     }}
                   >
                     {product.additional}
@@ -338,10 +338,10 @@ const ProductDetails = () => {
 
               {additionalInfoVisibleReviews && (
                 <div className="review-form">
-                  <h2 ref={reviewsRef}>Reviews</h2>
+                  <h2 ref={reviewsRef}>Recenzii</h2>
                   <div className="no-review">
                     {product.reviews.length === 0 && (
-                      <MessageBox>There are no reviews</MessageBox>
+                      <MessageBox>Nu există recenzii</MessageBox>
                     )}
                   </div>
                   <List>
@@ -488,9 +488,9 @@ const ProductDetails = () => {
               </div>
               <div className="status">
                 {product.stoc > 0 ? (
-                  <div className="in-stock">In stock</div>
+                  <div className="in-stock">În stoc</div>
                 ) : (
-                  <div className="unavailable">Unavailable</div>
+                  <div className="unavailable">Indisponibil</div>
                 )}
               </div>
               <div className="raiting">
@@ -519,7 +519,7 @@ const ProductDetails = () => {
                     }}
                     disabled
                   >
-                    Out of stock
+                    Epuizat
                   </Button>
                 ) : (
                   <Button
@@ -533,7 +533,7 @@ const ProductDetails = () => {
                     onClick={(event) => addToCartHandler(product, event)}
                   >
                     {' '}
-                    Add to cart
+                    Adaugă în coș
                   </Button>
                 )}
               </div>
@@ -552,7 +552,7 @@ const ProductDetails = () => {
                       fontFamily: 'YourChosenFont, sans-serif', // Set the desired font
                     }}
                   >
-                    <Typography>Detalii despre produs</Typography>
+                    <Typography>Detalii produs</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography
@@ -567,7 +567,7 @@ const ProductDetails = () => {
                 </Accordion>
               </div>
 
-              <div className="accordion-recenzii">
+              {/* <div className="accordion-recenzii">
                 <Accordion
                   sx={{
                     backgroundColor: '#edcea8',
@@ -591,7 +591,7 @@ const ProductDetails = () => {
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
-              </div>
+              </div> */}
             </div>
           </div>
           {loading && <LoadingBox />}

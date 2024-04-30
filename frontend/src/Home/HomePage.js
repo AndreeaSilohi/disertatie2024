@@ -35,9 +35,9 @@ function HomePage() {
       <div className="about-products">
         <div className="grid-container">
           <div className="grid-item">
-            Stupul este o intreaga farmacie. Produsele apicole sunt necesare
-            pentru oameni menține sănătatea, pentru a preveni bolile, dar și
-            pentru a aduce metabolismul la un vârf de prospețime și vitalizare.
+            Stupul este un adevărat depozit de medicamente naturale. Produsele apicole sunt esențiale
+            pentru menținerea sănătății umane, pentru a preveni bolile, dar și
+            pentru stimularea metabolismului, aducând vitalitate și prospețime.
           </div>
         </div>
         {/* <Animation /> */}

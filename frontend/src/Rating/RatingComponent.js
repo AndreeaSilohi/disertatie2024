@@ -15,7 +15,7 @@ function CustomRating(props) {
         precision={0.5}
         readOnly
       />
-      {caption ? <span>{caption}</span> : <span>{numReviews} reviews</span>}
+      {caption ? <span>{caption}</span> : <span>{numReviews} recenzii</span>}
     </div>
   );
 }

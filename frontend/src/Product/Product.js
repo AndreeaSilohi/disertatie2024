@@ -253,7 +253,7 @@ function Product(props) {
             </IconButton>
             {product.stoc === 0 ? (
               <Button variant="contained" disabled>
-                Out of stock
+                Epuizat
               </Button>
             ) : (
               <Button
@@ -267,7 +267,7 @@ function Product(props) {
                 onClick={(event) => addToCartHandler(product, event)}
               >
                 {' '}
-                Add to cart
+                Adaugă în coș
               </Button>
             )}
           </div>

@@ -214,25 +214,35 @@ export default function OrderScreen() {
                 <Typography variant="h6">Shipping</Typography>
                 <List>
                   <ListItem>
-                    <strong>Name: </strong>
+                    <strong>Nume: </strong>
                     <p>{order.shippingAddress.fullName}</p>
                   </ListItem>
                   <ListItem>
-                    <strong>Address: </strong>
+                    <strong>Adresă: </strong>
                     <p>
                       {" "}
                       {order.shippingAddress.address},{" "}
                       {order.shippingAddress.city},{" "}
                       {order.shippingAddress.postalCode},{" "}
-                      {order.shippingAddress.country}
+                      {order.shippingAddress.country},{" "}
+                      {order.shippingAddress.telephone}
+                      
+                    </p>
+                  </ListItem>
+                  <ListItem>
+                    <strong>Telefon: </strong>
+                    <p>
+                      {" "}
+                      {order.shippingAddress.telephone}
+                      
                     </p>
                   </ListItem>
                   {order.isDelivered ? (
                     <MessageBox variant="success">
-                      Delivered at {order.deliveredAt}
+                      Livrat la data de {order.deliveredAt}
                     </MessageBox>
                   ) : (
-                    <MessageBox variant="danger">Not delivered</MessageBox>
+                    <MessageBox variant="danger">Comanda nu este încă livrată</MessageBox>
                   )}
                 </List>
               </CardContent>
@@ -240,18 +250,18 @@ export default function OrderScreen() {
 
             <Card className="mb-3" style={{ marginTop: "40px" }}>
               <CardContent>
-                <Typography variant="h6">Payment</Typography>
+                <Typography variant="h6">Plată</Typography>
                 <List>
                   <ListItem>
-                    <strong>Method: </strong>
+                    <strong>Metodă de plată: </strong>
                     <p>{order.paymentMethod}</p>
                   </ListItem>
                   {order.isPaid ? (
                     <MessageBox variant="success">
-                      Paid at {order.paidAt}
+                      Plătită {order.paidAt}
                     </MessageBox>
                   ) : (
-                    <MessageBox variant="danger">Not paid</MessageBox>
+                    <MessageBox variant="danger">Neplătită</MessageBox>
                   )}
                 </List>
               </CardContent>
@@ -259,7 +269,7 @@ export default function OrderScreen() {
 
             <Card className="mb-3" style={{ marginTop: "40px" }}>
               <CardContent>
-                <Typography variant="h6">Items</Typography>
+                <Typography variant="h6">Produse</Typography>
                 <List>
                   {order.orderItems.map((item) => (
                     <ListItem key={item._id}>
@@ -290,12 +300,12 @@ export default function OrderScreen() {
           <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6">Order Summary</Typography>
+                <Typography variant="h6">Sumarul comenzii</Typography>
                 <List>
                   <ListItem>
                     <Grid container>
                       <Grid item xs>
-                        Items
+                       Produse
                       </Grid>
                       <Grid item xs>
                         {order.itemsPrice}lei
@@ -305,7 +315,7 @@ export default function OrderScreen() {
                   <ListItem>
                     <Grid container>
                       <Grid item xs>
-                        Shipping
+                        Livrare
                       </Grid>
                       <Grid item xs>
                         {order.shippingPrice}lei
@@ -325,7 +335,7 @@ export default function OrderScreen() {
                   <ListItem>
                     <Grid container>
                       <Grid item xs>
-                        <strong> Order Total</strong>
+                        <strong>Totalul comenzii</strong>
                       </Grid>
                       <Grid item xs>
                         <strong>{order.totalPrice}LEI</strong>
@@ -354,7 +364,7 @@ export default function OrderScreen() {
                       {loadingDeliver && <LoadingBox></LoadingBox>}
                       <div>
                         <Button type="button" onClick={deliverOrderHandler}>
-                          Deliver Order
+                          Livrează comanda
                         </Button>
                       </div>
                     </ListItem>

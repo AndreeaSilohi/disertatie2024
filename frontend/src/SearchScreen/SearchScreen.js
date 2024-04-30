@@ -168,11 +168,11 @@ export default function SearchScreen() {
             <Select
               sx={{
                 fontFamily: 'Montserrat, sans-serif',
-                backgroundColor:"white",
+                backgroundColor: 'white',
                 fontSize: '17px',
                 width: '190px',
-                display:"flex",
-                justifyContent:"center"
+                display: 'flex',
+                justifyContent: 'center',
               }}
               value={order}
               onChange={(e) => {
@@ -279,7 +279,7 @@ export default function SearchScreen() {
             className={styles.title}
             sx={{ fontFamily: 'Montserrat, sans-serif' }}
           >
-           Cele mai apreciate
+            Cele mai apreciate
           </Typography>
           <ul className={styles.reviewContainer}>
             {ratings.map((r) => (
@@ -300,7 +300,10 @@ export default function SearchScreen() {
                 to={getFilterUrl({ rating: 'all' })}
                 className={rating === 'all' ? 'text-bold' : ''}
               >
-                <RatingComponent caption={' și peste'} rating={0}></RatingComponent>
+                <RatingComponent
+                  caption={' și peste'}
+                  rating={0}
+                ></RatingComponent>
               </Link>
             </li>
           </ul>

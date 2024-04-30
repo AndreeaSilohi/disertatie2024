@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "../navbar/Navbar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import { useNavigate } from "react-router-dom";
-import "./ShippingAddress.css";
-import { Store } from "../Store";
-import { useContext } from "react";
-import CheckoutSteps from "../CheckoutSteps/CheckoutSteps";
-import miere from "../assets/miere.png";
+import React, { useEffect, useState } from 'react';
+import Navbar from '../navbar/Navbar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { useNavigate } from 'react-router-dom';
+import './ShippingAddress.css';
+import { Store } from '../Store';
+import { useContext } from 'react';
+import CheckoutSteps from '../CheckoutSteps/CheckoutSteps';
+import miere from '../assets/miere.png';
 export default function ShippingAddress() {
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -17,17 +17,18 @@ export default function ShippingAddress() {
     cart: { shippingAddress },
   } = state;
 
-  const [fullName, setFullName] = useState(shippingAddress.fullName || "");
-  const [address, setAddress] = useState(shippingAddress.address || "");
-  const [city, setCity] = useState(shippingAddress.city || "");
+  const [fullName, setFullName] = useState(shippingAddress.fullName || '');
+  const [address, setAddress] = useState(shippingAddress.address || '');
+  const [city, setCity] = useState(shippingAddress.city || '');
   const [postalCode, setPostalCode] = useState(
-    shippingAddress.postalCode || ""
+    shippingAddress.postalCode || ''
   );
-  const [country, setCountry] = useState(shippingAddress.country || "");
+  const [country, setCountry] = useState(shippingAddress.country || '');
+  const [telephone, setTelephone] = useState(shippingAddress.telephone || '');
 
   useEffect(() => {
     if (!userInfo) {
-      navigate("/signin?redirect=/shipping");
+      navigate('/signin?redirect=/shipping');
     }
   }, [userInfo, navigate]);
 
@@ -35,34 +36,33 @@ export default function ShippingAddress() {
     e.preventDefault();
 
     ctxDispatch({
-      type: "SAVE_SHIPPING_ADDRESS",
+      type: 'SAVE_SHIPPING_ADDRESS',
       payload: {
         fullName,
         address,
         city,
         postalCode,
         country,
+        telephone,
       },
     });
     localStorage.setItem(
-      "shippingAddress",
+      'shippingAddress',
       JSON.stringify({
         fullName,
         address,
         city,
         postalCode,
         country,
+        telephone,
       })
     );
-    navigate("/payment");
+    navigate('/payment');
   };
 
   return (
     <div className="container-shipping">
       <div className="image-background">
-        {/* <div className="navbar-shipping">
-          <Navbar />
-        </div> */}
         <div className="total">
           <div className="left">
             <img className="left-img" src={miere}></img>
@@ -80,7 +80,7 @@ export default function ShippingAddress() {
                   </div>
                   <div className="form-shipping-fields">
                     <TextField
-                      style={{ marginBottom: "35px", width: "70%" }}
+                      style={{ marginBottom: '35px', width: '70%' }}
                       label="Full name"
                       variant="standard"
                       fullWidth
@@ -90,7 +90,7 @@ export default function ShippingAddress() {
                     />
 
                     <TextField
-                      style={{ marginBottom: "35px", width: "70%" }}
+                      style={{ marginBottom: '35px', width: '70%' }}
                       label="Address"
                       variant="standard"
                       fullWidth
@@ -100,7 +100,7 @@ export default function ShippingAddress() {
                     />
 
                     <TextField
-                      style={{ marginBottom: "35px", width: "70%" }}
+                      style={{ marginBottom: '35px', width: '70%' }}
                       label="City"
                       variant="standard"
                       fullWidth
@@ -110,7 +110,7 @@ export default function ShippingAddress() {
                     />
 
                     <TextField
-                      style={{ marginBottom: "35px", width: "70%" }}
+                      style={{ marginBottom: '35px', width: '70%' }}
                       label="Postal code"
                       variant="standard"
                       fullWidth
@@ -120,13 +120,23 @@ export default function ShippingAddress() {
                     />
 
                     <TextField
-                      style={{ marginBottom: "35px", width: "70%" }}
+                      style={{ marginBottom: '35px', width: '70%' }}
                       label="Country"
                       variant="standard"
                       fullWidth
                       required
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
+                    />
+
+                    <TextField
+                      style={{ marginBottom: '35px', width: '70%' }}
+                      label="Telephone"
+                      variant="standard"
+                      fullWidth
+                      required
+                      value={telephone}
+                      onChange={(e) => setTelephone(e.target.value)}
                     />
                     <button className="button-continue">Continue</button>
                   </div>

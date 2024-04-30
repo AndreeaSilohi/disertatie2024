@@ -1,12 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 .detalii-page {
-  background-color:white;
+  background-color: white;
   height: 100%;
 }
 .detalii-titlu {
   font-size: 20px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   display: flex;
   justify-content: flex-start;
 }
@@ -41,7 +41,7 @@
   color: rgb(215, 126, 43);
   display: flex;
   margin-left: 20px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .detalii-quantity {
@@ -77,11 +77,12 @@
 }
 
 .accordion-detalii {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .group-btn {
   color: black;
+  padding: 20px;
 }
 
 .group-btn {
@@ -90,8 +91,8 @@
 }
 
 .info-review {
-  font-family: "Montserrat", sans-serif;
-  color: "black";
+  font-family: 'Montserrat', sans-serif;
+  color: 'black';
   font-size: 20px;
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.199);
@@ -115,27 +116,24 @@
   margin-bottom: 40px;
 }
 
-
-.status{
+.status {
   padding: 14px;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
 }
 .in-stock {
   color: #4caf50;
-
 }
 
 .unavailable {
   color: red;
-
 }
 
-.review-form{
-    font-family: "Montserrat", sans-serif !important;
-    padding: 40px;
+.review-form {
+  font-family: 'Montserrat', sans-serif !important;
+  padding: 40px;
 }
 
-.user-info-review{
+.user-info-review {
   padding: 40px;
 }
