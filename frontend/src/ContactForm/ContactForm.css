@@ -60,7 +60,7 @@
   justify-content: space-between;
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 .grid-item-program{
   color: black;

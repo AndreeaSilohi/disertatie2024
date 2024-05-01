@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 .container-about {
   position: relative;
 }
@@ -12,10 +12,10 @@
 
 .h1-title-about {
   margin-top: 20%;
-  padding:20px;
+  padding: 20px;
   font-size: 3rem;
   white-space: nowrap;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
 }
 .about-us {
@@ -27,7 +27,7 @@
 }
 .header-about {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(https://i.postimg.cc/RFGMnDcF/Whats-App-Image-2024-04-15-at-23-06-54-34757276-1-1.png);
+    url(https://i.postimg.cc/sXGZG9zt/Whats-App-Image-2024-05-01-at-20-29-11-daf8eb6e.png);
   background-size: cover;
   height: 400px;
 }
@@ -39,7 +39,7 @@
   transform: translate(-50%, -50%);
   color: white;
   text-align: center;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 .about-us-grid-container {
   display: grid;
@@ -48,15 +48,17 @@
 }
 .about-us-grid-item {
   margin-top: 40px;
-  padding-left: 300px;
-  padding-right: 300px;
-  font-family: "Montserrat", sans-serif;
+
+  padding-left: 100px;
+  padding-right: 100px;
+  font-family: 'Montserrat', sans-serif;
   text-align: center;
+  font-size: 22px;
   color: rgb(7, 7, 7);
 }
 
 .text-title {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 25px;
 }
 
@@ -71,7 +73,7 @@
   padding: 40px;
 }
 .about-us-grid-item-left {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: black;
   font-size: 30px;
   padding: 150px;
@@ -83,13 +85,13 @@
   margin-top: 100px;
 }
 .grid-item-img-right {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: black;
   font-size: 30px;
   padding: 150px;
 }
 .about-us-grid-item-right {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 30px;
   display: flex;
   justify-content: center;
@@ -99,4 +101,100 @@
 
 .about-navbar {
   width: 100%;
+}
+
+.hexagon-container {
+  margin-top: 150px;
+  display: flex;
+  justify-content: center; /* Center the hexagons horizontally */
+  flex-wrap: wrap;
+}
+.hexagon {
+  width: 175px; /* Adjust the width as needed */
+  height: 200.47px; /* Adjust the height as needed */
+  position: relative;
+  margin: 50px 20px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  overflow: hidden; /* Ensure the image doesn't overflow */
+}
+
+.hexagon:nth-child(1),
+.hexagon:nth-child(3),
+.hexagon:nth-child(5),
+.hexagon:nth-child(7) {
+  margin-top: -40px; /* Adjust the negative margin to move them up */
+}
+.hexagon img {
+  width: auto;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hexagon:before,
+.hexagon:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+}
+
+.hexagon:before {
+  top: -25px;
+  border-bottom: 25px solid #6c7a89; /* Adjust the color to match the background */
+}
+
+.hexagon:after {
+  bottom: -25px;
+  border-top: 25px solid #6c7a89; /* Adjust the color to match the background */
+}
+
+.content-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.content-left {
+  margin-left: 60px;
+  margin-bottom: 40px;
+}
+
+.content-right {
+  margin-left: 80px;
+
+  margin-bottom: 40px;
+}
+
+.div-images-right {
+  display: flex;
+  justify-content: center;
+}
+.img-right {
+  width: 500px;
+  height: 800px;
+}
+.div-images-right {
+  gap: 120px;
+}
+
+.p-right {
+  margin-bottom: 40px;
+  text-align: left;
+  font-size: 22px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.img-left {
+  height: 700px;
+}
+
+.social-media {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
 }

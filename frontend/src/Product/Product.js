@@ -106,7 +106,7 @@ function Product(props) {
         payload: { ...product, quantity },
       });
       ctxDispatchW({ type: 'CREATE_SUCCESS' });
-      setNotification(`${product.name} was added to the cart`);
+      setNotification(`${product.name} a fost adăugat în coș`);
       setTimeout(() => {
         setNotification(null);
       }, 3000);
