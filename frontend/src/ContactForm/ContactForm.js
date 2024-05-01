@@ -79,6 +79,9 @@ function ContactForm() {
                     onChange={(e) => setSubject(e.target.value)}
                     margin="normal"
                     required
+                    InputProps={{
+                      style: { backgroundColor: 'whitesmoke' } 
+                    }}
                   />
                   <TextField
                     fullWidth
@@ -88,6 +91,9 @@ function ContactForm() {
                     margin="normal"
                     required
                     type="email"
+                    InputProps={{
+                      style: { backgroundColor: 'whitesmoke' } 
+                    }}
                   />
                   <TextField
                     fullWidth
@@ -98,6 +104,9 @@ function ContactForm() {
                     required
                     multiline
                     rows={4}
+                    InputProps={{
+                      style: { backgroundColor: 'whitesmoke' } 
+                    }}
                   />
                   <div className="button-submit">
                     <Button

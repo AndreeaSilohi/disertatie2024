@@ -6,7 +6,7 @@
   display: flex;
   margin-bottom: 40px;
   /* background-color: #eeebdd; */
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   font-family: "Montserrat", sans-serif !important;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .container-contact-form{
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   
 }
 .form-contact-info {
@@ -64,7 +64,7 @@
 }
 .grid-item-program{
   color: black;
-  background-color: white;
+  background-color: whitesmoke;
   font-size: 20px;
   margin-right: 40px;
   width: 50%;

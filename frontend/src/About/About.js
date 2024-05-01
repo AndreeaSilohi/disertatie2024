@@ -69,21 +69,21 @@ function About() {
 
       <div className="about-us-grid-item">
         <p>
-          Apicultorii care se ocupa de prepararea mierii si a produselor
-          derivate au o experienta de aproximativ 20 de ani cu albinele si in
-          prepararea mierii. Daca interesul dumneavoastra pentru produsele
-          apicole a fost starnit, va invitam si pe canalele noastre de Facebook,
-          TikTok si Instagram pentru a ne urmari activitatea.
+          Apicultorii care se ocupă de prepararea mierii și a produselor
+          derivate au o experiență de aproximativ 20 de ani cu albinele și in
+          prepararea mierii. Dacă interesul dumneavoastră pentru produsele
+          apicole a fost stârnit, vă invităm și pe canalele noastre de Facebook,
+          Instagram și TikTok pentru a ne urmări activitatea.
         </p>
         <div className="social-media">
           <div>
-            <FacebookLogo size={40} style={{color:"#FFA500"}}/>
+            <FacebookLogo size={40} style={{ color: '#FFA500' }} />
           </div>
           <div>
-            <InstagramLogo size={40} style={{color:"#FFA500"}} />
+            <InstagramLogo size={40} style={{ color: '#FFA500' }} />
           </div>
           <div>
-            <TiktokLogo size={40}  style={{color:"#FFA500"}}/>
+            <TiktokLogo size={40} style={{ color: '#FFA500' }} />
           </div>
         </div>
       </div>
