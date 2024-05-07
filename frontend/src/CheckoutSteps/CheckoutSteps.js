@@ -7,16 +7,16 @@ const CheckoutSteps = (props) => {
     <Grid  >
       <div className="checkout-steps">
         <div>
-          <StepItem className="step" label="Sign-In" active={props.step1} />
+          <StepItem className="step" label="Logare" active={props.step1} />
         </div>
         <div>
-          <StepItem className="step" label="Shipping" active={props.step2} />
+          <StepItem className="step" label="Detalii livrare" active={props.step2} />
         </div>
         <div>
-          <StepItem className="step" label="Payment" active={props.step3} />
+          <StepItem className="step" label="Metodă plată" active={props.step3} />
         </div>
         <div>
-          <StepItem className="step" label="Place Order" active={props.step4} />
+          <StepItem className="step" label="Plasare comandă" active={props.step4} />
         </div>
       </div>
     </Grid>

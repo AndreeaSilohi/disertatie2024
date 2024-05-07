@@ -7,7 +7,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width:1200px;
+  width:1400px;
   /* gap:300px; */
   border-bottom: 2px solid #ccc;
 }
@@ -18,7 +18,7 @@
   padding: 8px;
   text-align: center;
   background-color: #ffa60011;
-  width: 120px;
+  width: 160px;
   font-family: "Montserrat", sans-serif !important;
 }
 

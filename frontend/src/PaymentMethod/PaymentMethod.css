@@ -1,4 +1,4 @@
-.container-payment{
+.container-payment {
   background-color: whitesmoke;
 }
 
@@ -6,14 +6,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .left-img-payment {
   margin-left: -100px;
   margin-right: 100px;
   /* width:500px; */
-  height:700px;
+  height: 700px;
 }
 
 .form-payment-method {
@@ -21,29 +20,26 @@
   justify-content: center;
   align-items: center;
 }
-.checkout-steps-payment{
+.checkout-steps-payment {
   width: 100%;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 }
 
-.form-controls{
-font-size: 25px;
-  height:300px
+.form-controls {
+  font-size: 25px;
+  height: 300px;
 }
 
-.form-label{
-  font-size: 40px;
-}
-.button-continue-payment{
+.button-continue-payment {
   font-family: 'Montserrat', sans-serif !important;
   width: 200px;
   font-size: 20px;
-  background-color: #FFA500;
+  background-color: #ffa500;
   color: white;
   border: none;
   cursor: pointer;
   height: 60px;
-  margin-top:25px;
+  margin-top: 25px;
   border-radius: 10px;
 }
