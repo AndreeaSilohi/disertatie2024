@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 .detalii-page {
-  background-color: white;
+  background-color: whitesmoke;
   height: 100%;
 }
 .detalii-titlu {
@@ -12,23 +12,23 @@
 }
 
 .detalii-card {
-  margin-top: 100px;
   text-align: center;
   font-size: 40px;
-  margin-left: 20px;
-}
-.detalii-container {
-  display: flex;
+  padding: 100px;
 }
 
-.detalii-left {
+.detalii-produs {
+  padding: 150px 100px 100px 100px;
+  width: 80%;
+}
+.detalii-card img {
+  width: 500px;
+}
+
+.detalii-sus {
   flex: 1;
-  padding: 40px 40px 0px 40px;
-}
-
-.detalii-right {
-  flex: 1.5;
-  padding: 150px;
+  display: flex;
+  /* padding: 40px 40px 0px 40px; */
 }
 
 .card-media {
@@ -38,17 +38,18 @@
 }
 
 .detalii-pret {
-  color: rgb(215, 126, 43);
+  color: #ffa500;
   display: flex;
-  margin-left: 20px;
-  font-family: 'Montserrat', sans-serif;
+
+  font-size: '26px';
+  text-transform: uppercase;
 }
 
 .detalii-quantity {
   display: flex;
   align-items: center;
   padding: 20px;
-  margin-left: -40px;
+  margin-left: -25px;
 }
 
 .accordion-recenzii {
@@ -69,25 +70,21 @@
 .product-single {
   width: 100%;
   display: block;
-  transition: opacity 0.3s ease; /* Add a smooth transition for opacity changes */
+  transition: opacity 0.3s ease;
 }
 
 .raiting {
-  padding-top: 20px;
+  margin-top: 20px;
 }
 
 .accordion-detalii {
   font-family: 'Montserrat', sans-serif;
+  margin-left: -5px;
 }
 
 .group-btn {
-  color: black;
-  padding: 20px;
-}
-
-.group-btn {
+  padding-left: 84px;
   display: flex;
-  justify-content: center;
 }
 
 .info-review {
@@ -95,7 +92,8 @@
   color: 'black';
   font-size: 20px;
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.199);
+  /* border: 1px solid rgba(0, 0, 0, 0.199); */
+
   padding: 16px;
   border-bottom: none;
 }
@@ -105,8 +103,8 @@
 }
 
 .selected {
-  color: white;
-  background-color: black;
+  color: #ffa500;
+  /* background-color: black; */
 }
 
 .divider {
@@ -117,7 +115,7 @@
 }
 
 .status {
-  padding: 14px;
+  padding: 14px 0px 0px 0px;
   font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
 }
@@ -131,9 +129,37 @@
 
 .review-form {
   font-family: 'Montserrat', sans-serif !important;
-  padding: 40px;
+  padding: 0px 100px;
 }
 
 .user-info-review {
   padding: 40px;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+.avatar-recenzie {
+  width: 90px;
+  height: 80px;
+  border-radius: 50%;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.review-img-name {
+  display: flex;
+  align-items: center;
+}
+
+.comment {
+  font-family: 'Montserrat', sans-serif !important;
+  margin-left: 115px;
+  font-size: 18px;
+}
+
+.p-lasa-recenzie{
+  font-size: 28px;
+  padding: 20px 20px 20px 0px;
+}
+form{
+  width:500px;
 }

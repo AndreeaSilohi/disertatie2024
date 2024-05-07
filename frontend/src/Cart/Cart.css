@@ -187,7 +187,7 @@
 .empty-cart-button {
   width: 200px;
   height: 50px;
-  background-color: #D77E2B;
+  background-color: #FFA500;
   color: white;
   border: none;
   margin: 10px;
@@ -202,6 +202,7 @@
   justify-content: center;
   width: 100%;
   padding: 20px;
+ 
 }
 
 /* .button-subtotal {
@@ -218,7 +219,7 @@
 .button-subtotal {
   width: 180px;
   font-size: 16px;
-  background-color: #D77E2B;
+  background-color: #FFA500;
   color: white;
   border: none;
   cursor: pointer;

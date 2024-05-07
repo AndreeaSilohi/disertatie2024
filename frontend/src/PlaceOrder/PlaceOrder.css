@@ -19,12 +19,12 @@
   display: flex;
 }
 
-.image-background {
+/* .image-background {
   background: repeat center url("../assets/opacity4.png");
   background-position: center center;
   background-size: cover;
   opacity: 0.8;
-}
+} */
 
 .header-center {
   font-family: "Montserrat", sans-serif;

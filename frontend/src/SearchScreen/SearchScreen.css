@@ -196,6 +196,7 @@ ul {
   right: 0;
 }
 .container-search{
-  background-color: #f7f3f0;
+  /* background-color: #f7f3f0; */
+  background-color: whitesmoke;
   font-family: 'Montserrat', sans-serif;
 }

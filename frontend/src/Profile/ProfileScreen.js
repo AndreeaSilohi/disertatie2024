@@ -103,6 +103,7 @@ export default function ProfileScreen() {
                 align="center"
                 mb={2}
                 className="typografy"
+                sx={{padding:"20px"}}
               >
                 Actualizare date personale
               </Typography>

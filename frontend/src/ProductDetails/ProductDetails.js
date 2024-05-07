@@ -10,7 +10,6 @@ import React, {
 import { useNavigate, useParams } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
-import Navbar from '../navbar/Navbar';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -36,6 +35,7 @@ import MessageBox from '../MessageBox';
 import { Store } from '../Store';
 import RatingComponent from '../Rating/RatingComponent';
 import { getError } from '../utils';
+import { ShoppingCartSimple, UserCircle } from 'phosphor-react';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -58,8 +58,31 @@ const reducer = (state, action) => {
   }
 };
 
+const formatDate = (dateString) => {
+  const months = [
+    'ianuarie',
+    'februarie',
+    'martie',
+    'aprilie',
+    'mai',
+    'iunie',
+    'iulie',
+    'august',
+    'septembrie',
+    'octombrie',
+    'noiembrie',
+    'decembrie',
+  ];
+
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+};
+
 const ProductDetails = () => {
-  let reviewsRef = useRef();
+  let reviewsRef = useRef(null);
   const params = useParams();
   const { slug } = params;
 
@@ -130,6 +153,7 @@ const ProductDetails = () => {
     if (userInfo) {
       fetchOrders();
     }
+    handleClickAdditionalInfo('info'); //adaugat
   }, [slug, userInfo]);
 
   // console.log(orders);
@@ -141,7 +165,7 @@ const ProductDetails = () => {
   };
 
   // const cartItemAmount = cartItems[product.id];
-  const [selectedTab, setSelectedTab] = useState(null);
+  const [selectedTab, setSelectedTab] = useState('info');
   const [selectedTabReviews, setSelectedTabReviews] = useState(null);
   const [additionalInfoVisible, setAdditionalInfoVisible] = useState(false);
   const [additionalInfoVisibleReviews, setAdditionalInfoVisibleReviews] =
@@ -204,7 +228,7 @@ const ProductDetails = () => {
             image: product.image,
             price: product.price,
             productId: product._id, // Ensure productId is provided correctly
-            stoc:product.stoc
+            stoc: product.stoc,
           },
           {
             headers: headers,
@@ -251,8 +275,6 @@ const ProductDetails = () => {
         }
       );
 
-      // console.log(user);
-
       dispatch({
         type: 'CREATE_SUCCESS',
       });
@@ -265,6 +287,10 @@ const ProductDetails = () => {
         behavior: 'smooth',
         top: reviewsRef.current.offsetTop,
       });
+
+      setRating(0); // Assuming initial value for rating is 0
+      setComment('');
+      
     } catch (error) {
       window.alert(getError(error));
       dispatch({ type: 'CREATE_FAIL' });
@@ -272,10 +298,6 @@ const ProductDetails = () => {
   };
   return (
     <div className="detalii-page">
-      {/* <div className="detalii-navbar">
-        <Navbar />
-      </div> */}
-
       {error ? (
         <div style={{ height: '100vh' }}>
           <MessageBox severity="error">{error}</MessageBox>
@@ -287,20 +309,127 @@ const ProductDetails = () => {
           </div>
 
           <div className="detalii-container">
-            <div className="detalii-left">
+            <div className="detalii-sus">
               <div className="detalii-card">
-                <img
-                  className="card-media"
-                  src={product.image}
-                  alt="Miere"
-                  style={{
-                    maxWidth: 400,
-                    maxHeight: 400,
-                    width: '100%',
-                  }}
-                />
+                <img className="card-media" src={product.image} alt="Miere" />
               </div>
 
+              <div className="detalii-produs">
+                <div className="detalii-titlu">
+                  <Typography
+                    gutterBottom
+                    variant="h4"
+                    component="div"
+                    sx={{
+                      fontFamily: 'Montserrat, sans-serif',
+                      fontSize: '35px',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    {product.name}
+                  </Typography>
+                </div>
+                <div className="detalii-pret">
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontFamily: 'Montserrat, sans-serif',
+                    }}
+                  >
+                    {product.price} lei
+                  </Typography>
+                </div>
+                <div className="status">
+                  {product.stoc > 0 ? (
+                    <div className="in-stock">În stoc</div>
+                  ) : (
+                    <div className="unavailable">Indisponibil</div>
+                  )}
+                </div>
+                <div className="raiting">
+                  <Box
+                    sx={{
+                      '& > legend': { mt: 2 },
+                      fontFamily: 'Montserrat, sans-serif',
+                    }}
+                  >
+                    <RatingComponent
+                      rating={product.rating}
+                      numReviews={product.numReviews}
+                    >
+                      {' '}
+                    </RatingComponent>
+                  </Box>
+                </div>
+                <div className="detalii-quantity">
+                  {product.stoc === 0 ? (
+                    <Button
+                      variant="contained"
+                      sx={{
+                        fontFamily: 'Montserrat, sans-serif',
+                        fontSize: '15px',
+                        textTransform: 'uppercase',
+                      }}
+                      disabled
+                    >
+                      Epuizat
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: '#FFA500' }}
+                      sx={{
+                        fontFamily: 'Montserrat, sans-serif',
+                        fontSize: '15px',
+                        textTransform: 'uppercase',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '10px',
+                      }}
+                      onClick={(event) => addToCartHandler(product, event)}
+                    >
+                      <ShoppingCartSimple size={24} />
+                      &nbsp; Adaugă în coș
+                    </Button>
+                  )}
+                </div>
+                <div className="detalii-descriere"></div>
+                <div className="accordion-detalii">
+                  <Accordion
+                    sx={{
+                      backgroundColor: 'white',
+                    }}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography
+                        sx={{
+                          fontFamily: 'Montserrat, sans-serif',
+                        }}
+                      >
+                        Detalii produs
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography
+                        sx={{
+                          fontSize: '15px',
+                          fontFamily: 'Montserrat, sans-serif',
+                        }}
+                      >
+                        {product.description}
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
+              </div>
+            </div>
+
+            <div className="detalii-jos">
               <div className="group-btn">
                 <div
                   className={`info-review ${
@@ -308,7 +437,7 @@ const ProductDetails = () => {
                   }`}
                   onClick={() => handleClickAdditionalInfo('info')}
                 >
-                  Informații adiționale
+                  INFORMAȚII ADIȚIONALE
                 </div>
                 <div
                   className={`info-review ${
@@ -316,10 +445,10 @@ const ProductDetails = () => {
                   }`}
                   onClick={() => handleClickReviews('reviews')}
                 >
-                 Recenzii {product.numReviews}
+                  RECENZII ({product.numReviews})
                 </div>
               </div>
-              <div className="divider"></div>
+              {/* <div className="divider"></div> */}
 
               {additionalInfoVisible && (
                 <div className="additional-info">
@@ -328,7 +457,7 @@ const ProductDetails = () => {
                       fontFamily: 'Montserrat, sans-serif',
                       fontSize: '20px',
                       lineHeight: '25px',
-                      padding: '0px 60px 60px 60px',
+                      padding: '0px 60px 60px 100px',
                     }}
                   >
                     {product.additional}
@@ -337,8 +466,8 @@ const ProductDetails = () => {
               )}
 
               {additionalInfoVisibleReviews && (
-                <div className="review-form">
-                  <h2 ref={reviewsRef}>Recenzii</h2>
+                <div className="review-form" ref={reviewsRef}>
+                  {/* <p className="recenzii-title"ref={reviewsRef}>Recenzii</p> */}
                   <div className="no-review">
                     {product.reviews.length === 0 && (
                       <MessageBox>Nu există recenzii</MessageBox>
@@ -353,23 +482,39 @@ const ProductDetails = () => {
                             fontSize: '25px',
                           }}
                         >
-                          <img
-                            src={review.profilePhoto}
-                            alt="User Avatar"
-                            style={{
-                              width: '30px', // Set the width of the image
-                              height: '30px', // Set the height of the image
-                              borderRadius: '50%', // Make the image circular
-                              marginTop: '20px',
-                            }}
-                          ></img>
-                          <strong>
-                            {review.name}&nbsp;-&nbsp;
-                            {review.createdAt.substring(0, 10)}
-                          </strong>
-                          <RatingComponent rating={review.rating} caption=" " />
-                          {/* <p >{review.createdAt.substring(0, 10)}</p> */}
-                          <p>{review.comment}</p>
+                          <div className="review-img-name">
+                            <div>
+                              {/* {user.isAdmin ? (
+                                <UserCircle size={70} /> // Render icon for administrator
+                              ) : ( */}
+                                <img
+                                  src={review.profilePhoto}
+                                  alt="User Avatar"
+                                  className="avatar-recenzie"
+                                />
+                              {/* )} */}
+                            </div>
+                            <div>
+                              <div className="stars-name">
+                                <RatingComponent
+                                  rating={review.rating}
+                                  caption=" "
+                                />
+                                <p
+                                  style={{
+                                    marginTop: '5px',
+                                    fontFamily: 'Montserrat, sans-serif',
+                                  }}
+                                >
+                                  <strong>{review.name}&nbsp;&nbsp;</strong>-
+                                  {formatDate(review.createdAt)}{' '}
+                                </p>
+                              </div>{' '}
+                            </div>
+                          </div>
+                          <div className="comment">
+                            <p>{review.comment}</p>
+                          </div>
                         </ListItemText>
                       </ListItem>
                     ))}
@@ -383,7 +528,9 @@ const ProductDetails = () => {
                           <div className="user-info-review">
                             {userInfo ? (
                               <form onSubmit={submitHandler}>
-                                <h2>Write a customer review</h2>
+                                <p className="p-lasa-recenzie">
+                                  Lasă o recenzie
+                                </p>
 
                                 <FormControl fullWidth>
                                   <InputLabel id="rating-label">
@@ -393,26 +540,27 @@ const ProductDetails = () => {
                                     labelId="rating-label"
                                     id="rating"
                                     value={rating}
-                                    label="Rating"
+                                    label="Ra ting"
                                     onChange={(e) => setRating(e.target.value)}
                                   >
                                     <MenuItem value="">
-                                      <em>Select...</em>
+                                      <em>Selectează...</em>
                                     </MenuItem>
-                                    <MenuItem value={1}>1- Poor</MenuItem>
-                                    <MenuItem value={2}>2- Fair</MenuItem>
-                                    <MenuItem value={3}>3- Good</MenuItem>
-                                    <MenuItem value={4}>4- Very good</MenuItem>
-                                    <MenuItem value={5}>5- Excellent</MenuItem>
+                                    <MenuItem value={1}>1- Slab</MenuItem>
+                                    <MenuItem value={2}>2- Acceptabil</MenuItem>
+                                    <MenuItem value={3}>3- Bun</MenuItem>
+                                    <MenuItem value={4}>4- Foarte bun</MenuItem>
+                                    <MenuItem value={5}>5- Excelent</MenuItem>
                                   </Select>
-                                  <FormHelperText>
+                                  {/* <FormHelperText>
                                     Please select a rating
-                                  </FormHelperText>
+                                  </FormHelperText> */}
                                 </FormControl>
                                 <TextField
                                   id="comment"
-                                  label="Comments"
-                                  placeholder="Leave a comment here"
+                                  label="Comentariu"
+                                  placeholder="Lasă un comentariu"
+                                  margin="normal"
                                   multiline
                                   fullWidth
                                   value={comment}
@@ -422,9 +570,9 @@ const ProductDetails = () => {
                                   disabled={loadingCreateReview}
                                   type="submit"
                                   variant="contained"
-                                  sx={{ mt: 2 }}
+                                  sx={{ mt: 2, backgroundColor: '#FFA500' }}
                                 >
-                                  Submit
+                                  Trimite
                                 </Button>
                                 {loadingCreateReview && (
                                   <LoadingBox></LoadingBox>
@@ -441,10 +589,8 @@ const ProductDetails = () => {
                           // Show a message if the product is not in orders
                           <MessageBox>
                             {userInfo ? (
-                              // If the user is logged in and the product is not in orders
                               'This product is not in your orders. You cannot let a review'
                             ) : (
-                              // If the user is not logged in
                               <>
                                 Please <Link to={'/signin'}>Sign In</Link> to
                                 write a review
@@ -457,141 +603,6 @@ const ProductDetails = () => {
                   </div>
                 </div>
               )}
-            </div>
-
-            <div className="detalii-right">
-              <div className="detalii-titlu">
-                <Typography
-                  gutterBottom
-                  variant="h4"
-                  component="div"
-                  sx={{
-                    fontFamily: 'Montserrat, sans-serif',
-                    fontSize: '35px',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {product.name}
-                </Typography>
-              </div>
-              <div className="detalii-pret">
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontFamily: 'Montserrat, sans-serif',
-                    fontSize: '35px',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {product.price} lei
-                </Typography>
-              </div>
-              <div className="status">
-                {product.stoc > 0 ? (
-                  <div className="in-stock">În stoc</div>
-                ) : (
-                  <div className="unavailable">Indisponibil</div>
-                )}
-              </div>
-              <div className="raiting">
-                <Box
-                  sx={{
-                    '& > legend': { mt: 2 },
-                    fontFamily: 'Montserrat, sans-serif',
-                  }}
-                >
-                  <RatingComponent
-                    rating={product.rating}
-                    numReviews={product.numReviews}
-                  >
-                    {' '}
-                  </RatingComponent>
-                </Box>
-              </div>
-              <div className="detalii-quantity">
-                {product.stoc === 0 ? (
-                  <Button
-                    variant="contained"
-                    sx={{
-                      fontFamily: 'Montserrat, sans-serif',
-                      fontSize: '15px',
-                      textTransform: 'uppercase',
-                    }}
-                    disabled
-                  >
-                    Epuizat
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    style={{ backgroundColor: '#d77e2b' }}
-                    sx={{
-                      fontFamily: 'Montserrat, sans-serif',
-                      fontSize: '15px',
-                      textTransform: 'uppercase',
-                    }}
-                    onClick={(event) => addToCartHandler(product, event)}
-                  >
-                    {' '}
-                    Adaugă în coș
-                  </Button>
-                )}
-              </div>
-              <div className="detalii-descriere"></div>
-              <div className="accordion-detalii">
-                <Accordion
-                  sx={{
-                    backgroundColor: '#edcea8',
-                  }}
-                >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    sx={{
-                      fontFamily: 'YourChosenFont, sans-serif', // Set the desired font
-                    }}
-                  >
-                    <Typography>Detalii produs</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography
-                      sx={{
-                        // fontFamily: "Quicksand, sans-serif",
-                        fontSize: '15px',
-                      }}
-                    >
-                      {product.description}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              </div>
-
-              {/* <div className="accordion-recenzii">
-                <Accordion
-                  sx={{
-                    backgroundColor: '#edcea8',
-                  }}
-                >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>Recenzii</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography
-                      sx={{
-                        fontFamily: 'Quicksand, sans-serif',
-                        fontSize: '15px',
-                      }}
-                    >
-                      {product.description}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              </div> */}
             </div>
           </div>
           {loading && <LoadingBox />}

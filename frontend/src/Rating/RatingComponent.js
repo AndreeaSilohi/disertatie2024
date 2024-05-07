@@ -1,6 +1,6 @@
 import React from "react";
 import Rating from "@mui/material/Rating";
-
+import './RatingComponent.css';
 function CustomRating(props) {
   const { rating, numReviews, caption } = props;
 
@@ -9,13 +9,19 @@ function CustomRating(props) {
 
   return (
     <div className="rating">
+
       <Rating
         name="custom-rating"
         value={roundHalf(rating)}
         precision={0.5}
         readOnly
       />
+
+      &nbsp;
+
       {caption ? <span>{caption}</span> : <span>{numReviews} recenzii</span>}
+  
+      
     </div>
   );
 }

@@ -2,28 +2,29 @@
 
 
 .checkout-steps {
-
   margin-bottom: 16px;
   margin-top: 40px; 
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  align-items: center;
+  width:1200px;
+  /* gap:300px; */
   border-bottom: 2px solid #ccc;
 }
 
 .step-item {
   flex-grow: 1;
-
   border-radius: 4px;
   padding: 8px;
   text-align: center;
-  background-color: whitesmoke;
+  background-color: #ffa60011;
   width: 120px;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 .active-step {
-  background-color: 	#353935 !important;
-  font-family: "Montserrat", sans-serif;
+  background-color: 	#FFA500 !important;
+  font-family: "Montserrat", sans-serif !important;
   color: #fff;
 }
 

@@ -190,7 +190,7 @@ function Cart() {
                       className="table-content-4"
                       onClick={() => removeItemHandler(product)}
                     >
-                      <Trash style={{ color: '#D77E2B' }} size={28} />
+                      <Trash style={{ color: '#FFA500' }} size={28} />
                     </div>
                   </div>
                 </div>

@@ -80,7 +80,7 @@ function ContactForm() {
                     margin="normal"
                     required
                     InputProps={{
-                      style: { backgroundColor: 'whitesmoke' } 
+                      style: { backgroundColor: '#f7f3f0' } 
                     }}
                   />
                   <TextField
@@ -92,7 +92,7 @@ function ContactForm() {
                     required
                     type="email"
                     InputProps={{
-                      style: { backgroundColor: 'whitesmoke' } 
+                      style: { backgroundColor: '#f7f3f0' } 
                     }}
                   />
                   <TextField
@@ -105,7 +105,7 @@ function ContactForm() {
                     multiline
                     rows={4}
                     InputProps={{
-                      style: { backgroundColor: 'whitesmoke' } 
+                      style: { backgroundColor: '#f7f3f0' } 
                     }}
                   />
                   <div className="button-submit">

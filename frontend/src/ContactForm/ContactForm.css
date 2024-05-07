@@ -1,22 +1,21 @@
-
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+.container-contact-form {
+  background-color: whitesmoke;
+}
 .container-form {
   position: relative;
   display: flex;
   margin-bottom: 40px;
   /* background-color: #eeebdd; */
-  /* background-color: whitesmoke; */
-  font-family: "Montserrat", sans-serif !important;
+
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 .contact-image {
   margin-top: 20px;
   height: 800px;
   margin-left: 40px;
-  
 }
-
 
 .contact-image:hover {
   transform: scale(1.05);
@@ -27,8 +26,8 @@
   /* padding-left: 250px;
   padding-right: 250px; */
   padding-left: 80px;
-  font-family: "Montserrat", sans-serif !important;
-  width:100%;
+  font-family: 'Montserrat', sans-serif !important;
+  width: 100%;
 }
 .grid-image {
   display: flex;
@@ -40,20 +39,17 @@
   justify-content: center;
   align-items: center;
   padding: 20px 20px 20px 10px;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
-.form-contact{
+.form-contact {
   margin-left: 140px;
 }
-.typografy{
-  font-family: "Montserrat", sans-serif !important;
+.typografy {
+  font-family: 'Montserrat', sans-serif !important;
+  color: #ffa500;
 }
 
-.container-contact-form{
-  /* background-color: whitesmoke; */
-  
-}
 .form-contact-info {
   display: flex;
   /* align-items: center; */
@@ -62,18 +58,20 @@
   font-weight: 300;
   /* margin-top: 60px; */
 }
-.grid-item-program{
+.grid-item-program {
   color: black;
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
+  background-color: #f7f3f0;
   font-size: 20px;
   margin-right: 40px;
   width: 50%;
-  height:45%;
+  height: 45%;
   border-radius: 8px;
   /* box-shadow: 5px 10px #f9f9f9; */
-  margin-top:40px;
- margin-bottom:40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.223);
 }
-.form{
-  padding-top:100px;
+.form {
+  padding-top: 100px;
 }

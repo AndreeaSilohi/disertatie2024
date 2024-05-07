@@ -258,7 +258,7 @@ function Product(props) {
             ) : (
               <Button
                 variant="contained"
-                style={{ backgroundColor: '#d77e2b' }}
+                style={{ backgroundColor: '#FFA500' }}
                 sx={{
                   fontFamily: 'Montserrat, sans-serif',
                   fontSize: '15px',
