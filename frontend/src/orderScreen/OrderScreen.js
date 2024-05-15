@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useReducer } from "react";
-import LoadingBox from "../LoadingBox";
-import MessageBox from "../MessageBox";
-import { Store } from "../Store";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { getError } from "../utils";
-import { Link as RouterLink } from "react-router-dom";
-import Navbar from "../navbar/Navbar";
-import "./OrderScreen.css";
+import React, { useContext, useEffect, useReducer } from 'react';
+import LoadingBox from '../LoadingBox';
+import MessageBox from '../MessageBox';
+import { Store } from '../Store';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { getError } from '../utils';
+import { Link as RouterLink } from 'react-router-dom';
+import Navbar from '../navbar/Navbar';
+import './OrderScreen.css';
 import {
   Card,
   CardContent,
@@ -16,36 +16,36 @@ import {
   List,
   ListItem,
   Grid,
-} from "@mui/material";
+} from '@mui/material';
 
-import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 
 function reducer(state, action) {
   switch (action.type) {
-    case "FETCH_REQUEST":
-      return { ...state, loading: true, error: "" };
-    case "FETCH_SUCCESS":
-      return { ...state, loading: false, order: action.payload, error: "" };
-    case "FETCH_FAIL":
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true, error: '' };
+    case 'FETCH_SUCCESS':
+      return { ...state, loading: false, order: action.payload, error: '' };
+    case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
 
-    case "PAY_REQUEST":
+    case 'PAY_REQUEST':
       return { ...state, loadingPay: true };
-    case "PAY_SUCCESS":
+    case 'PAY_SUCCESS':
       return { ...state, loadingPay: false, successPay: true };
-    case "PAY_FAIL":
+    case 'PAY_FAIL':
       return { ...state, loadingPay: false };
-    case "PAY_RESET":
+    case 'PAY_RESET':
       return { ...state, loadingPay: false, successPay: false };
 
-    case "DELIVER_REQUEST":
+    case 'DELIVER_REQUEST':
       return { ...state, loadingDeliver: true };
 
-    case "DELIVER_SUCCESS":
+    case 'DELIVER_SUCCESS':
       return { ...state, loadingDeliver: false, successDeliver: true };
-    case "FETCH_FAIL":
+    case 'FETCH_FAIL':
       return { ...state, loadingDeliver: false };
-    case "DELIVER_RESET":
+    case 'DELIVER_RESET':
       return {
         ...state,
         loadingDeliver: false,
@@ -76,7 +76,7 @@ export default function OrderScreen() {
   ] = useReducer(reducer, {
     loading: true,
     order: {},
-    error: "",
+    error: '',
     successPay: false,
     loadingPay: false,
   });
@@ -100,7 +100,7 @@ export default function OrderScreen() {
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
-        dispatch({ type: "PAY_REQUEST" });
+        dispatch({ type: 'PAY_REQUEST' });
         const { data } = await axios.put(
           `/api/orders/${order._id}/pay`,
           details,
@@ -108,10 +108,10 @@ export default function OrderScreen() {
             headers: { authorization: `Bearer ${userInfo.token}` },
           }
         );
-        dispatch({ type: "PAY_SUCCESS", payload: data });
-        window.alert("Order is paid!");
+        dispatch({ type: 'PAY_SUCCESS', payload: data });
+        window.alert('Order is paid!');
       } catch (err) {
-        dispatch({ type: "PAY_FAIL", payload: getError(err) });
+        dispatch({ type: 'PAY_FAIL', payload: getError(err) });
         window.alert(getError(err));
       }
     });
@@ -124,20 +124,20 @@ export default function OrderScreen() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        dispatch({ type: "FETCH_REQUEST" });
+        dispatch({ type: 'FETCH_REQUEST' });
         const { data } = await axios.get(`/api/orders/${orderId}`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
-        dispatch({ type: "FETCH_SUCCESS", payload: data });
+        dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
         dispatch({
-          type: "FETCH_FAIL",
+          type: 'FETCH_FAIL',
           payload: getError(err),
         });
       }
     };
     if (!userInfo) {
-      return navigate("/login");
+      return navigate('/login');
     }
     if (
       !order._id ||
@@ -147,25 +147,25 @@ export default function OrderScreen() {
     ) {
       fetchOrder();
       if (successPay) {
-        dispatch({ type: "PAY_RESET" });
+        dispatch({ type: 'PAY_RESET' });
       }
 
       if (successDeliver) {
-        dispatch({ type: "DELIVER_RESET" });
+        dispatch({ type: 'DELIVER_RESET' });
       }
     } else {
       const loadPaypalScript = async () => {
-        const { data: clientId } = await axios.get("/api/keys/paypal", {
+        const { data: clientId } = await axios.get('/api/keys/paypal', {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         paypalDispatch({
-          type: "resetOptions",
+          type: 'resetOptions',
           value: {
-            "client-id": clientId,
-            currency: "EUR",
+            'client-id': clientId,
+            currency: 'EUR',
           },
         });
-        paypalDispatch({ type: "setLoadingStatus", value: "pending" });
+        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
       };
       loadPaypalScript();
     }
@@ -181,7 +181,7 @@ export default function OrderScreen() {
 
   async function deliverOrderHandler() {
     try {
-      dispatch({ type: "DELIVER_REQUEST" });
+      dispatch({ type: 'DELIVER_REQUEST' });
       const { data } = await axios.put(
         `/api/orders/${order._id}/deliver`,
         {},
@@ -189,11 +189,11 @@ export default function OrderScreen() {
           headers: { authorization: `Bearer ${userInfo.token}` },
         }
       );
-      dispatch({ type: "DELIVER_SUCCESS", payload: data });
-      window.alert("Order is delivered!");
+      dispatch({ type: 'DELIVER_SUCCESS', payload: data });
+      window.alert('Order is delivered!');
     } catch (err) {
       window.alert(getError(err));
-      dispatch({ type: "DELIVER_FAIL" });
+      dispatch({ type: 'DELIVER_FAIL' });
     }
   }
   return loading ? (
@@ -206,35 +206,39 @@ export default function OrderScreen() {
         <Navbar />
       </div> */}
       <div className="order-content">
-        <h1>Order {orderId}</h1>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <Card className="mb-3">
               <CardContent>
-                <Typography variant="h6">Shipping</Typography>
+                <Typography
+                  variant="h6"
+                  style={{
+                    fontSize: '25px',
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                >
+                  Informații client
+                </Typography>
                 <List>
                   <ListItem>
-                    <strong>Nume: </strong>
+                    <strong>Nume: &nbsp;</strong>
                     <p>{order.shippingAddress.fullName}</p>
                   </ListItem>
                   <ListItem>
                     <strong>Adresă: </strong>
                     <p>
-                      {" "}
-                      {order.shippingAddress.address},{" "}
-                      {order.shippingAddress.city},{" "}
-                      {order.shippingAddress.postalCode},{" "}
-                      {order.shippingAddress.country},{" "}
-                      {order.shippingAddress.telephone}
-                      
+                      &nbsp;
+                      {order.shippingAddress.address},{' '}
+                      {order.shippingAddress.city},{' '}
+                      {order.shippingAddress.postalCode},{' '}
+                      {order.shippingAddress.country}
                     </p>
                   </ListItem>
                   <ListItem>
                     <strong>Telefon: </strong>
                     <p>
-                      {" "}
+                      &nbsp;
                       {order.shippingAddress.telephone}
-                      
                     </p>
                   </ListItem>
                   {order.isDelivered ? (
@@ -242,18 +246,28 @@ export default function OrderScreen() {
                       Livrat la data de {order.deliveredAt}
                     </MessageBox>
                   ) : (
-                    <MessageBox variant="danger">Comanda nu este încă livrată</MessageBox>
+                    <MessageBox variant="danger">
+                      Comanda nu este încă livrată
+                    </MessageBox>
                   )}
                 </List>
               </CardContent>
             </Card>
 
-            <Card className="mb-3" style={{ marginTop: "40px" }}>
+            <Card className="mb-3" style={{ marginTop: '40px' }}>
               <CardContent>
-                <Typography variant="h6">Plată</Typography>
+                <Typography
+                  variant="h6"
+                  style={{
+                    fontSize: '25px',
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                >
+                  Plată
+                </Typography>
                 <List>
                   <ListItem>
-                    <strong>Metodă de plată: </strong>
+                    <strong>Metodă de plată: &nbsp;</strong>
                     <p>{order.paymentMethod}</p>
                   </ListItem>
                   {order.isPaid ? (
@@ -267,28 +281,43 @@ export default function OrderScreen() {
               </CardContent>
             </Card>
 
-            <Card className="mb-3" style={{ marginTop: "40px" }}>
+            <Card className="mb-3" style={{ marginTop: '40px' }}>
               <CardContent>
-                <Typography variant="h6">Produse</Typography>
+                <Typography
+                  variant="h6"
+                  style={{
+                    fontSize: '25px',
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                >
+                  Produse
+                </Typography>
                 <List>
                   {order.orderItems.map((item) => (
                     <ListItem key={item._id}>
                       <Grid container alignItems="center">
-                        <Grid item xs={6}>
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="img-fluid rounded img-thumbnail"
-                          />
-                          <RouterLink to={`/product/${item.slug}`}>
-                            {item.name}
-                          </RouterLink>
-                        </Grid>
-                        <Grid item xs={3}>
-                          <span>{item.quantity}</span>
-                        </Grid>
-                        <Grid item xs={3}>
-                          {item.price}lei
+                        <Grid item>
+                          <div className="div-img-order-screen">
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="grid-img-order-screen"
+                            />
+
+                            <RouterLink
+                              style={{
+                                fontSize: '18px',
+                                width: '220px',
+                              }}
+                              to={`/product/${item.slug}`}
+                              className="router-name"
+                            >
+                              {item.name}
+                            </RouterLink>
+
+                            <p className="quantity-price">{item.quantity}</p>
+                            <p className="quantity-price">{item.price} lei</p>
+                          </div>
                         </Grid>
                       </Grid>
                     </ListItem>
@@ -298,17 +327,31 @@ export default function OrderScreen() {
             </Card>
           </Grid>
           <Grid item xs={12} md={4}>
-            <Card>
+            <Card className="order-pay">
               <CardContent>
-                <Typography variant="h6">Sumarul comenzii</Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontFamily: 'Montserrat, sans-serif',
+                    fontSize: '25px',
+                  }}
+                >
+                  Totalul comenzii
+                </Typography>
                 <List>
                   <ListItem>
-                    <Grid container>
+                    <Grid
+                      container
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                      }}
+                    >
                       <Grid item xs>
-                       Produse
+                        Produse
                       </Grid>
                       <Grid item xs>
-                        {order.itemsPrice}lei
+                        {order.itemsPrice} lei
                       </Grid>
                     </Grid>
                   </ListItem>
@@ -318,7 +361,7 @@ export default function OrderScreen() {
                         Livrare
                       </Grid>
                       <Grid item xs>
-                        {order.shippingPrice}lei
+                        {order.shippingPrice}&nbsp;lei
                       </Grid>
                     </Grid>
                   </ListItem>
@@ -338,12 +381,18 @@ export default function OrderScreen() {
                         <strong>Totalul comenzii</strong>
                       </Grid>
                       <Grid item xs>
-                        <strong>{order.totalPrice}LEI</strong>
+                        <strong>{order.totalPrice}&nbsp;LEI</strong>
                       </Grid>
                     </Grid>
                   </ListItem>
-                  {!order.isPaid && order.paymentMethod !== 'Cash' &&(
-                    <ListItem>
+                  {!order.isPaid && order.paymentMethod !== 'Cash' && (
+                    <ListItem
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
                       {isPending ? (
                         <LoadingBox />
                       ) : (

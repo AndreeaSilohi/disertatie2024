@@ -5,10 +5,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import Button from '@mui/material/Button';
 import { Store } from '../Store';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../navbar/Navbar';
 import './PaymentMethod.css';
 import albine from '../assets/albine.png';
 import backgroundNew from '../assets/backgroundNew.png';
@@ -74,7 +72,7 @@ export default function PaymentMethod() {
                   label="PayPal"
                 />
                 <FormControlLabel
-                 sx={{fontSize:"35px"}}
+                  sx={{ fontSize: '35px' }}
                   value="Cash"
                   control={<Radio />}
                   label="Cash la livrare"

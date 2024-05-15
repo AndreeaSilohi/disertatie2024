@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useReducer } from "react";
-import axios from "axios";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useReducer } from 'react';
+import axios from 'axios';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -9,21 +9,19 @@ import {
   List,
   ListItem,
   Grid,
-} from "@mui/material";
-
-import CheckoutSteps from "../CheckoutSteps/CheckoutSteps";
-import Navbar from "../navbar/Navbar";
-import { Store } from "../Store";
-import LoadingBox from "../LoadingBox";
-import "./PlaceOrder.css";
+} from '@mui/material';
+import CheckoutSteps from '../CheckoutSteps/CheckoutSteps';
+import { Store } from '../Store';
+import LoadingBox from '../LoadingBox';
+import './PlaceOrder.css';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "CREATE_REQUEST":
+    case 'CREATE_REQUEST':
       return { ...state, loading: true };
-    case "CREATE_SUCCESS":
+    case 'CREATE_SUCCESS':
       return { ...state, loading: false };
-    case "CREATE_FAIL":
+    case 'CREATE_FAIL':
       return { ...state, loading: false };
     default:
       return state;
@@ -50,9 +48,9 @@ export default function PlaceOrder() {
 
   const placeOrderHandler = async () => {
     try {
-      dispatch({ type: "CREATE_REQUEST" });
+      dispatch({ type: 'CREATE_REQUEST' });
       const { data } = await axios.post(
-        "/api/orders",
+        '/api/orders',
         {
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,
@@ -71,126 +69,177 @@ export default function PlaceOrder() {
 
       // Reduce stock quantity for each product in the cart
       for (const item of cart.cartItems) {
-        console.log(item)
+        console.log(item);
         await axios.put(`/api/products/${item.slug}/reduceStock`, {
           quantity: item.quantity,
         });
       }
-      await axios.delete("/api/cart", {
+      await axios.delete('/api/cart', {
         headers: {
           authorization: `Bearer ${userInfo.token}`,
         },
       });
 
-      ctxDispatch({ type: "CART_CLEAR" });
-      dispatch({ type: "CREATE_SUCCESS" });
-      localStorage.removeItem("cartItems");
+      ctxDispatch({ type: 'CART_CLEAR' });
+      dispatch({ type: 'CREATE_SUCCESS' });
+      localStorage.removeItem('cartItems');
       navigate(`/order/${data.order._id}`);
     } catch (err) {
-      dispatch({ type: "CREATE_FAIL" });
+      dispatch({ type: 'CREATE_FAIL' });
       window.alert(err);
     }
   };
 
   useEffect(() => {
     if (!cart.paymentMethod) {
-      navigate("/payment");
+      navigate('/payment');
     }
   }, [cart, navigate]);
 
   return (
     <div className="container-place-order">
       <div className="image-background">
-        {/* <div className="navbar-place-order">
-          <Navbar />
-        </div> */}
         <div className="background-picture">
-          <h1 className="header-center">
-            <p>Preview Order</p>
-          </h1>
           <div className="center-all">
-            <div className="checkout">
+            <div className="checkout-steps-place-order">
               <CheckoutSteps step1 step2 step3 step4 />
             </div>
             <div className="place-order-content">
               <Grid container spacing={3}>
                 <Grid item xs={12} md={8}>
-                  <Card className="mb-3">
+                  <Card className="adresa-livrare">
                     <CardContent>
-                      <Typography variant="h6">Shipping</Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontFamily: 'Montserrat, sans-serif',
+                          fontSize: '25px',
+                        }}
+                      >
+                        Adresă livrare
+                      </Typography>
                       <List>
                         <ListItem>
-                          <strong>Name: </strong>
-                          <p>{cart.shippingAddress.fullName}</p>
+                          <p style={{ fontSize: '18px' }}>
+                            {cart.shippingAddress.fullName}
+                          </p>
                         </ListItem>
                         <ListItem>
-                          <strong>Address: </strong>
-                          <p>
-                            {" "}
-                            {cart.shippingAddress.address},{" "}
-                            {cart.shippingAddress.city},{" "}
-                            {cart.shippingAddress.postalCode},{" "}
+                          <p style={{ fontSize: '18px' }}>
+                            {' '}
+                            {cart.shippingAddress.address},{' '}
+                            {cart.shippingAddress.city},{' '}
+                            {cart.shippingAddress.postalCode},{' '}
                             {cart.shippingAddress.country}
                           </p>
                         </ListItem>
                       </List>
-                      <RouterLink to="/shipping">Edit</RouterLink>
+                      <RouterLink className="router-link" to="/shipping">
+                        Editează
+                      </RouterLink>
                     </CardContent>
                   </Card>
 
-                  <Card className="mb-3" style={{ marginTop: "40px" }}>
+                  <Card className="mb-3" style={{ marginTop: '40px' }}>
                     <CardContent>
-                      <Typography variant="h6">Payment</Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontFamily: 'Montserrat, sans-serif',
+                          fontSize: '25px',
+                        }}
+                      >
+                        Metodă de plată
+                      </Typography>
                       <List>
                         <ListItem>
-                          <strong>Method: </strong>
-                          <p>{cart.paymentMethod}</p>
+                          {/* <strong>Metodă: </strong> */}
+                          <p style={{ fontSize: '18px' }}>
+                            {cart.paymentMethod}
+                          </p>
                         </ListItem>
                       </List>
-                      <RouterLink to="/payment">Edit</RouterLink>
+                      <RouterLink className="router-link" to="/payment">
+                        Editează
+                      </RouterLink>
                     </CardContent>
                   </Card>
 
-                  <Card className="mb-3" style={{ marginTop: "40px" }}>
+                  <Card className="mb-3" style={{ marginTop: '40px' }}>
                     <CardContent>
-                      <Typography variant="h6">Items</Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontFamily: 'Montserrat, sans-serif',
+                          fontSize: '25px',
+                        }}
+                      >
+                        {' '}
+                        Produse comandă{' '}
+                      </Typography>
                       <List>
                         {cart.cartItems.map((item) => (
                           <ListItem key={item._id}>
                             <Grid container alignItems="center">
-                              <Grid item xs={6}>
-                                <img
-                                  src={item.image}
-                                  alt={item.name}
-                                  className="img-fluid rounded img-thumbnail"
-                                />
-                                <RouterLink to={`/product/${item.slug}`}>
-                                  {item.name}
-                                </RouterLink>
-                              </Grid>
-                              <Grid item xs={3}>
-                                <span>{item.quantity}</span>
-                              </Grid>
-                              <Grid item xs={3}>
-                                ${item.price}
+                              <Grid item>
+                                <div className="img-name">
+                                  <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    className="grid-img"
+                                  />
+                                  <RouterLink
+                                    style={{
+                                      fontSize: '18px',
+                                      width: '220px',
+                                    }}
+                                    to={`/product/${item.slug}`}
+                                    className="router-name"
+                                  >
+                                    {item.name}
+                                  </RouterLink>
+                                  <p className="quantity-price">
+                                    {item.quantity}
+                                  </p>
+                                  <p className="quantity-price">
+                                    {item.price} lei
+                                  </p>
+                                </div>
                               </Grid>
                             </Grid>
                           </ListItem>
                         ))}
                       </List>
-                      <RouterLink to="/cart">Edit</RouterLink>
+                      <RouterLink className="router-link" to="/cart">
+                        Editează
+                      </RouterLink>
                     </CardContent>
                   </Card>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Card>
+                  <Card className="order-summary">
                     <CardContent>
-                      <Typography variant="h6">Order Summary</Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontFamily: 'Montserrat, sans-serif',
+                          fontSize: '25px',
+                        }}
+                      >
+                        Sumar comandă
+                      </Typography>
                       <List>
                         <ListItem>
-                          <Grid container>
+                          <Grid
+                            container
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                            }}
+                          >
                             <Grid item xs>
-                              Items
+                              {' '}
+                              Cost produse
                             </Grid>
                             <Grid item xs>
                               {cart.itemsPrice} lei
@@ -198,9 +247,15 @@ export default function PlaceOrder() {
                           </Grid>
                         </ListItem>
                         <ListItem>
-                          <Grid container>
+                          <Grid
+                            container
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                            }}
+                          >
                             <Grid item xs>
-                              Shipping
+                              Livrare
                             </Grid>
                             <Grid item xs>
                               {cart.shippingPrice} lei
@@ -208,41 +263,40 @@ export default function PlaceOrder() {
                           </Grid>
                         </ListItem>
                         <ListItem>
-                          {/* <Grid container>
+                          <Grid
+                            container
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                            }}
+                          >
                             <Grid item xs>
-                              Tax
-                            </Grid>
-                            <Grid item xs>
-                              {cart.taxPrice} lei
-                            </Grid>
-                          </Grid> */}
-                        </ListItem>
-                        <ListItem>
-                          <Grid container>
-                            <Grid item xs>
-                              <strong> Order Total</strong>
+                              <strong style={{ fontSize: '18px' }}>
+                                Totalul comenzii
+                              </strong>
                             </Grid>
                             <Grid item xs>
                               <strong>{cart.totalPrice} lei</strong>
                             </Grid>
                           </Grid>
                         </ListItem>
+
                         <ListItem>
-                          <Grid container justifyContent="center">
+                          <Grid container>
                             <Button
                               sx={{
-                                fontFamily: "Montserrat, sans-serif",
-                                fontSize: "15px",
-                                textTransform: "uppercase",
-                                color: "black",
-                                backgroundColor: "#d77e2b",
-                                width: "400px",
+                                fontFamily: 'Montserrat, sans-serif',
+                                fontSize: '15px',
+                                textTransform: 'uppercase',
+                                color: 'white',
+                                backgroundColor: '#FFA500',
+                                width: '400px',
                               }}
                               type="button"
                               onClick={placeOrderHandler}
                               disabled={cart.cartItems.length === 0}
                             >
-                              Place Order
+                              Mergi către plată
                             </Button>
                           </Grid>
                           {loading && <LoadingBox />}

@@ -16,7 +16,7 @@ const CheckoutSteps = (props) => {
           <StepItem className="step" label="Metodă plată" active={props.step3} />
         </div>
         <div>
-          <StepItem className="step" label="Plasare comandă" active={props.step4} />
+          <StepItem className="step" label="Rezumat" active={props.step4} />
         </div>
       </div>
     </Grid>

@@ -1,6 +1,30 @@
 .order-content{
-    padding: 80px;
+    padding:40px 0px 40px 0px;
     box-sizing: border-box; /* Include padding in the total width */
     width: 90%; /* Adjust the max-width as needed */
     margin: auto; /* Center the form horizontally */
+}
+
+.container-order{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.your-order{
+    padding:15px 15px 15px 0px;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.order-pay{
+    width:100%;
+}
+.div-img-order-screen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:80px
+}
+
+.grid-img-order-screen{
+    width:160px;
 }

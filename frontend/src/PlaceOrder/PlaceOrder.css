@@ -1,33 +1,24 @@
 .container-place-order {
-  background: rgb(238, 220, 130);
+  /* background: rgb(238, 220, 130);
   background: linear-gradient(
     90deg,
     rgba(238, 220, 130, 1) 8%,
     rgba(170, 170, 170, 1) 100%
-  );
+  ); */
+  background-color: whitesmoke;
+  font-family: 'Montserrat', sans-serif;
+  padding:40px;
 }
 
 .place-order-content {
-  /* padding: 80px;
-  box-sizing: border-box; 
-  width: 90%; 
-  margin: auto;  */
-
   padding: 16px 32px;
   border-radius: 8px;
-  width: 74%;
+  width: 85%;
   display: flex;
 }
 
-/* .image-background {
-  background: repeat center url("../assets/opacity4.png");
-  background-position: center center;
-  background-size: cover;
-  opacity: 0.8;
-} */
-
 .header-center {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 32px;
   font-weight: 500;
   padding: 10px;
@@ -35,4 +26,47 @@
   justify-content: center;
 }
 
+.checkout-steps-place-order{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
+
+.order-summary{
+  margin-left:120px;
+  width:120%;
+}
+
+.adresa-livrare{
+  width:100%;
+}
+
+.grid-img{
+  width:160px;
+}
+
+.img-name{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:80px
+  
+}
+.router-name{
+  width:200px;
+  text-decoration: none;
+}
+
+.quantity-price{
+  width:70px;
+  font-size: 18px;
+ 
+}
+.grid-style{
+  width:500px
+}
+
+.router-link{
+  text-decoration: none;
+}
