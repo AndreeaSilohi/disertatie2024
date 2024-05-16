@@ -56,7 +56,7 @@ function Shop() {
       <Animation/>
       <div className="shop">
   
-      <SearchBox />
+      {/* <SearchBox /> */}
      
         <div className="cards-shop">
           {loading ? (

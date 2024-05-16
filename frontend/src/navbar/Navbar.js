@@ -11,7 +11,7 @@ import {
   UploadSimple,
   UserCircle,
   Users,
-  ChartLine
+  ChartLine,
 } from 'phosphor-react';
 import './Navbar.css';
 import logo from '../assets/logo.png';
@@ -185,9 +185,11 @@ function Navbar() {
   return (
     <div className={sidebarIsOpen ? 'navbar active-cont' : 'navbar'}>
       <div className="div-logo-menu">
-        <div className="burger-menu" onClick={toggleSidebar}>
-          <List size={28} />
-        </div>
+        {userInfo && ( // Render sidebar only if user is logged in
+          <div className="burger-menu" onClick={toggleSidebar}>
+            <List size={28} />
+          </div>
+        )}
         <img className="logo" src={logo} alt="Logo" />
       </div>
 
@@ -268,7 +270,7 @@ function Navbar() {
             <>
               {userInfo.isAdmin ? (
                 // Render admin menu
-                <div className='admin-menu'>
+                <div className="admin-menu">
                   <LightTooltip title="Panou de administrare">
                     <IconButton
                       color="inherit"
@@ -297,8 +299,8 @@ function Navbar() {
                       to="/admin/dashboard"
                       onClick={handleMenuClose}
                     >
-                      <ChartLine size={20} style={{ marginRight: '2px' }}/>
-                     
+                      <ChartLine size={20} style={{ marginRight: '2px' }} />
+
                       <span className="span-menu">Monitorizare vânzări</span>
                     </MenuItem>
                     <Divider />
@@ -310,7 +312,7 @@ function Navbar() {
                       onClick={handleMenuClose}
                     >
                       <ListBullets size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu" >Produse</span>
+                      <span className="span-menu">Produse</span>
                     </MenuItem>
 
                     <Divider />
@@ -322,7 +324,7 @@ function Navbar() {
                       onClick={handleMenuClose}
                     >
                       <List size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu" >Comenzi</span>
+                      <span className="span-menu">Comenzi</span>
                     </MenuItem>
 
                     <Divider />
@@ -334,7 +336,7 @@ function Navbar() {
                       onClick={handleMenuClose}
                     >
                       <Users size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu" >Utilizatori</span>
+                      <span className="span-menu">Utilizatori</span>
                     </MenuItem>
 
                     <Divider />
@@ -375,9 +377,7 @@ function Navbar() {
                           size={20}
                           style={{ marginRight: '2px' }}
                         />
-                        <span className="span-menu" >
-                          Încarcă fotografie
-                        </span>
+                        <span className="span-menu">Încarcă fotografie</span>
                       </label>
                       <input
                         type="file"
@@ -397,7 +397,7 @@ function Navbar() {
                       onClick={handleMenuClose}
                     >
                       <UserCircle size={25} style={{ marginRight: '5px' }} />
-                      <span className="span-menu" >Actualizare date</span>
+                      <span className="span-menu">Actualizare date</span>
                     </MenuItem>
                     <Divider />
                     <MenuItem
@@ -408,7 +408,7 @@ function Navbar() {
                       onClick={handleMenuClose}
                     >
                       <ListBullets size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu" >Istoric comenzi</span>
+                      <span className="span-menu">Istoric comenzi</span>
                     </MenuItem>
 
                     <Divider />
@@ -417,7 +417,7 @@ function Navbar() {
                       style={{ display: 'flex', alignItems: 'center' }}
                     >
                       <SignOut size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu" >Delogare</span>
+                      <span className="span-menu">Delogare</span>
                     </MenuItem>
                   </Menu>
                 </div>
@@ -439,6 +439,7 @@ function Navbar() {
         </div>
       </div>
       {/* Sidebar */}
+
       <Drawer anchor="left" open={sidebarIsOpen} onClose={toggleSidebar}>
         <MuiList className="sidebar-list">
           {categories.map((category) => (

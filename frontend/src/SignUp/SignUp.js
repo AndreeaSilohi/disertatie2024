@@ -1,9 +1,9 @@
-import { useContext, useState, useEffect } from "react";
-import Axios from "axios";
-import Navbar from "../navbar/Navbar";
-import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Store } from "../Store";
+import { useContext, useState, useEffect } from 'react';
+import Axios from 'axios';
+import Navbar from '../navbar/Navbar';
+import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Store } from '../Store';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -11,32 +11,32 @@ function SignUp() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
 
-  const redirectUrl = new URLSearchParams(search).get("redirect");
-  const redirect = redirectUrl ? redirectUrl : "/";
+  const redirectUrl = new URLSearchParams(search).get('redirect');
+  const redirect = redirectUrl ? redirectUrl : '/';
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const submitHandlerSignup = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      alert('Passwords do not match');
       return;
     }
     try {
-      const { data } = await Axios.post("/api/users/signup", {
+      const { data } = await Axios.post('/api/users/signup', {
         name,
         email,
         password,
       });
-      ctxDispatch({ type: "USER_SIGNIN", payload: data });
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      navigate(redirect || "/");
+      ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+      localStorage.setItem('userInfo', JSON.stringify(data));
+      navigate(redirect || '/');
     } catch (err) {
-      alert("Invalid email or password");
+      alert('Invalid email or password');
     }
   };
 
@@ -109,8 +109,10 @@ function SignUp() {
                       <input type="submit" value="Înregistrare" />
                     </div>
                     <div className="text sign-up-text">
-                      Ai deja un cont?{" "}
-                      <Link to={`/signin?redirect=${redirect}`}>Loghează-te</Link>
+                      Ai deja un cont?{' '}
+                      <Link to={`/signin?redirect=${redirect}`}>
+                        Loghează-te
+                      </Link>
                     </div>
                   </div>
                 </form>

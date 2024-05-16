@@ -65,7 +65,7 @@
   font-size: 20px;
   margin-right: 40px;
   width: 50%;
-  height: 45%;
+  height: 780px;
   border-radius: 8px;
   /* box-shadow: 5px 10px #f9f9f9; */
   margin-top: 40px;
@@ -74,4 +74,11 @@
 }
 .form {
   padding-top: 100px;
+}
+.h5-contact-form{
+  margin:0;
+}
+
+.inside-text-contact-form{
+  padding:30px;
 }

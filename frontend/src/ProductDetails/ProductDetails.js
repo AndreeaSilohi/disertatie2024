@@ -580,8 +580,7 @@ const ProductDetails = () => {
                               </form>
                             ) : (
                               <MessageBox>
-                                Please <Link to={'/signin'}>Sign In</Link> to
-                                write a review
+                               Te rugăm să te loghezi pentru a scrie o recenzie<Link to={'/signin'}>Sign In</Link>
                               </MessageBox>
                             )}
                           </div>
@@ -592,8 +591,7 @@ const ProductDetails = () => {
                               'This product is not in your orders. You cannot let a review'
                             ) : (
                               <>
-                                Please <Link to={'/signin'}>Sign In</Link> to
-                                write a review
+                                Te rugăm să te loghezi pentru a scrie o recenzie <Link to={'/signin'}>Logare</Link> 
                               </>
                             )}
                           </MessageBox>

@@ -23,6 +23,9 @@ function ContactForm() {
       });
       setLoading(false);
       window.alert(data.message);
+      setSubject('');
+      setEmail('');
+      setMessage('');
     } catch (err) {
       setLoading(false);
       window.alert(
@@ -39,7 +42,7 @@ function ContactForm() {
           <div className="form">
             <div className="grid-txt">
               Contactează-ne! Îți vom răspunde mai repede decât zboară
-              albinuțele din floare în floare! 
+              albinuțele din floare în floare!
             </div>
 
             <Box
@@ -80,7 +83,7 @@ function ContactForm() {
                     margin="normal"
                     required
                     InputProps={{
-                      style: { backgroundColor: '#f7f3f0' } 
+                      style: { backgroundColor: '#f7f3f0' },
                     }}
                   />
                   <TextField
@@ -92,7 +95,7 @@ function ContactForm() {
                     required
                     type="email"
                     InputProps={{
-                      style: { backgroundColor: '#f7f3f0' } 
+                      style: { backgroundColor: '#f7f3f0' },
                     }}
                   />
                   <TextField
@@ -105,7 +108,7 @@ function ContactForm() {
                     multiline
                     rows={4}
                     InputProps={{
-                      style: { backgroundColor: '#f7f3f0' } 
+                      style: { backgroundColor: '#f7f3f0' },
                     }}
                   />
                   <div className="button-submit">
@@ -132,48 +135,70 @@ function ContactForm() {
         </div>
         <div className="grid-item-program">
           {/* <img alt="home" src={sides}></img> */}
-          <div className="inside-text">
+          <div className="inside-text-contact-form">
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <MapPin style={{color:"#FFA500",marginRight:"10px"}}size={40} />
-              <h5>Adresă</h5>
+              <MapPin
+                style={{ color: '#FFA500', marginRight: '10px' }}
+                size={40}
+              />
+              <h5 className="h5-contact-form">Adresă</h5>
             </div>
 
-            <p style={{ fontSize: '16px' }} >Strada Viscolului numărul 12 </p>
-            <p style={{marginTop:"10px",fontSize: '16px'}}>Sector 6, București </p>
+            <p style={{ fontSize: '16px' }}>Strada Viscolului numărul 12 </p>
+            <p style={{ marginTop: '10px', fontSize: '16px' }}>
+              Sector 6, București{' '}
+            </p>
             <hr style={{ marginTop: '30px' }}></hr>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Phone style={{color:"#FFA500",marginRight:"10px"}}size={40} />
-              <h5 >Telefon</h5>
+              <Phone
+                style={{ color: '#FFA500', marginRight: '10px' }}
+                size={40}
+              />
+              <h5 className="h5-contact-form">Telefon</h5>
             </div>
 
-            <p style={{ fontSize: '16px' }} >+1 (949) 354-2574</p>
-            <p style={{marginTop:"10px",fontSize: '16px'}}>+1 (949) 354-2575</p>
+            <p style={{ fontSize: '16px' }}>+1 (949) 354-2574</p>
+            <p style={{ marginTop: '10px', fontSize: '16px' }}>
+              +1 (949) 354-2575
+            </p>
 
             <hr style={{ marginTop: '30px' }}></hr>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <EnvelopeSimple style={{color:"#FFA500",marginRight:"10px"}} size={40} />
-              <h5>Email</h5>
+              <EnvelopeSimple
+                style={{ color: '#FFA500', marginRight: '10px' }}
+                size={40}
+              />
+              <h5 className="h5-contact-form">Email</h5>
             </div>
 
-            <p style={{ fontSize: '16px' }} >silohiandreea05@gmail.com</p>
+            <p style={{ fontSize: '16px' }}>silohiandreea05@gmail.com</p>
             <hr style={{ marginTop: '30px' }}></hr>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Clock style={{color:"#FFA500",marginRight:"10px"}} size={40} />
-              <h5>Program</h5>
+              <Clock
+                style={{ color: '#FFA500', marginRight: '10px' }}
+                size={40}
+              />
+              <h5 className="h5-contact-form">Program</h5>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between',marginTop:"20px" }}>
-              <p style={{ fontSize: '16px' }} >Luni-Vineri</p>
-              <p style={{ fontSize: '16px' }} >08:00-18:00</p>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: '20px',
+              }}
+            >
+              <p style={{ fontSize: '16px' }}>Luni-Vineri</p>
+              <p style={{ fontSize: '16px' }}>08:00-18:00</p>
             </div>
             <hr style={{ marginTop: '20px' }}></hr>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <p style={{ fontSize: '16px' }} >Sâmbătă</p>
-              <p style={{ fontSize: '16px' }} >08:00-16:00</p>
+              <p style={{ fontSize: '16px' }}>Sâmbătă</p>
+              <p style={{ fontSize: '16px' }}>08:00-16:00</p>
             </div>
             <hr style={{ marginTop: '20px' }}></hr>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <p style={{ fontSize: '16px' }} >Duminică</p>
-              <p style={{ fontSize: '16px' }} >Închis</p>
+              <p style={{ fontSize: '16px' }}>Duminică</p>
+              <p style={{ fontSize: '16px' }}>Închis</p>
             </div>
           </div>
         </div>
