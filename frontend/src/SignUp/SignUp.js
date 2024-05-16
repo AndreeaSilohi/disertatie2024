@@ -57,22 +57,22 @@ function SignUp() {
           <div className="cover">
             <div className="front">
               <img
-                src="https://images.unsplash.com/photo-1497322313607-9fa0c2c4c4f8?q=80&w=1937&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
+                src="https://images.pexels.com/photos/2749847/pexels-photo-2749847.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="Înregistrare"
               />
             </div>
           </div>
           <div className="forms">
             <div className="form-content">
               <div className="signup-form">
-                <div className="title">Signup</div>
+                <div className="title">Creare cont</div>
                 <form onSubmit={submitHandlerSignup} action="#">
                   <div className="input-boxes">
                     <div className="input-box">
                       <i className="fas fa-user"></i>
                       <input
                         type="text"
-                        placeholder="Enter your name"
+                        placeholder="Nume"
                         required
                         onChange={(e) => setName(e.target.value)}
                       />
@@ -81,7 +81,7 @@ function SignUp() {
                       <i className="fas fa-envelope"></i>
                       <input
                         type="text"
-                        placeholder="Enter your email"
+                        placeholder="Email"
                         required
                         onChange={(e) => setEmail(e.target.value)}
                       />
@@ -90,7 +90,7 @@ function SignUp() {
                       <i className="fas fa-lock"></i>
                       <input
                         type="password"
-                        placeholder="Enter your password"
+                        placeholder="Parolă"
                         required
                         onChange={(e) => setPassword(e.target.value)}
                       />
@@ -100,17 +100,17 @@ function SignUp() {
                       <i className="fas fa-lock"></i>
                       <input
                         type="password"
-                        placeholder="Confirm password"
+                        placeholder="Confirmare parolă"
                         required
                         onChange={(e) => setConfirmPassword(e.target.value)}
                       />
                     </div>
                     <div className="button input-box">
-                      <input type="submit" value="Submit" />
+                      <input type="submit" value="Înregistrare" />
                     </div>
                     <div className="text sign-up-text">
-                      Already have an account?{" "}
-                      <Link to={`/signin?redirect=${redirect}`}>Sign-In</Link>
+                      Ai deja un cont?{" "}
+                      <Link to={`/signin?redirect=${redirect}`}>Loghează-te</Link>
                     </div>
                   </div>
                 </form>
