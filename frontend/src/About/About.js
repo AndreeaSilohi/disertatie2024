@@ -70,7 +70,7 @@ function About() {
       <div className="about-us-grid-item">
         <p>
           Apicultorii care se ocupă de prepararea mierii și a produselor
-          derivate au o experiență de aproximativ 20 de ani cu albinele și in
+          derivate au o experiență de aproximativ 20 de ani cu albinele și în
           prepararea mierii. Dacă interesul dumneavoastră pentru produsele
           apicole a fost stârnit, vă invităm și pe canalele noastre de Facebook,
           Instagram și TikTok pentru a ne urmări activitatea.
