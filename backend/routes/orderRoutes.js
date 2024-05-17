@@ -4,18 +4,39 @@ import { isAuth, isAdmin, mailgun, payOrderEmailTemplate } from "../utils.js";
 import Order from "../modelss/orderModel.js";
 import User from "../modelss/userModel.js";
 import Product from "../modelss/productModel.js";
-// import { mailgun } from "../utils.js";
 const orderRouter = express.Router();
 
+// orderRouter.get(
+//   "/",
+//   isAuth,
+//   isAdmin,
+//   expressAsyncHandler(async (req, res) => {
+//     const orders = await Order.find().populate("user", "name");
+//     res.send(orders);
+//   })
+// );
+
+//get orders cu paginare
 orderRouter.get(
   "/",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find().populate("user", "name");
-    res.send(orders);
+    const pageSize = 10;
+    const page = Number(req.query.page) || 1; 
+
+    const totalCount = await Order.countDocuments({});
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    const orders = await Order.find()
+      .skip(pageSize * (page - 1))
+      .limit(pageSize)
+      .populate("user", "name");
+
+    res.send({ orders, page, totalPages });
   })
 );
+
 orderRouter.post(
   "/",
   isAuth,

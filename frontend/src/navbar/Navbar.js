@@ -58,6 +58,7 @@ function Navbar() {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [user, setUser] = useState(null);
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -129,7 +130,14 @@ function Navbar() {
           },
         }
       );
-      window.alert('Image uploaded successfully');
+      // window.alert('Image uploaded successfully');
+      setNotification({
+        type: 'success',
+        message: 'Imagine încărcată cu succes',
+      });
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
       // Update user state with the new profile photo URL
       setUser({ ...user, profilePhoto: urlProfile });
       localStorage.setItem('profilePhoto', urlProfile); //UPDATEZ LOCAL STORAGE CU FOTOGRAFIA PENTRU CA ACUM AFISEZ FOTOGRAFIA DIN LOCALSTORAGE VEZI SIGN IN 71
@@ -183,7 +191,8 @@ function Navbar() {
 
   const profilePhoto = localStorage.getItem('profilePhoto');
   return (
-    <div className={sidebarIsOpen ? 'navbar active-cont' : 'navbar'}>
+    <div>
+<div className={sidebarIsOpen ? 'navbar active-cont' : 'navbar'}>
       <div className="div-logo-menu">
         {userInfo && ( // Render sidebar only if user is logged in
           <div className="burger-menu" onClick={toggleSidebar}>
@@ -456,7 +465,16 @@ function Navbar() {
           ))}
         </MuiList>
       </Drawer>
+
     </div>
+    {notification && (
+        <div className={`notification ${notification.type}`}>
+          <span>{notification.message}</span>
+          {/* <button onClick={handleCloseNotification}>Close</button> */}
+        </div>
+      )}
+    </div>
+    
   );
 }
 export default Navbar;

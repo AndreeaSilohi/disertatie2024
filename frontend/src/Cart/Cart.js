@@ -4,12 +4,12 @@ import React from 'react';
 import './Cart.css';
 import { Store } from '../Store';
 import { Trash, X } from 'phosphor-react';
-import Navbar from '../navbar/Navbar';
 import axios from 'axios';
 import { Divider } from '@mui/material';
 
 function Cart() {
   const navigate = useNavigate();
+  const [notification, setNotification] = useState(null);
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     cart: { cartItems },
@@ -48,12 +48,13 @@ function Cart() {
     try {
       const { data } = await axios.get(`/api/products/${product.product}`);
       if (data.stoc < newQuantity) {
-        window.alert('Sorry. Product is out of stock');
+        // window.alert('Sorry. Product is out of stock');
+        setNotification({ type: 'success', message: "Ati depasit stocul"});
         return;
       }
 
       const response = await axios.put(
-        `/api/cart/${product.product}`, // assuming _id is the identifier of the product
+        `/api/cart/${product.product}`, 
         { quantity: newQuantity },
         {
           headers: {
@@ -61,8 +62,6 @@ function Cart() {
           },
         }
       );
-
-      // Dispatch CART_UPDATE_QUANTITY action to update the quantity locally
       ctxDispatch({
         type: 'CART_UPDATE_QUANTITY',
         payload: {
@@ -235,6 +234,12 @@ function Cart() {
           </div>
         )}
       </div>
+      {notification && (
+        <div className={`notification ${notification.type}`}>
+          <span>{notification.message}</span>
+          {/* <button onClick={handleCloseNotification}>Close</button> */}
+        </div>
+      )}
     </div>
   );
 }

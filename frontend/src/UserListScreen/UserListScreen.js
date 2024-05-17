@@ -1,4 +1,4 @@
-import React, { useState,useContext, useEffect, useReducer } from 'react';
+import React, { useState, useContext, useEffect, useReducer } from 'react';
 import './UserListScreen.css';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -23,6 +23,8 @@ import {
 
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import Pagination from '@mui/material/Pagination';
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: 'rgb(215, 126, 43)',
@@ -99,6 +101,7 @@ export default function UserListScreen() {
     modalOpen: false,
     selectedUser: null,
     openCreateDialog: false,
+  
   });
 
   const { state } = useContext(Store);
@@ -106,14 +109,16 @@ export default function UserListScreen() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deletingUser, setDeletingUser] = useState(null);
   const [notification, setNotification] = useState(null);
-
+  const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage
+  const [totalPages, setTotalPages] = useState(1);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`/api/users`, {
+        const { data } = await axios.get(`/api/users?page=${currentPage}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        dispatch({ type: 'FETCH_SUCCESS', payload: data.users });
+        setTotalPages(data.totalPages);
       } catch (err) {
         dispatch({
           type: 'FETCH_FAIL',
@@ -126,7 +131,7 @@ export default function UserListScreen() {
     } else {
       fetchData();
     }
-  }, [userInfo, successDelete]);
+  }, [userInfo, successDelete, currentPage]);
 
   const deleteUser = async (user) => {
     setDeletingUser(user);
@@ -146,7 +151,7 @@ export default function UserListScreen() {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       });
       dispatch({ type: 'DELETE_SUCCESS' });
-      setNotification("Utilizatorul a fost sters cu succes");
+      setNotification('Utilizatorul a fost sters cu succes');
       setTimeout(() => {
         setNotification(null);
       }, 3000);
@@ -177,6 +182,10 @@ export default function UserListScreen() {
 
   const closeEditModal = () => {
     dispatch({ type: 'CLOSE_MODAL' });
+  };
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value); // Update currentPage when page changes
   };
   return (
     <div className="container-users">
@@ -219,7 +228,7 @@ export default function UserListScreen() {
                       {user.email}
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
-                      {user.isAdmin ? 'YES' : 'NO'}
+                      {user.isAdmin ? 'DA' : 'NU'}
                     </StyledTableCell>
 
                     <StyledTableCell align="center" className="table-cell">
@@ -253,7 +262,7 @@ export default function UserListScreen() {
                         }}
                         onClick={() => deleteUser(user)}
                       >
-                       Șterge
+                        Șterge
                       </Button>
                     </StyledTableCell>
                   </StyledTableRow>
@@ -262,6 +271,13 @@ export default function UserListScreen() {
             </Table>
           </TableContainer>
         )}
+        <Pagination
+          className="pagination-prd"
+          count={totalPages} // Total number of pages
+          page={currentPage} // Current page
+          onChange={handlePageChange} // Function to handle page change
+          sx={{ '& .Mui-selected': { color: '#FFA500' } }}
+        />
         {modalOpen && selectedUser && (
           <div className="modal">
             <div className="modal-content">
@@ -283,7 +299,9 @@ export default function UserListScreen() {
           title="Confirmare ștergere"
           message="Ești sigur că vrei să ștergi acest utilizator?"
         />
-        {notification && <div className="notification-delete-user">{notification}</div>}
+        {notification && (
+          <div className="notification-delete-user">{notification}</div>
+        )}
       </div>
     </div>
   );

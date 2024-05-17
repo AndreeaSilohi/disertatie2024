@@ -11,8 +11,9 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import './Product.css';
 import { Wishlist } from '../W';
-import MessageBox from '../MessageBox';
 import { useNavigate } from 'react-router-dom';
+import RatingComponent from '../Rating/RatingComponent';
+
 function Product(props) {
   const navigate = useNavigate();
   let reviewsRef = useRef();
@@ -48,6 +49,9 @@ function Product(props) {
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [notification, setNotification] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const [alert, setAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState('');
   useEffect(() => {
     // Check if the product is in the wishlist when the component mounts
     setIsInWishlist(wishlistItems.some((item) => item.product === product._id));
@@ -57,9 +61,8 @@ function Product(props) {
     event.preventDefault();
     event.stopPropagation();
 
-    console.log(product);
     if (!userToken) {
-      alert('You are not logged in. Please log in to add items to the cart.');
+      alert('Nu ești logat. Loghează-te pentru a adăuga produse în coș');
       navigate('/signin');
       return;
     }
@@ -70,7 +73,13 @@ function Product(props) {
       const existItem = cartItems.find((x) => x._id === product._id);
       const quantity = existItem ? existItem.quantity + 1 : 1;
       if (data.stoc < quantity) {
-        window.alert('Sorry. Product is out of stock');
+        setNotification({
+          type: 'success',
+          message: 'Produsul are stocul epuizat',
+        });
+        setTimeout(() => {
+          setNotification(null);
+        }, 3000);
         return;
       }
 
@@ -122,8 +131,10 @@ function Product(props) {
 
     if (!userToken) {
       alert(
-        'You are not logged in. Please log in to add items to the wihslist.'
+        'Nu ești logat. Loghează-te pentru a adăuga produse în lista de favorite'
       );
+
+      navigate('/signin');
       return;
     }
     try {
@@ -232,9 +243,19 @@ function Product(props) {
             >
               {product.name}
             </Typography>
-            <Typography className="typografy-price" color="text.secondary"  sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+            <Typography
+              className="typografy-price"
+              color="text.secondary"
+              sx={{ fontFamily: 'Montserrat, sans-serif' }}
+            >
               {product.price} lei
             </Typography>
+            <RatingComponent
+              rating={product.rating}
+              numReviews={product.numReviews}
+            >
+              {' '}
+            </RatingComponent>
           </CardContent>
 
           <div className="actions-card">

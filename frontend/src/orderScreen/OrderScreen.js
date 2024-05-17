@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer,useState } from 'react';
 import LoadingBox from '../LoadingBox';
 import MessageBox from '../MessageBox';
 import { Store } from '../Store';
@@ -59,6 +59,7 @@ export default function OrderScreen() {
   const { state } = useContext(Store);
   const { userInfo } = state;
   const params = useParams();
+  const [notification, setNotification] = useState(null);
 
   const { id: orderId } = params;
   const navigate = useNavigate();
@@ -109,7 +110,14 @@ export default function OrderScreen() {
           }
         );
         dispatch({ type: 'PAY_SUCCESS', payload: data });
-        window.alert('Order is paid!');
+        // window.alert('Order is paid!');
+        setNotification({
+          type: 'success',
+          message: 'Plată efectuată cu succes',
+        });
+        setTimeout(() => {
+          setNotification(null);
+        }, 3000);
       } catch (err) {
         dispatch({ type: 'PAY_FAIL', payload: getError(err) });
         window.alert(getError(err));
@@ -190,7 +198,14 @@ export default function OrderScreen() {
         }
       );
       dispatch({ type: 'DELIVER_SUCCESS', payload: data });
-      window.alert('Order is delivered!');
+      // window.alert('Order is delivered!');
+      setNotification({
+        type: 'success',
+        message: 'Comanda este livrată',
+      });
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
     } catch (err) {
       window.alert(getError(err));
       dispatch({ type: 'DELIVER_FAIL' });
@@ -445,6 +460,12 @@ export default function OrderScreen() {
           </Grid>
         </Grid>
       </div>
+      {notification && (
+        <div className={`notification ${notification.type}`}>
+          <span>{notification.message}</span>
+          {/* <button onClick={handleCloseNotification}>Close</button> */}
+        </div>
+      )}
     </div>
   );
 }

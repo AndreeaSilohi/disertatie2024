@@ -14,11 +14,11 @@ export default function ConfirmationDialog({ open, onClose, onConfirm, title, me
         <DialogContentText>{message}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
-          Cancel
+        <Button onClick={onClose} style={{color:"#000000DE"}}>
+          Închide
         </Button>
-        <Button onClick={onConfirm} color="primary" autoFocus>
-          Confirm
+        <Button onClick={onConfirm} style={{color:"#FFA500"}} autoFocus>
+          Șterge
         </Button>
       </DialogActions>
     </Dialog>

@@ -7,13 +7,33 @@ import jwt from 'jsonwebtoken';
 
 const userRouter = express.Router();
 
+// userRouter.get(
+//   '/',
+//   isAuth,
+//   isAdmin,
+//   expressAsyncHandler(async (req, res) => {
+//     const users = await User.find({});
+//     res.send(users);
+//   })
+// );
+
+//get users cu paginare
 userRouter.get(
   '/',
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const users = await User.find({});
-    res.send(users);
+    const page = parseInt(req.query.page) || 1; 
+    const pageSize = 10; 
+
+    const count = await User.countDocuments({}); 
+    const totalPages = Math.ceil(count / pageSize); 
+
+    const users = await User.find({})
+      .skip(pageSize * (page - 1)) 
+      .limit(pageSize);
+
+    res.send({ users,pageSize, totalPages });
   })
 );
 

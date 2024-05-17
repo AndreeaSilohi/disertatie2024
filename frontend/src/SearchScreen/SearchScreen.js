@@ -11,7 +11,7 @@ import SearchBox from '../SearchBox/SearchBox';
 import Divider from '@mui/material/Divider';
 import { Store } from '../Store';
 import './SearchScreen.css';
-
+import Pagination from '@mui/material/Pagination';
 import RatingComponent from '../Rating/RatingComponent';
 
 const styles = {
@@ -92,7 +92,7 @@ export default function SearchScreen() {
   const query = sp.get('query') || 'all';
   const price = sp.get('price') || 'all';
   const rating = sp.get('rating') || 'all';
-  const order = sp.get('order') || 'newest';
+  const order = sp.get('order') || 'toprated';
   const page = sp.get('page') || 1;
 
   const [{ loading, error, products, pages, countProducts }, dispatch] =
@@ -149,10 +149,14 @@ export default function SearchScreen() {
     const filterRating = filter.rating || rating;
     const filterPrice = filter.price || price;
     const sortOrder = filter.order || order;
+    
 
     return `/search?category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&order=${sortOrder}&page=${filterPage}`;
   };
 
+  const handlePageChange = (event, value) => {
+    navigate(getFilterUrl({ page: value }));
+  };
   return (
     <div className="container-search">
       <header className="header-shop">
@@ -179,13 +183,13 @@ export default function SearchScreen() {
                 navigate(getFilterUrl({ order: e.target.value }));
               }}
             >
-              <MenuItem
+              {/* <MenuItem
                 sx={{ fontFamily: 'Montserrat, sans-serif', fontSize: '17px' }}
                 className="sort-select"
                 value="newest"
               >
                 Cele mai noi
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 sx={{ fontFamily: 'Montserrat, sans-serif', fontSize: '17px' }}
                 className="sort-select"
@@ -323,8 +327,8 @@ export default function SearchScreen() {
                       {countProducts === 0 ? 'No' : countProducts} Rezultate
                       {query !== 'all' && ' : ' + query}
                       {category !== 'all' && ' : ' + category}
-                      {price !== 'all' && ' : Price ' + price}
-                      {rating !== 'all' && ' : Rating ' + rating + ' & up'}
+                      {price !== 'all' && ' : Preț ' + price}
+                      {rating !== 'all' && ' : Rating ' + rating + ' și peste'}
                       {query !== 'all' ||
                       category !== 'all' ||
                       rating !== 'all' ||
@@ -359,7 +363,7 @@ export default function SearchScreen() {
                   </Grid>
                 ))}
               </Grid>
-              <div className="pagination-container">
+              {/* <div className="pagination-container">
                 <div className={styles.pagination}>
                   {[...Array(pages).keys()].map((x) => (
                     <Link
@@ -376,7 +380,15 @@ export default function SearchScreen() {
                     </Link>
                   ))}
                 </div>
-              </div>
+                </div> */}
+                <Pagination
+              className="pagination-prd"
+                count={pages}
+                page={parseInt(page)}
+                onChange={handlePageChange}
+                sx={{ "& .Mui-selected": {color: "#FFA500" } }}
+              />
+             
             </>
           )}
         </Grid>

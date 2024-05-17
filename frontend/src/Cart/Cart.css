@@ -153,8 +153,9 @@
   align-items: center;
 }
 .subtotal {
-  padding: 60px;
+  padding: 20px;
   font-size: 20px;
+  margin:0px;
 }
 
 .big-cart {
@@ -205,16 +206,6 @@
  
 }
 
-/* .button-subtotal {
-  width: 150px;
-  background-color: rgb(19, 19, 19);
-  color: white;
-  border: none;
-  cursor: pointer;
-  height: 60px;
-  color: white;
-  margin: 10px;
-} */
 
 .button-subtotal {
   width: 180px;
@@ -236,12 +227,12 @@
   align-items: center;
   width: 40%;
   height: auto;
-  max-height: 400px;
+  max-height: 420px;
   background-color: #fafafa;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 90px;
+  /* margin-top: 90px; */
   /* border: 1px solid rgba(0, 0, 0, 0.118); */
 }
 .order-details h4 {
@@ -249,4 +240,8 @@
 }
 .plus-minus{
   color:rgba(0, 0, 0, 0.851);
+}
+
+.checkout{
+  padding-bottom:20px;
 }

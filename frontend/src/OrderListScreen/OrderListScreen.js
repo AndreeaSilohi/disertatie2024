@@ -20,6 +20,7 @@ import { useContext, useEffect, useReducer } from 'react';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import Pagination from '@mui/material/Pagination';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -102,14 +103,19 @@ export default function OrderListScreen() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deletingOrder, setDeletingOrder] = useState(null);
   const [notification, setNotification] = useState(null);
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/orders`, {
+        const { data } = await axios.get(`/api/orders?page=${page}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        dispatch({ type: 'FETCH_SUCCESS', payload: data.orders });
+        setTotalPages(data.totalPages);
       } catch (err) {
         dispatch({
           type: 'FETCH_FAIL',
@@ -122,7 +128,7 @@ export default function OrderListScreen() {
     } else {
       fetchData();
     }
-  }, [userInfo, successDelete]);
+  }, [userInfo, successDelete, page]);
 
   const deleteOrder = async (order) => {
     setDeletingOrder(order);
@@ -154,6 +160,9 @@ export default function OrderListScreen() {
     }
   };
 
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
   return (
     <div className="container-orders">
       <div className="order-history-content">
@@ -241,7 +250,7 @@ export default function OrderListScreen() {
                         }}
                         onClick={() => deleteOrder(order)}
                       >
-                       Șterge
+                        Șterge
                       </Button>
                     </StyledTableCell>
                   </StyledTableRow>
@@ -250,6 +259,13 @@ export default function OrderListScreen() {
             </Table>
           </TableContainer>
         )}
+        <Pagination
+          className="pagination-prd"
+          count={totalPages}
+          page={page}
+          onChange={handlePageChange}
+          sx={{ '& .Mui-selected': { color: '#FFA500' } }}
+        />
         <ConfirmationDialog
           open={confirmDelete}
           onClose={() => setConfirmDelete(false)}

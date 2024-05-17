@@ -61,12 +61,23 @@
   }
   .notification {
     position: fixed;
-    top: 100px;
-    right: 50px;
-    padding: 20px;
-    background-color: #4caf50;
-    color: white;
+    top: 20px;
+    right: 20px;
+    background-color: #5cb85c; /* Default color */
+    color: #fff;
+    padding: 10px 20px;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
   }
   
+  .notification.success {
+    background-color: #5cb85c; /* Success color */
+  }
+  
+  .notification.warning {
+    background-color: #f0ad4e; /* Warning color */
+  }
+  
+  .notification.error {
+    background-color: #d9534f; /* Error color */
+  }

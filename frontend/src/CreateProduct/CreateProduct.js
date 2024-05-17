@@ -56,6 +56,7 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
     additional: '',
   });
 
+  const [notification, setNotification] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProductData({ ...productData, [name]: value });
@@ -90,7 +91,14 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
         },
       });
       dispatch({ type: 'UPLOAD_NEW_SUCCESS' });
-      window.alert('Image uploaded successfully');
+      // window.alert('Image uploaded successfully');
+      setNotification({
+        type: 'success',
+        message: 'Imagine încărcată cu succes',
+      });
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
       setProductData({ ...productData, image: data.secure_url });
     } catch (err) {
       window.alert(getError(err));
@@ -98,271 +106,171 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
     }
   };
   return (
-    <Dialog open={open} onClose={onClose}>
-      {/* <DialogTitle
-        sx={{
-          fontFamily: 'Montserrat, sans-serif',
-          fontSize: '25px',
-          paddingTop: '40px',
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        Creare produs
-      </DialogTitle> */}
+    <div>
+      <Dialog open={open} onClose={onClose}>
+        <div className="dialog-content">
+          <DialogContent>
+            <TextField
+              fullWidth
+              margin="normal"
+              id="name"
+              name="name"
+              label="Denumire produs"
+              value={productData.name}
+              onChange={handleChange}
+              sx={{ fontFamily: 'Montserrat, sans-serif' }}
+            />
+            {/* <TextField
+              fullWidth
+              margin="normal"
+              id="slug"
+              name="slug"
+              label="Slug"
+              value={productData.slug}
+              onChange={handleChange}
+            /> */}
 
-      <div className="dialog-content">
-        <DialogContent>
-          <TextField
-            fullWidth
-            margin="normal"
-            id="name"
-            name="name"
-            label="Denumire produs"
-            value={productData.name}
-            onChange={handleChange}
-            sx={{ fontFamily: 'Montserrat, sans-serif' }}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            id="slug"
-            name="slug"
-            label="Slug"
-            value={productData.slug}
-            onChange={handleChange}
-          />
+            <label
+              htmlFor="imageFile"
+              style={{
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                marginTop: '15px',
+              }}
+            >
+              <Upload size={26} style={{ marginRight: '2px' }} />
+              <span className="span-menu">Încarcă fotografie</span>
+            </label>
+            <input
+              type="file"
+              id="imageFile"
+              label="Alege imagine"
+              onChange={uploadFileHandler}
+              style={{ display: 'none' }}
+            />
+            <TextField
+              margin="dense"
+              id="image"
+              name="image"
+              label="Link imagine"
+              fullWidth
+              value={productData.image}
+              onChange={handleChange}
+            />
 
-          <label
-            htmlFor="imageFile"
-            style={{
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              marginTop: '15px',
-            }}
-          >
-            <Upload size={26} style={{ marginRight: '2px' }} />
-            <span className="span-menu">Încarcă fotografie</span>
-          </label>
-          <input
-            type="file"
-            id="imageFile"
-            label="Alege imagine"
-            onChange={uploadFileHandler}
-            style={{ display: 'none' }}
-          />
+            <TextField
+              margin="dense"
+              id="price"
+              name="price"
+              label="Preț"
+              type="number"
+              fullWidth
+              inputProps={{ min: 1 }}
+              value={productData.price}
+              onChange={handleChange}
+            />
+            <TextField
+              margin="dense"
+              id="category"
+              name="category"
+              label="Categorie"
+              fullWidth
+              value={productData.category}
+              onChange={handleChange}
+            />
+            <TextField
+              margin="dense"
+              id="stoc"
+              name="stoc"
+              label="Stoc"
+              type="number"
+              inputProps={{ min: 0 }}
+              fullWidth
+              value={productData.stoc}
+              onChange={handleChange}
+            />
+            {/* <TextField
+              margin="dense"
+              id="rating"
+              name="rating"
+              label="Rating"
+              fullWidth
+              value={productData.rating}
+              onChange={handleChange}
+            />
+            <TextField
+              margin="dense"
+              id="numReviews"
+              name="numReviews"
+              label="Număr de recenzii"
+              fullWidth
+              value={productData.numReviews}
+              onChange={handleChange}
+            /> */}
+            <TextField
+              margin="dense"
+              id="description"
+              name="description"
+              label="Descriere"
+              fullWidth
+              value={productData.description}
+              onChange={handleChange}
+            />
+            <TextField
+              margin="dense"
+              id="additional"
+              name="additional"
+              label="Informații adiționale"
+              fullWidth
+              value={productData.additional}
+              onChange={handleChange}
+            />
+          </DialogContent>
+        </div>
 
-          {/* <label htmlFor="imageFile" style={{ cursor: 'pointer' }}>
-            <Upload size={24} onChange={uploadFileHandler} />
-          </label>
-          <input
-            type="file"
-            id="imageFile"
-            label="Alege imagine"
-            onChange={uploadFileHandler}
-          /> */}
-          <TextField
-            margin="dense"
-            id="image"
-            name="image"
-            label="Link imagine"
-            fullWidth
-            value={productData.image}
-            onChange={handleChange}
-          />
+        <div className="dialog-actions">
+          <DialogActions>
+            <Button
+              type="button"
+              variant="outlined"
+              onClick={onClose}
+              sx={{
+                color: 'red',
+                borderColor: 'red',
+                padding: '5px',
+                marginRight: '5px',
+                fontSize: '15px',
+              }}
+            >
+              Renunță
+            </Button>
+            <Button
+              className="button-actions"
+              type="button"
+              variant="outlined"
+              onClick={handleSubmit}
+              sx={{
+                color: '#2E7D32',
+                borderColor: '#2E7D32',
+                padding: '5px',
+                marginRight: '5px',
+                fontSize: '15px',
+              }}
+            >
+              Salvează
+            </Button>
+          </DialogActions>
+        </div>
+      </Dialog>
 
-          <TextField
-            margin="dense"
-            id="price"
-            name="price"
-            label="Preț"
-            type="number"
-            fullWidth
-            inputProps={{ min: 1 }}
-            value={productData.price}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            id="category"
-            name="category"
-            label="Categorie"
-            fullWidth
-            value={productData.category}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            id="stoc"
-            name="stoc"
-            label="Stoc"
-            type="number"
-            inputProps={{ min: 0 }}
-            fullWidth
-            value={productData.stoc}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            id="rating"
-            name="rating"
-            label="Rating"
-            fullWidth
-            value={productData.rating}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            id="numReviews"
-            name="numReviews"
-            label="Număr de recenzii"
-            fullWidth
-            value={productData.numReviews}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            id="description"
-            name="description"
-            label="Descriere"
-            fullWidth
-            value={productData.description}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="dense"
-            id="additional"
-            name="additional"
-            label="Informații adiționale"
-            fullWidth
-            value={productData.additional}
-            onChange={handleChange}
-          />
-
-          {/* <input
-            className="input-field"
-            name="name"
-            placeholder="Name"
-            value={productData.name}
-            onChange={handleChange}
-          />
-          <input
-            className="input-field"
-            name="slug"
-            placeholder="Slug"
-            value={productData.slug}
-            onChange={handleChange}
-          />
-          <input
-            className="input-field"
-            name="image"
-            placeholder="Image"
-            fullWidth
-            value={productData.image}
-            onChange={handleChange}
-          />
-
-          <input
-            type="file"
-            id="imageFile"
-            label="Choose Image"
-            onChange={uploadFileHandler}
-          />
-          <input
-            className="input-field"
-            name="price"
-            placeholder="Price"
-            type="number"
-            fullWidth
-            value={productData.price}
-            onChange={handleChange}
-          />
-          <input
-            className="input-field"
-            name="category"
-            placeholder="Category"
-            fullWidth
-            value={productData.category}
-            onChange={handleChange}
-          />
-          <input
-            className="input-field"
-            name="stoc"
-            placeholder="Stoc"
-            fullWidth
-            value={productData.stoc}
-            onChange={handleChange}
-          />
-          <input
-            className="input-field"
-            name="rating"
-            placeholder="Rating"
-            fullWidth
-            value={productData.rating}
-            onChange={handleChange}
-          />
-          <input
-            className="input-field"
-            name="numReviews"
-            placeholder="Number of Reviews"
-            fullWidth
-            value={productData.numReviews}
-            onChange={handleChange}
-          />
-          <input
-            className="input-field"
-            name="description"
-            placeholder="Description"
-            fullWidth
-            value={productData.description}
-            onChange={handleChange}
-          />
-          <input
-            className="input-field"
-            name="additional"
-            placeholder="Additional informations"
-            fullWidth
-            value={productData.additional}
-            onChange={handleChange}
-          /> */}
-        </DialogContent>
-      </div>
-
-      <div className="dialog-actions">
-        <DialogActions>
-          <Button
-            type="button"
-            variant="outlined"
-            onClick={onClose}
-            sx={{
-              color: 'red',
-              borderColor: 'red',
-              padding: '5px',
-              marginRight: '5px',
-              fontSize: '15px',
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            className="button-actions"
-            type="button"
-            variant="outlined"
-            onClick={handleSubmit}
-            sx={{
-              color: '#2E7D32',
-              borderColor: '#2E7D32',
-              padding: '5px',
-              marginRight: '5px',
-              fontSize: '15px',
-            }}
-          >
-            Save
-          </Button>
-        </DialogActions>
-      </div>
-    </Dialog>
+      {notification && (
+        <div className={`notification ${notification.type}`}>
+          <span>{notification.message}</span>
+          {/* <button onClick={handleCloseNotification}>Close</button> */}
+        </div>
+      )}
+    </div>
   );
 };
 

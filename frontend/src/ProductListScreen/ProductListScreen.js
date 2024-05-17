@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import { Store } from '../Store';
 import LoadingBox from '../LoadingBox';
 import MessageBox from '../MessageBox';
 import { useNavigate } from 'react-router-dom';
-import { Link, useLocation } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
 import './ProductListScreen.css';
 import { getError } from '../utils';
 import CreateProduct from '../CreateProduct/CreateProduct';
@@ -18,10 +18,11 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
- 
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: 'rgb(215, 126, 43)',
@@ -31,7 +32,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }));
- 
+
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
@@ -40,7 +41,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
- 
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -90,7 +91,7 @@ const reducer = (state, action) => {
       return state;
   }
 };
- 
+
 export default function ProductListScreen() {
   const [
     {
@@ -115,7 +116,7 @@ export default function ProductListScreen() {
   const page = sp.get('page') || 1;
   const { state } = useContext(Store);
   const { userInfo } = state;
- 
+  const [notification, setNotification] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -127,29 +128,33 @@ export default function ProductListScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
- 
+
     if (successDelete) {
       dispatch({ type: 'DELETE_RESET' });
     } else {
       fetchData();
     }
   }, [page, userInfo, successDelete]);
- 
+
   const createHandler = () => {
     dispatch({ type: 'CREATE_REQUEST' });
     dispatch({ type: 'OPEN_CREATE_DIALOG' });
   };
- 
+
   const closeCreateDialog = () => {
     dispatch({ type: 'CLOSE_CREATE_DIALOG' });
   };
- 
+
   const submitCreateForm = async (productData) => {
     try {
       const { data } = await axios.post('/api/products', productData, {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       });
-      window.alert('Product created successfully');
+      // window.alert('Product created successfully');
+      setNotification({ type: 'success', message: 'Produs creat cu succes' });
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
       dispatch({ type: 'CREATE_SUCCESS' });
       dispatch({ type: 'ADD_PRODUCT', payload: data.product });
       navigate(`/admin/products`);
@@ -158,12 +163,12 @@ export default function ProductListScreen() {
       dispatch({ type: 'CREATE_FAIL' });
     }
   };
- 
+
   const deleteHandler = async (product) => {
     setDeletingProduct(product);
     setConfirmDelete(true);
   };
- 
+
   const deleteProduct = async () => {
     try {
       await axios.delete(`/api/products/${deletingProduct._id}`, {
@@ -176,10 +181,13 @@ export default function ProductListScreen() {
       dispatch({ type: 'DELETE_FAIL' });
     }
   };
- 
+
   const [confirmDelete, setConfirmDelete] = React.useState(false);
   const [deletingProduct, setDeletingProduct] = React.useState(null);
- 
+
+  const handlePageChange = (event, value) => {
+    navigate(`/admin/products?page=${value}`);
+  };
   return (
     <div className="container-products">
       <div className="order-history-content">
@@ -204,62 +212,79 @@ export default function ProductListScreen() {
         ) : error ? (
           <MessageBox>{error}</MessageBox>
         ) : (
-          <TableContainer className="table-container" component={Paper}>
-            <Table sx={{ minWidth: 700 }}>
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center" className="table-cell">NUME</StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">PREȚ</StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">CATEGORIE</StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">ACȚIUNI</StyledTableCell>
-                </TableRow>
-              </TableHead>
- 
-              <TableBody>
-                {products.map((product) => (
-                  <StyledTableRow key={product._id}>
-                    <StyledTableCell align="center" className="table-cell">{String(product.name)}</StyledTableCell>
-                    <StyledTableCell align="center" className="table-cell">{product.price}&nbsp;lei</StyledTableCell>
-                    <StyledTableCell align="center" className="table-cell">{product.category}</StyledTableCell>
+          <div className='pagination-total'>
+            <TableContainer className="table-container" component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
                     <StyledTableCell align="center" className="table-cell">
-                      <Button
-                        className="button-actions"
-                        variant="outlined"
-                        type="button"
-                        style={{
-                          color: 'rgb(215, 126, 43)',
-                          borderColor: 'rgb(215, 126, 43)',
-                          padding: '5px',
-                          marginRight: '5px',
-                          fontSize: '12px',
-                        }}
-                        onClick={() => navigate(`/admin/product/${product._id}`)}
-                      >
-                        Editează
-                      </Button>
- 
-                      <Button
-                        className="button-actions"
-                        variant="outlined"
-                        type="button"
-                        style={{
-                          color: 'red',
-                          borderColor: 'red',
-                          padding: '5px',
-                          marginRight: '5px',
-                          fontSize: '12px',
-                        }}
-                        onClick={() => deleteHandler(product)}
-                      >
-                        Șterge
-                      </Button>
+                      NUME
                     </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
- 
-            <div className="pagination">
+                    <StyledTableCell align="center" className="table-cell">
+                      PREȚ
+                    </StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">
+                      CATEGORIE
+                    </StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">
+                      ACȚIUNI
+                    </StyledTableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  {products.map((product) => (
+                    <StyledTableRow key={product._id}>
+                      <StyledTableCell align="center" className="table-cell">
+                        {String(product.name)}
+                      </StyledTableCell>
+                      <StyledTableCell align="center" className="table-cell">
+                        {product.price}&nbsp;lei
+                      </StyledTableCell>
+                      <StyledTableCell align="center" className="table-cell">
+                        {product.category}
+                      </StyledTableCell>
+                      <StyledTableCell align="center" className="table-cell">
+                        <Button
+                          className="button-actions"
+                          variant="outlined"
+                          type="button"
+                          style={{
+                            color: 'rgb(215, 126, 43)',
+                            borderColor: 'rgb(215, 126, 43)',
+                            padding: '5px',
+                            marginRight: '5px',
+                            fontSize: '12px',
+                          }}
+                          onClick={() =>
+                            navigate(`/admin/product/${product._id}`)
+                          }
+                        >
+                          Editează
+                        </Button>
+
+                        <Button
+                          className="button-actions"
+                          variant="outlined"
+                          type="button"
+                          style={{
+                            color: 'red',
+                            borderColor: 'red',
+                            padding: '5px',
+                            marginRight: '5px',
+                            fontSize: '12px',
+                          }}
+                          onClick={() => deleteHandler(product)}
+                        >
+                          Șterge
+                        </Button>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+
+              {/* <div className="pagination">
               {[...Array(pages).keys()].map((x) => (
                 <Link
                   key={x + 1}
@@ -269,9 +294,20 @@ export default function ProductListScreen() {
                   {x + 1}
                 </Link>
               ))}
-            </div>
-          </TableContainer>
+            </div> */}
+            </TableContainer>
+            {/* <Stack spacing={2} className="pagination"> */}
+              <Pagination
+              className="pagination-prd"
+                count={pages}
+                page={parseInt(page)}
+                onChange={handlePageChange}
+                sx={{ "& .Mui-selected": {color: "#FFA500" } }}
+              />
+            {/* </Stack> */}
+          </div>
         )}
+
         <CreateProduct
           open={openCreateDialog}
           onClose={closeCreateDialog}
@@ -286,11 +322,15 @@ export default function ProductListScreen() {
               deleteProduct(deletingProduct);
             }
           }}
-          title="Confirm Delete"
-          message="Are you sure you want to delete this product?"
+          title="Dialog de confirmare"
+          message="Ești sigur că vrei să ștergi acest produs?"
         />
       </div>
+      {notification && (
+        <div className={`notification ${notification.type}`}>
+          <span>{notification.message}</span>
+        </div>
+      )}
     </div>
   );
 }
- 

@@ -193,7 +193,8 @@ const ProductDetails = () => {
     event.stopPropagation();
 
     if (!user) {
-      alert('You are not logged in. Please log in to add items to the cart.');
+      alert('Nu ești logat. Loghează-te pentru a adăuga produse în coș');
+      navigate('/signin');
       return;
     }
 
@@ -258,7 +259,7 @@ const ProductDetails = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!comment || !rating) {
-      window.alert('Please enter a comment and rating');
+      window.alert('Introdu un comentariu și o notă');
       return;
     }
     try {
@@ -278,7 +279,12 @@ const ProductDetails = () => {
       dispatch({
         type: 'CREATE_SUCCESS',
       });
-      window.alert('Review submitted successfully!');
+      // window.alert('Review submitted successfully!');
+      setNotification("Recenzie trimisa cu succes");
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+
       product.reviews.unshift(data.review);
       product.numReviews = data.numReviews;
       product.rating = data.rating;

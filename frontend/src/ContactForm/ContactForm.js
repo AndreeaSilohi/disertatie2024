@@ -12,6 +12,7 @@ function ContactForm() {
   const [message, setMessage] = useState('');
 
   const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -22,7 +23,8 @@ function ContactForm() {
         message,
       });
       setLoading(false);
-      window.alert(data.message);
+      setNotification({ type: 'success', message: "Email trimis cu succes"});
+      // window.alert(data.message);
       setSubject('');
       setEmail('');
       setMessage('');
@@ -34,6 +36,9 @@ function ContactForm() {
           : err.message
       );
     }
+  };
+  const handleCloseNotification = () => {
+    setNotification(null);
   };
   return (
     <div className="container-contact-form">
@@ -203,6 +208,12 @@ function ContactForm() {
           </div>
         </div>
       </div>
+      {notification && (
+        <div className={`notification ${notification.type}`}>
+          <span>{notification.message}</span>
+          {/* <button onClick={handleCloseNotification}>Close</button> */}
+        </div>
+      )}
     </div>
   );
 }

@@ -10,19 +10,25 @@ export default function ResetPassword() {
   const navigate = useNavigate();
 
   const { token } = useParams();
-
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const { state } = useContext(Store);
   const { userInfo } = state;
 
-
+  const [notification, setNotification] = useState(null);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      window.alert('Parolele nu se potrivesc');
+      // window.alert('Parolele nu se potrivesc');
+      setNotification({
+        type: 'warning',
+        message: 'Parolele nu se potrivesc',
+      });
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
       return;
     }
 
@@ -80,6 +86,12 @@ export default function ResetPassword() {
           </div>
         </div>
       </div>
+      {notification && (
+        <div className={`notification ${notification.type}`}>
+          <span>{notification.message}</span>
+          {/* <button onClick={handleCloseNotification}>Close</button> */}
+        </div>
+      )}
     </div>
   );
 }

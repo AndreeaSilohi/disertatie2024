@@ -10,14 +10,64 @@ productRouter.get("/", async (req, res) => {
   res.send(products);
 });
 
+// productRouter.post(
+//   "/",
+//   isAuth,
+//   isAdmin,
+//   expressAsyncHandler(async (req, res) => {
+//     const {
+//       name,
+//       slug,
+//       image,
+//       price,
+//       category,
+//       stoc,
+//       rating,
+//       numReviews,
+//       description,
+//       additional,
+//     } = req.body;
+
+//     const newProduct = new Product({
+//       name,
+//       slug,
+//       image,
+//       price,
+//       category,
+//       stoc,
+//       rating,
+//       numReviews,
+//       description,
+//       additional,
+//     });
+
+//     const product = await newProduct.save();
+//     res.status(201).send({ message: "Product Created", product });
+//   })
+// );
+
+
 productRouter.post(
   "/",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
+    const lastProduct = await Product.findOne().sort({ createdAt: -1 });
+    let lastSlugNumericPart = 0;
+    if (lastProduct) {
+      // Extract the numeric part from the last product's slug
+      const lastSlugParts = lastProduct.slug.split("-");
+      lastSlugNumericPart = parseInt(lastSlugParts[lastSlugParts.length - 1]);
+    }
+    
+    // Increment the numeric part by one
+    const newSlugNumericPart = lastSlugNumericPart + 1;
+
+    // Construct the new slug
+    const newSlug = `${newSlugNumericPart}`;
+
     const {
       name,
-      slug,
       image,
       price,
       category,
@@ -30,13 +80,13 @@ productRouter.post(
 
     const newProduct = new Product({
       name,
-      slug,
+      slug: newSlug, // Assign the newly generated slug
       image,
       price,
       category,
       stoc,
-      rating,
-      numReviews,
+      rating:0,
+      numReviews:0,
       description,
       additional,
     });
@@ -227,6 +277,8 @@ productRouter.get(
     });
   })
 );
+
+
 productRouter.get(
   "/categories",
   expressAsyncHandler(async (req, res) => {
