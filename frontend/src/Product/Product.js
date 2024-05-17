@@ -48,10 +48,9 @@ function Product(props) {
 
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [notificationWarning, setNotificationWarning] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const [alert, setAlert] = useState(false);
-  const [alertContent, setAlertContent] = useState('');
   useEffect(() => {
     // Check if the product is in the wishlist when the component mounts
     setIsInWishlist(wishlistItems.some((item) => item.product === product._id));
@@ -62,8 +61,16 @@ function Product(props) {
     event.stopPropagation();
 
     if (!userToken) {
-      alert('Nu ești logat. Loghează-te pentru a adăuga produse în coș');
-      navigate('/signin');
+      // alert(
+      //   'Nu ești logat. Loghează-te pentru a adăuga produse în lista de favorite'
+      // );
+      setNotificationWarning(
+        'Nu ești logat. Loghează-te pentru a adăuga produse în coș'
+      );
+      setTimeout(() => {
+        setNotificationWarning(null);
+        navigate('/signin');
+      }, 1000);
       return;
     }
 
@@ -130,11 +137,13 @@ function Product(props) {
     event.stopPropagation();
 
     if (!userToken) {
-      alert(
+      setNotificationWarning(
         'Nu ești logat. Loghează-te pentru a adăuga produse în lista de favorite'
       );
-
-      navigate('/signin');
+      setTimeout(() => {
+        setNotificationWarning(null);
+        navigate('/signin');
+      }, 1000);
       return;
     }
     try {
@@ -295,6 +304,7 @@ function Product(props) {
         </div>
       </Link>
       {notification && <div className="notification">{notification}</div>}
+      {notificationWarning && <div className="notificationWarning">{notificationWarning}</div>}
       {selectedProduct && <ProductDetails userToken={userToken} />}
     </div>
   );

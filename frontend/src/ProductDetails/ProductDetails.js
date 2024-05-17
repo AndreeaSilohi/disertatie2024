@@ -90,6 +90,7 @@ const ProductDetails = () => {
   const [comment, setComment] = useState('');
   const [value, setValue] = React.useState(0);
   const [notification, setNotification] = useState(null);
+  const [notificationWarning, setNotificationWarning] = useState(null);
 
   const [{ loading, error, product, loadingCreateReview }, dispatch] =
     useReducer(reducer, {
@@ -193,8 +194,14 @@ const ProductDetails = () => {
     event.stopPropagation();
 
     if (!user) {
-      alert('Nu ești logat. Loghează-te pentru a adăuga produse în coș');
-      navigate('/signin');
+      setNotificationWarning(
+        'Nu ești logat. Loghează-te pentru a adăuga produse în coș',
+  
+      );
+      setTimeout(() => {
+        setNotificationWarning(null);
+        navigate('/signin');
+      }, 1000);
       return;
     }
 
@@ -611,6 +618,8 @@ const ProductDetails = () => {
           </div>
           {loading && <LoadingBox />}
           {notification && <div className="notification">{notification}</div>}
+          {notificationWarning && <div className="notificationWarning">{notificationWarning}</div>}
+
         </>
       )}
     </div>
