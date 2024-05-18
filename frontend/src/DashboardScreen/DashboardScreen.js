@@ -1,32 +1,32 @@
-import React, { useEffect, useReducer, useContext } from "react";
-import { Store } from "../Store";
-import Navbar from "../navbar/Navbar";
-import LoadingBox from "../LoadingBox";
-import { getError } from "../utils";
-import axios from "axios";
-import MessageBox from "../MessageBox";
+import React, { useEffect, useReducer, useContext } from 'react';
+import { Store } from '../Store';
+import Navbar from '../navbar/Navbar';
+import LoadingBox from '../LoadingBox';
+import { getError } from '../utils';
+import axios from 'axios';
+import MessageBox from '../MessageBox';
 import {
   Card,
   CardContent,
   Typography,
   Button,
   IconButton,
-} from "@mui/material"; // Assuming you're using Material-UI components
+} from '@mui/material'; // Assuming you're using Material-UI components
 
-import Chart from "react-google-charts";
-import "./DashboardScreen.css";
+import Chart from 'react-google-charts';
+import './DashboardScreen.css';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "FETCH_REQUEST":
+    case 'FETCH_REQUEST':
       return { ...state, loading: true };
-    case "FETCH_SUCCESS":
+    case 'FETCH_SUCCESS':
       return {
         ...state,
         summary: action.payload,
         loading: false,
       };
-    case "FETCH_FAIL":
+    case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
@@ -36,7 +36,7 @@ const reducer = (state, action) => {
 export default function DashboardScreen() {
   const [{ loading, summary, error }, dispatch] = useReducer(reducer, {
     loading: true,
-    error: "",
+    error: '',
   });
 
   const { state } = useContext(Store);
@@ -45,14 +45,14 @@ export default function DashboardScreen() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get("/api/orders/summary", {
+        const { data } = await axios.get('/api/orders/summary', {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
 
-        dispatch({ type: "FETCH_SUCCESS", payload: data });
+        dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
         dispatch({
-          type: "FETCH_FAIL",
+          type: 'FETCH_FAIL',
           payload: getError(err),
         });
       }
@@ -62,7 +62,7 @@ export default function DashboardScreen() {
 
   return (
     <div className="container-dashboard">
-      <h1>Monitorizare vânzări</h1>
+      <p className="title-dashboard">Monitorizare vânzări</p>
       {loading ? (
         <LoadingBox />
       ) : error ? (
@@ -78,7 +78,7 @@ export default function DashboardScreen() {
                     : 0}
                 </Typography>
 
-                <Typography color="text.secondary">Users</Typography>
+                <Typography color="text.secondary">Utilizatori</Typography>
               </CardContent>
             </Card>
 
@@ -90,7 +90,7 @@ export default function DashboardScreen() {
                     : 0}
                 </Typography>
 
-                <Typography color="text.secondary">Orders</Typography>
+                <Typography color="text.secondary">Comenzi</Typography>
               </CardContent>
             </Card>
 
@@ -99,46 +99,65 @@ export default function DashboardScreen() {
                 <Typography gutterBottom variant="h5" component="div">
                   {summary.orders && summary.users[0]
                     ? summary.orders[0].totalSales.toFixed(2)
-                    : 0}{" "}
+                    : 0}{' '}
                   lei
                 </Typography>
 
-                <Typography color="text.secondary">Orders</Typography>
+                <Typography color="text.secondary">Total încasări</Typography>
               </CardContent>
             </Card>
           </div>
+
           <div className="charts">
-            <h2>Sales chart</h2>
             {summary.dailyOrders.length === 0 ? (
-              <MessageBox> No sale</MessageBox>
+              <MessageBox>Nicio comandă</MessageBox>
             ) : (
               <Chart
-                width="100%"
-                height="400px"
+                style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)' }}
+                width="1000px"
+                height="500px"
                 chartType="AreaChart"
                 loader={<div>Loading chart...</div>}
                 data={[
-                  ["Date", "Sales"],
+                  ['Date', 'Vânzări'],
                   ...summary.dailyOrders.map((x) => [x._id, x.sales]),
                 ]}
+                options={{
+                  title: 'Monitorizarea vânzărilor',
+                  titleTextStyle: {
+                    fontSize: 20,
+                    bold: true,
+                    textAlign: 'center',
+                    margin: 50
+                  },
+                }}
               ></Chart>
             )}
           </div>
 
           <div className="charts">
-            <h2>Categories</h2>
             {summary.productCategories.length === 0 ? (
-              <MessageBox> No category</MessageBox>
+              <MessageBox>Nicio categorie</MessageBox>
             ) : (
               <Chart
-                width="100%"
-                height="400px"
+                style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)' }}
+                width="1000px"
+                height="500px"
                 chartType="PieChart"
                 loader={<div>Loading chart...</div>}
                 data={[
-                  ["Category", "Products"],
+                  ['Category', 'Products'],
                   ...summary.productCategories.map((x) => [x._id, x.count]),
                 ]}
+                options={{
+                  title: 'Categorii de produse',
+                  titleTextStyle: {
+                    fontSize: 20,
+                    bold: true,
+                    textAlign:"center"
+                    
+                  },
+                }}
               ></Chart>
             )}
           </div>

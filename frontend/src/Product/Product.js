@@ -70,7 +70,7 @@ function Product(props) {
       setTimeout(() => {
         setNotificationWarning(null);
         navigate('/signin');
-      }, 1000);
+      }, 2000);
       return;
     }
 
@@ -143,7 +143,7 @@ function Product(props) {
       setTimeout(() => {
         setNotificationWarning(null);
         navigate('/signin');
-      }, 1000);
+      }, 2000);
       return;
     }
     try {
