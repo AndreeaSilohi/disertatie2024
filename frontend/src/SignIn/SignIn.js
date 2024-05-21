@@ -1,12 +1,12 @@
 import './SignIn.css';
 import { useContext, useState, useEffect } from 'react';
 import Axios from 'axios';
-import Navbar from '../navbar/Navbar';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
 import { Wishlist } from '../W';
 import ResetPassword from '../ResetPassword/ResetPassword';
+
 function Profile() {
   const navigate = useNavigate();
   const { search } = useLocation();
@@ -110,9 +110,6 @@ function Profile() {
 
   return (
     <div>
-      {/* <div className="navbar">
-        <Navbar />
-      </div> */}
       <div className="background">
         <div className="container">
           <input type="checkbox" id="flip" />
@@ -129,7 +126,7 @@ function Profile() {
               <div className="login-form">
                
                 <form onSubmit={submitHandler} action="#">
-                   <div className="title">Logare</div>
+                   <div className="title-logare">Logare</div>
                   <div className="input-boxes">
                     <div className="input-box">
                       <i className="fas fa-envelope"></i>

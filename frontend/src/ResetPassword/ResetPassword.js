@@ -5,6 +5,7 @@ import { Store } from '../Store';
 import { getError } from '../utils';
 import axios from 'axios';
 import { Button } from '@mui/material';
+import './ResetPassword.css';
 
 export default function ResetPassword() {
   const navigate = useNavigate();
@@ -55,18 +56,28 @@ export default function ResetPassword() {
     <div className="background">
       <div className="container">
         <div className="forms">
+        <input type="checkbox" id="flip" />
+          <div className="cover">
+            <div className="front">
+              <img
+                src="https://images.pexels.com/photos/60579/forget-me-not-hoverfly-fly-flower-60579.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="Resetare parolă"
+              />
+            </div>
+          </div>
           <div className="form-content">
-            <div className="login-form">
-              <div className="title">Reset password</div>
+            <div className="reset-form">
+              <div className="title-reset">Resetează parola</div>
               <form onSubmit={submitHandler} action="#">
-                <div className="input-boxes">
+                <div className="input-boxes-reset">
                   <div className="input-box">
                     <i className="fas fa-lock"></i>
                     <input
                       type="password"
-                      placeholder="Enter your password"
+                      placeholder="Introdu parola nouă"
                       required
                       onChange={(e) => setPassword(e.target.value)}
+                      sx={{padding:"0px"}}
                     />
                   </div>
 
@@ -74,12 +85,16 @@ export default function ResetPassword() {
                     <i className="fas fa-lock"></i>
                     <input
                       type="password"
-                      placeholder="Confirm new password"
+                      placeholder="Confirmă parola nouă"
                       required
                       onChange={(e) => setConfirmPassword(e.target.value)}
+                      sx={{padding:"0px"}}
                     />
                   </div>
-                  <Button type="submit">Reset Password</Button>
+                  {/* <Button type="submit">Resetează parola</Button> */}
+                  <div className="button-reset input-box">
+                      <input type="submit" value="Trimite" />
+                    </div>
                 </div>
               </form>
             </div>

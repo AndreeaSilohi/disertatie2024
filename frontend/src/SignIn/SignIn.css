@@ -106,13 +106,13 @@
 .form-content .signup-form{
   width: calc(100% / 2 - 25px);
 }
-.forms .form-content .title{
+.forms .form-content .title-logare{
   position: relative;
   font-size: 24px;
   font-weight: 500;
   color: #333;
 }
-.forms .form-content .title:before{
+.forms .form-content .title-logare:before{
   content: '';
   position: absolute;
   left: 0;
@@ -121,7 +121,7 @@
   width: 25px;
   background: #064420;
 }
-.forms .signup-form  .title:before{
+.forms .signup-form  .title-logare:before{
   width: 20px;
 }
 .forms .form-content .input-boxes{
