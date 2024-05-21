@@ -120,12 +120,12 @@ export default function PlaceOrder() {
                       </Typography>
                       <List>
                         <ListItem>
-                          <p style={{ fontSize: '18px' }}>
+                          <p style={{ fontSize: '18px',margin:"0px" }}>
                             {cart.shippingAddress.fullName}
                           </p>
                         </ListItem>
                         <ListItem>
-                          <p style={{ fontSize: '18px' }}>
+                          <p style={{ fontSize: '18px',margin:"0px" }}>
                             {' '}
                             {cart.shippingAddress.address},{' '}
                             {cart.shippingAddress.city},{' '}
@@ -296,7 +296,7 @@ export default function PlaceOrder() {
                               onClick={placeOrderHandler}
                               disabled={cart.cartItems.length === 0}
                             >
-                              Mergi către plată
+                              Finalizează comanda
                             </Button>
                           </Grid>
                           {loading && <LoadingBox />}

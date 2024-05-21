@@ -1,45 +1,237 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Poppins:wght@100;200;400&family=Rajdhani:wght@300&display=swap");
-.wishList {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #f3f4ec;
-  position: relative;
-  
+/* 
+ 
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.wrapper-wishlist {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+ 
+header.header-wishlist {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  url(https://images.unsplash.com/photo-1702396302605-d5e23a59fc2f?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+background-size: cover;
+font-family: 'Montserrat', sans-serif;
+height:400px;
 }
-
-.countHandler input {
-  width: 40px;
-  text-align: center;
-  font-weight: bolder;
-}
-
-
-.background-wishlist {
-  width: 100%;
-  display: block;
-}
-
-.container-wishlist {
-  position: relative;
-  text-align: center;
+ 
+h1.h1-title-wishlist {
+  font-size: 2.5rem;
+  font-family: 'Montserrat', sans-serif;
   color: white;
+  margin: 0;
+}
+ 
+.navbar {
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+ 
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.1rem;
+  margin: 0 15px;
+  transition: color 0.3s;
+}
+ 
+.navbar a:hover {
+  color: #007bff;
+}
+ 
+.wishlist-container {
+  padding: 20px;
+}
+ 
+.wishlist-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+ 
+.wishlist-card {
+  background-color: white;
+  width: 300px;
+  height:500px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+ 
+.wishlist-card:hover {
+  transform: translateY(-10px);
+}
+ 
+.wishlist-card img {
   width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+ 
+.wishlist-card-content {
+  padding: 20px;
+}
+ 
+.wishlist-card-content h3 {
+  font-size: 1.2rem;
+  margin: 0 0 10px;
+  cursor: pointer;
+  color: #FFA500;
+}
+ 
+.wishlist-card-content h3:hover {
+  text-decoration: underline;
+}
+ 
+.wishlist-card-content p {
+  margin: 0;
+  color: #333;
+  font-size: 1rem;
+}
+ 
+.trash-icon {
+  color: #FFA500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+ 
+.trash-icon:hover {
+  color: #c9302c;
+}
+ 
+.trash-icon:active {
+  color: #ac2925;
+}
+  */
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.centered {
+.overlay-text-wishlist {
+  margin-top: 200px;
   position: absolute;
-  top: 60%;
+  top: 25%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  text-transform: uppercase;
-  font-family: "Catamaran", sans-serif;
-  font-size: 50px;
-} */
+  transform: translate(-50%, -110%);
+  color: white;
+  text-align: center;
+}
+
+header.header-wishlist {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(https://images.unsplash.com/photo-1702396302605-d5e23a59fc2f?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-size: cover;
+  font-family: 'Montserrat', sans-serif;
+  height: 400px;
+}
+
+h1.h1-title-wishlist {
+  font-size: 2.5rem;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  margin: 0;
+}
+
+.navbar {
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.1rem;
+  margin: 0 15px;
+  transition: color 0.3s;
+}
+
+.wishlist-container {
+  padding: 20px;
+}
+
+.wishlist-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding:40px;
+}
+
+.wishlist-card {
+  background-color: white;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.wishlist-card:hover {
+  transform: translateY(-10px);
+}
+
+.wishlist-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.wishlist-card-content {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wishlist-card-content h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  cursor: pointer;
+  color: #FFA500;
+}
+
+.wishlist-card-content h3:hover {
+  text-decoration: underline;
+}
+
+.wishlist-card-content p {
+  margin: 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.trash-icon {
+  color: #000000c5;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.trash-icon:hover {
+  color: #c9302c;
+}
+
+.trash-icon:active {
+  color: #ac2925;
+}

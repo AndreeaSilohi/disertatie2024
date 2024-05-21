@@ -1,10 +1,9 @@
-import React, { useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { Wishlist } from "../W";
-import { Trash } from "phosphor-react";
-import axios from "axios";
-import wishlistimg from "../assets/wishlistimg.jpg";
-import Navbar from "../navbar/Navbar";
+import React, { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Wishlist } from '../W';
+import { Trash } from 'phosphor-react';
+import axios from 'axios';
+import './Wishlist.css';
 
 function WishList() {
   const navigate = useNavigate();
@@ -21,18 +20,18 @@ function WishList() {
           // If userInfo or token is not available, return early
           return;
         }
-        const { data } = await axios.get("/api/wishlist", {
+        const { data } = await axios.get('/api/wishlist', {
           headers: {
             Authorization: `Bearer ${userInfo.token}`,
           },
         });
         console.log(data);
         ctxDispatch({
-          type: "WISHLIST_SET_ITEMS",
+          type: 'WISHLIST_SET_ITEMS',
           payload: data.wishlistItems,
         });
       } catch (error) {
-        console.error("Error fetching wishlist items:", error);
+        console.error('Error fetching wishlist items:', error);
         // Handle error
       }
     };
@@ -48,49 +47,34 @@ function WishList() {
         },
       });
 
-      ctxDispatch({ type: "WISHLIST_REMOVE_ITEM", payload: item });
+      ctxDispatch({ type: 'WISHLIST_REMOVE_ITEM', payload: item });
     } catch (error) {
-      console.error("Error removing item from wishlist:", error);
+      console.error('Error removing item from wishlist:', error);
     }
   };
 
   return (
-    <div className="wrapper-wishlist">
-      <div className="wishList">
-        {/* <div className="navbar">
-          <Navbar />
-        </div> */}
-
-        <div className="container-wishlist">
-          <img
-            className="background-wishlist"
-            src={wishlistimg}
-            alt="Background"
-          />
-          <div className="centered">Your Wishlist Items</div>
+    <div>
+      <header className="header-wishlist">
+        <div className="overlay-text-wishlist">
+          <h1 className="h1-title-wishlist">PRODUSE FAVORITE</h1>
         </div>
-
-        <div className="cartItems">
+      </header>
+      <div className="wishlist-container">
+        <div className="wishlist-items">
           {wishlistItems.map((wishlistItem, index) => (
-            <div key={index} className="cart-table">
-              <div className="table-content">
-                <div className="table-content-1">
-                  <div className="img">
-                    <img src={wishlistItem.image} alt={wishlistItem.name} />
-                    <div
-                      onClick={() => navigate(`/product/${wishlistItem.slug}`)}
-                    >
-                      {wishlistItem.name}
-                    </div>
-                  </div>
-                </div>
-                <div className="table-content-2">{wishlistItem.price}</div>
-                <div
-                  className="table-content-4"
+            <div key={index} className="wishlist-card">
+              <img src={wishlistItem.image} alt={wishlistItem.name} />
+              <div className="wishlist-card-content">
+                <h3 onClick={() => navigate(`/product/${wishlistItem.slug}`)}>
+                  {wishlistItem.name}
+                </h3>
+                <p>{wishlistItem.price} lei</p>
+                <Trash
+                  size={24}
+                  className="trash-icon"
                   onClick={() => removeItemHandler(wishlistItem)}
-                >
-                  <Trash size={28} />
-                </div>
+                />
               </div>
             </div>
           ))}

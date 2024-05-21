@@ -601,7 +601,7 @@ const ProductDetails = () => {
                           // Show a message if the product is not in orders
                           <MessageBox>
                             {userInfo ? (
-                              'This product is not in your orders. You cannot let a review'
+                              'Nu poți lăsa o recenzie, deoarece acest produs nu se află în comenzile plasate de tine.'
                             ) : (
                               <>
                                 Te rugăm să te loghezi pentru a scrie o recenzie <Link to={'/signin'}>Logare</Link> 

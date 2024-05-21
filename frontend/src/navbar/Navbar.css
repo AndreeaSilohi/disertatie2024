@@ -1,5 +1,4 @@
-
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 .navbar {
   width: 100%;
@@ -10,18 +9,16 @@
   font-weight: 900;
   background-color: rgba(255, 255, 255, 0.9);
   z-index: 99;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   text-transform: uppercase;
-
 }
 
 .nav-links {
   width: 55%;
   display: flex;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   list-style: none;
- 
 }
 
 .nav-link {
@@ -29,12 +26,11 @@
   text-decoration: none;
 }
 
-
-.div-logo-menu{
-  padding:10px;
+.div-logo-menu {
+  padding: 10px;
   display: flex;
   align-items: center;
-  width:10%
+  width: 10%;
 }
 
 .profile-icons-container {
@@ -69,18 +65,18 @@
   color: orange;
 }
 
-.icons{
+.icons {
   display: flex;
   align-items: center;
-  padding:50px;
+  padding: 10px;
 }
 
-
-.icons-wishlist-cart{
-  margin-right:60px;
+.icons-wishlist-cart {
+  margin-right: 60px;
+  
 }
 
-.span-menu{
-  font-family: "Montserrat", sans-serif !important;
- margin-left: 4px;
+.span-menu {
+  font-family: 'Montserrat', sans-serif !important;
+  margin-left: 4px;
 }

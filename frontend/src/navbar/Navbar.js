@@ -192,289 +192,292 @@ function Navbar() {
   const profilePhoto = localStorage.getItem('profilePhoto');
   return (
     <div>
-<div className={sidebarIsOpen ? 'navbar active-cont' : 'navbar'}>
-      <div className="div-logo-menu">
-        {userInfo && ( // Render sidebar only if user is logged in
-          <div className="burger-menu" onClick={toggleSidebar}>
-            <List size={28} />
-          </div>
-        )}
-        <img className="logo" src={logo} alt="Logo" />
-      </div>
-
-      <ul className="nav-links">
-        <NavLink
-          to="/"
-          exact
-          className="nav-link"
-          style={({ isActive }) =>
-            isActive ? { color: 'orange' } : { color: 'black' }
-          }
-        >
-          Acasă
-        </NavLink>
-        <NavLink
-          to="/shop"
-          className="nav-link"
-          style={({ isActive }) =>
-            isActive ? { color: 'orange' } : { color: 'black' }
-          }
-        >
-          Magazinul nostru
-        </NavLink>
-        <NavLink
-          to="/about"
-          className="nav-link"
-          style={({ isActive }) =>
-            isActive ? { color: 'orange' } : { color: 'black' }
-          }
-        >
-          Despre
-        </NavLink>
-        <NavLink
-          to="/curiosities"
-          className="nav-link"
-          style={({ isActive }) =>
-            isActive ? { color: 'orange' } : { color: 'black' }
-          }
-        >
-          Curiozități
-        </NavLink>
-        <NavLink
-          to="/contact-form"
-          className="nav-link"
-          style={({ isActive }) =>
-            isActive ? { color: 'orange' } : { color: 'black' }
-          }
-        >
-          Contact
-        </NavLink>
-      </ul>
-      <div className="icons">
-        <div className="icons-wishlist-cart">
-          <NavLink to="/wishlist">
-            <IconButton color="inherit">
-              <Badge badgeContent={wishlistCount} color="success">
-                <HeartStraight style={{ color: 'black' }} size={30} />
-              </Badge>
-            </IconButton>
-          </NavLink>
-
-          <NavLink to="/cart">
-            <IconButton color="inherit">
-              <Badge
-                badgeContent={cart.cartItems.reduce(
-                  (a, c) => a + c.quantity,
-                  0
-                )}
-                color="success"
-              >
-                <ShoppingCart style={{ color: 'black' }} size={30} />
-              </Badge>
-            </IconButton>
-          </NavLink>
-        </div>
-        <div className="icons-profile">
-          {userInfo ? (
-            <>
-              {userInfo.isAdmin ? (
-                // Render admin menu
-                <div className="admin-menu">
-                  <LightTooltip title="Panou de administrare">
-                    <IconButton
-                      color="inherit"
-                      aria-controls="admin-menu"
-                      aria-haspopup="true"
-                      onClick={handleMenuOpen}
-                    >
-                      <UserCircle style={{ color: 'black' }} size={40} />
-                    </IconButton>
-                  </LightTooltip>
-                  <Menu
-                    id="admin-menu"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'right',
-                    }}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleMenuClose}
-                  >
-                    <MenuItem
-                      style={{ display: 'flex', alignItems: 'center' }}
-                      value={1}
-                      component={Link}
-                      to="/admin/dashboard"
-                      onClick={handleMenuClose}
-                    >
-                      <ChartLine size={20} style={{ marginRight: '2px' }} />
-
-                      <span className="span-menu">Monitorizare vânzări</span>
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem
-                      style={{ display: 'flex', alignItems: 'center' }}
-                      value={2}
-                      component={Link}
-                      to="/admin/products"
-                      onClick={handleMenuClose}
-                    >
-                      <ListBullets size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu">Produse</span>
-                    </MenuItem>
-
-                    <Divider />
-                    <MenuItem
-                      style={{ display: 'flex', alignItems: 'center' }}
-                      value={3}
-                      component={Link}
-                      to="/admin/orders"
-                      onClick={handleMenuClose}
-                    >
-                      <List size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu">Comenzi</span>
-                    </MenuItem>
-
-                    <Divider />
-                    <MenuItem
-                      style={{ display: 'flex', alignItems: 'center' }}
-                      value={4}
-                      component={Link}
-                      to="/admin/users"
-                      onClick={handleMenuClose}
-                    >
-                      <Users size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu">Utilizatori</span>
-                    </MenuItem>
-
-                    <Divider />
-                    <MenuItem
-                      onClick={signoutHandler}
-                      style={{ display: 'flex', alignItems: 'center' }}
-                    >
-                      <SignOut size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu">Delogare</span>
-                    </MenuItem>
-                  </Menu>
-                </div>
-              ) : (
-                // Render user menu
-                <div className="user-menu">
-                  <LightTooltip title="Contul meu">
-                    <Avatar
-                      alt="user"
-                      src={profilePhoto}
-                      sx={{ width: 40, height: 40 }}
-                      onClick={handleMenuOpen}
-                    />
-                  </LightTooltip>
-                  <Menu
-                    id="user-menu"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'right',
-                    }}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleMenuClose}
-                  >
-                    <MenuItem style={{ display: 'flex', alignItems: 'center' }}>
-                      <label htmlFor="photoInput" style={{ cursor: 'pointer' }}>
-                        <UploadSimple
-                          size={20}
-                          style={{ marginRight: '2px' }}
-                        />
-                        <span className="span-menu">Încarcă fotografie</span>
-                      </label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handlePhotoUpload}
-                        id="photoInput"
-                        style={{ display: 'none' }}
-                      />
-                    </MenuItem>
-
-                    <Divider />
-                    <MenuItem
-                      style={{ display: 'flex', alignItems: 'center' }}
-                      value={1}
-                      component={Link}
-                      to="/profile"
-                      onClick={handleMenuClose}
-                    >
-                      <UserCircle size={25} style={{ marginRight: '5px' }} />
-                      <span className="span-menu">Actualizare date</span>
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem
-                      style={{ display: 'flex', alignItems: 'center' }}
-                      value={2}
-                      component={Link}
-                      to="/orderhistory"
-                      onClick={handleMenuClose}
-                    >
-                      <ListBullets size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu">Istoric comenzi</span>
-                    </MenuItem>
-
-                    <Divider />
-                    <MenuItem
-                      onClick={signoutHandler}
-                      style={{ display: 'flex', alignItems: 'center' }}
-                    >
-                      <SignOut size={20} style={{ marginRight: '2px' }} />
-                      <span className="span-menu">Delogare</span>
-                    </MenuItem>
-                  </Menu>
-                </div>
-              )}
-            </>
-          ) : (
-            <Link to="/signin">
-              <SignIn
-                size={32}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginRight: '2px',
-                  color: 'black',
-                }}
-              />
-            </Link>
+      <div className={sidebarIsOpen ? 'navbar active-cont' : 'navbar'}>
+        <div className="div-logo-menu">
+          {userInfo && ( // Render sidebar only if user is logged in
+            <div className="burger-menu" onClick={toggleSidebar}>
+              <List size={28} />
+            </div>
           )}
+          <img className="logo" src={logo} alt="Logo" />
         </div>
+
+        <ul className="nav-links">
+          <NavLink
+            to="/"
+            exact
+            className="nav-link"
+            style={({ isActive }) =>
+              isActive ? { color: 'orange' } : { color: 'black' }
+            }
+          >
+            Acasă
+          </NavLink>
+          <NavLink
+            to="/shop"
+            className="nav-link"
+            style={({ isActive }) =>
+              isActive ? { color: 'orange' } : { color: 'black' }
+            }
+          >
+            Magazinul nostru
+          </NavLink>
+          <NavLink
+            to="/about"
+            className="nav-link"
+            style={({ isActive }) =>
+              isActive ? { color: 'orange' } : { color: 'black' }
+            }
+          >
+            Despre
+          </NavLink>
+          <NavLink
+            to="/curiosities"
+            className="nav-link"
+            style={({ isActive }) =>
+              isActive ? { color: 'orange' } : { color: 'black' }
+            }
+          >
+            Curiozități
+          </NavLink>
+          <NavLink
+            to="/contact-form"
+            className="nav-link"
+            style={({ isActive }) =>
+              isActive ? { color: 'orange' } : { color: 'black' }
+            }
+          >
+            Contact
+          </NavLink>
+        </ul>
+        <div className="icons">
+          <div className="icons-wishlist-cart">
+            <NavLink to="/wishlist" style={{marginRight:"-10px"}}>
+              <IconButton color="inherit">
+                <Badge badgeContent={wishlistCount} color="success">
+                  <HeartStraight style={{ color: 'black' }} size={30} />
+                </Badge>
+              </IconButton>
+            </NavLink>
+
+            <NavLink to="/cart">
+              <IconButton color="inherit">
+                <Badge
+                  badgeContent={cart.cartItems.reduce(
+                    (a, c) => a + c.quantity,
+                    0
+                  )}
+                  color="success"
+                >
+                  <ShoppingCart style={{ color: 'black' }} size={30} />
+                </Badge>
+              </IconButton>
+            </NavLink>
+          </div>
+          <div className="icons-profile">
+            {userInfo ? (
+              <>
+                {userInfo.isAdmin ? (
+                  // Render admin menu
+                  <div className="admin-menu">
+                    <LightTooltip title="Panou de administrare">
+                      <IconButton
+                        color="inherit"
+                        aria-controls="admin-menu"
+                        aria-haspopup="true"
+                        onClick={handleMenuOpen}
+                      >
+                        <UserCircle style={{ color: 'black' }} size={40} />
+                      </IconButton>
+                    </LightTooltip>
+                    <Menu
+                      id="admin-menu"
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleMenuClose}
+                    >
+                      <MenuItem
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        value={1}
+                        component={Link}
+                        to="/admin/dashboard"
+                        onClick={handleMenuClose}
+                      >
+                        <ChartLine size={20} style={{ marginRight: '2px' }} />
+
+                        <span className="span-menu">Monitorizare vânzări</span>
+                      </MenuItem>
+                      <Divider />
+                      <MenuItem
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        value={2}
+                        component={Link}
+                        to="/admin/products"
+                        onClick={handleMenuClose}
+                      >
+                        <ListBullets size={20} style={{ marginRight: '2px' }} />
+                        <span className="span-menu">Produse</span>
+                      </MenuItem>
+
+                      <Divider />
+                      <MenuItem
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        value={3}
+                        component={Link}
+                        to="/admin/orders"
+                        onClick={handleMenuClose}
+                      >
+                        <List size={20} style={{ marginRight: '2px' }} />
+                        <span className="span-menu">Comenzi</span>
+                      </MenuItem>
+
+                      <Divider />
+                      <MenuItem
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        value={4}
+                        component={Link}
+                        to="/admin/users"
+                        onClick={handleMenuClose}
+                      >
+                        <Users size={20} style={{ marginRight: '2px' }} />
+                        <span className="span-menu">Utilizatori</span>
+                      </MenuItem>
+
+                      <Divider />
+                      <MenuItem
+                        onClick={signoutHandler}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                      >
+                        <SignOut size={20} style={{ marginRight: '2px' }} />
+                        <span className="span-menu">Delogare</span>
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                ) : (
+                  // Render user menu
+                  <div className="user-menu">
+                    <LightTooltip title="Contul meu">
+                      <Avatar
+                        alt="user"
+                        src={profilePhoto}
+                        sx={{ width: 40, height: 40 }}
+                        onClick={handleMenuOpen}
+                      />
+                    </LightTooltip>
+                    <Menu
+                      id="user-menu"
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleMenuClose}
+                    >
+                      <MenuItem
+                        style={{ display: 'flex', alignItems: 'center' }}
+                      >
+                        <label
+                          htmlFor="photoInput"
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <UploadSimple
+                            size={20}
+                            style={{ marginRight: '2px' }}
+                          />
+                          <span className="span-menu">Încarcă fotografie</span>
+                        </label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handlePhotoUpload}
+                          id="photoInput"
+                          style={{ display: 'none' }}
+                        />
+                      </MenuItem>
+
+                      <Divider />
+                      <MenuItem
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        value={1}
+                        component={Link}
+                        to="/profile"
+                        onClick={handleMenuClose}
+                      >
+                        <UserCircle size={25} style={{ marginRight: '5px' }} />
+                        <span className="span-menu">Actualizare date</span>
+                      </MenuItem>
+                      <Divider />
+                      <MenuItem
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        value={2}
+                        component={Link}
+                        to="/orderhistory"
+                        onClick={handleMenuClose}
+                      >
+                        <ListBullets size={20} style={{ marginRight: '2px' }} />
+                        <span className="span-menu">Istoric comenzi</span>
+                      </MenuItem>
+
+                      <Divider />
+                      <MenuItem
+                        onClick={signoutHandler}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                      >
+                        <SignOut size={20} style={{ marginRight: '2px' }} />
+                        <span className="span-menu">Delogare</span>
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                )}
+              </>
+            ) : (
+              <Link to="/signin">
+                <SignIn
+                  size={32}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginRight: '2px',
+                    color: 'black',
+                  }}
+                />
+              </Link>
+            )}
+          </div>
+        </div>
+        {/* Sidebar */}
+
+        <Drawer anchor="left" open={sidebarIsOpen} onClose={toggleSidebar}>
+          <MuiList className="sidebar-list">
+            {categories.map((category) => (
+              <ListItem
+                key={category}
+                component={Link}
+                to={`/search?category=${category}`}
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <ListItemText>
+                  <Typography variant="body1">{category}</Typography>
+                </ListItemText>
+              </ListItem>
+            ))}
+          </MuiList>
+        </Drawer>
       </div>
-      {/* Sidebar */}
-
-      <Drawer anchor="left" open={sidebarIsOpen} onClose={toggleSidebar}>
-        <MuiList className="sidebar-list">
-          {categories.map((category) => (
-            <ListItem
-              key={category}
-              component={Link}
-              to={`/search?category=${category}`}
-              onClick={() => setSidebarIsOpen(false)}
-            >
-              <ListItemText>
-                <Typography variant="body1">{category}</Typography>
-              </ListItemText>
-            </ListItem>
-          ))}
-        </MuiList>
-      </Drawer>
-
-    </div>
-    {notification && (
+      {notification && (
         <div className={`notification ${notification.type}`}>
           <span>{notification.message}</span>
           {/* <button onClick={handleCloseNotification}>Close</button> */}
         </div>
       )}
     </div>
-    
   );
 }
 export default Navbar;
