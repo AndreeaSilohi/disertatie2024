@@ -109,7 +109,7 @@ function Cart() {
         {cartItems.length === 0 ? (
           <div className="empty-cart">
             <div className="empty-cart-1-div">
-              <h1>COȘUL TĂU ESTE GOL</h1>
+              <h1>Coșul tău este gol</h1>
             </div>
             <div className="empty-cart-2-div">
               Shopping-ul este întotdeauna bun atunci când este vorba de produse

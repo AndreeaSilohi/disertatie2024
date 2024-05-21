@@ -60,6 +60,24 @@ function WishList() {
           <h1 className="h1-title-wishlist">PRODUSE FAVORITE</h1>
         </div>
       </header>
+
+      {wishlistItems.length === 0 ? (
+          <div className="empty-wishlist">
+            <div className="empty-wishlist-1-div">
+              <h1>Lista de favorite este goală</h1>
+            </div>
+            <div className="empty-wishlist-2-div">
+             Începe acum să adaugi produse în lista de favorite
+            </div>
+
+            <button
+              onClick={() => navigate('/shop')}
+              className="empty-cart-button"
+            >
+              SPRE PRODUSE
+            </button>
+          </div>
+        ) : (
       <div className="wishlist-container">
         <div className="wishlist-items">
           {wishlistItems.map((wishlistItem, index) => (
@@ -80,7 +98,9 @@ function WishList() {
           ))}
         </div>
       </div>
+        )}
     </div>
+        
   );
 }
 
