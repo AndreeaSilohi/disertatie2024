@@ -348,7 +348,7 @@ export default function SearchScreen() {
                 <div className="empty-product">
                   <div className="empty-product-content">
                     <Warning size={32} />
-                    <h1>NO PRODUCTS FOUND</h1>
+                    <h1>Niciun produs găsit</h1>
                   </div>
                 </div>
               )}

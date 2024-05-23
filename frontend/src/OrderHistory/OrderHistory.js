@@ -123,13 +123,13 @@ export default function OrderHistory() {
                     <StyledTableCell align="center" className="table-cell">
                       {order.isPaid
                         ? String(order.paidAt).substring(0, 10)
-                        : 'No'}
+                        : 'Nu'}
                     </StyledTableCell>
 
                     <StyledTableCell align="center" className="table-cell">
                       {order.isDelivered
                         ? order.deliveredAt.substring(0, 10)
-                        : 'No'}
+                        : 'Nu'}
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
                       <Button

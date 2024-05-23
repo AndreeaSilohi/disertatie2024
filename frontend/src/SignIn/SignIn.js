@@ -5,7 +5,7 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
 import { Wishlist } from '../W';
-import ResetPassword from '../ResetPassword/ResetPassword';
+import { Eye } from 'phosphor-react'; 
 
 function Profile() {
   const navigate = useNavigate();
@@ -24,6 +24,8 @@ function Profile() {
   const {
     wishlist: { wishlistItems },
   } = stateW;
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const fetchWishlistItems = async (token) => {
     try {
@@ -124,32 +126,42 @@ function Profile() {
           <div className="forms">
             <div className="form-content">
               <div className="login-form">
-               
                 <form onSubmit={submitHandler} action="#">
-                   <div className="title-logare">Logare</div>
+                  <div className="title-logare">Logare</div>
                   <div className="input-boxes">
+                  <div className='inputs'>
                     <div className="input-box">
                       <i className="fas fa-envelope"></i>
-                      <input
-                        type="email"
-                        placeholder="Introdu email"
-                        required
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
+                      <div className="email-input">
+                        <input
+                          type="email"
+                          placeholder="Introdu email"
+                          required
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                      </div>
                     </div>
                     <div className="input-box">
-                      <i className="fas fa-lock"></i>
-                      <input
-                        type="password"
-                        placeholder="Introdu parola"
-                        required
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
+                      <div className="password-input">
+                        <i className="fas fa-lock"></i>
+
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          value={password}
+                          placeholder="Introdu parola"
+                          required
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <Eye
+                          size={26}
+                          onClick={() => setShowPassword(!showPassword)}
+                          style={{ cursor: 'pointer', color: showPassword ? '#FFA500' : 'green' }}
+                        />
+                      </div>
                     </div>
-                    {/* <div className="text">
-                      <a href="#">Ai uitat parola?</a>
-                    </div> */}
-                    <div className="text">
+
+                   </div>
+                    <div className="text-password">
                       Ți-ai uitat parola? &nbsp;
                       <Link to={`/forget-password`}>Resetează parola</Link>
                     </div>
@@ -162,13 +174,6 @@ function Profile() {
                         &nbsp;Creează un cont
                       </Link>
                     </div>
-
-                    {/* <div className="text sign-up-text">
-                      Ți-ai uitat parola? &nbsp;
-                      <Link to={`/forget-password`}>
-                        Reset password
-                      </Link>
-                    </div> */}
                   </div>
                 </form>
               </div>

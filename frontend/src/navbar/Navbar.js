@@ -60,27 +60,27 @@ function Navbar() {
   const [user, setUser] = useState(null);
   const [notification, setNotification] = useState(null);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await axios.get(`/api/products/categories`);
-        setCategories(data);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const { data } = await axios.get(`/api/products/categories`);
+  //       setCategories(data);
 
-        if (userInfo) {
-          const userResult = await axios.get(
-            `/api/users/profile/${userInfo._id}`,
-            {
-              headers: { Authorization: `Bearer ${userInfo.token}` },
-            }
-          );
-          setUser(userResult.data);
-        }
-      } catch (err) {
-        window.alert(getError(err));
-      }
-    };
-    fetchCategories();
-  }, []);
+  //       if (userInfo) {
+  //         const userResult = await axios.get(
+  //           `/api/users/profile/${userInfo._id}`,
+  //           {
+  //             headers: { Authorization: `Bearer ${userInfo.token}` },
+  //           }
+  //         );
+  //         setUser(userResult.data);
+  //       }
+  //     } catch (err) {
+  //       window.alert(getError(err));
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
 
   const signoutHandler = () => {
     ctxDispatch({ type: 'USER_SIGNOUT' });
@@ -194,11 +194,11 @@ function Navbar() {
     <div>
       <div className={sidebarIsOpen ? 'navbar active-cont' : 'navbar'}>
         <div className="div-logo-menu">
-          {userInfo && ( // Render sidebar only if user is logged in
+          {/* {userInfo && ( // Render sidebar only if user is logged in
             <div className="burger-menu" onClick={toggleSidebar}>
               <List size={28} />
             </div>
-          )}
+          )} */}
           <img className="logo" src={logo} alt="Logo" />
         </div>
 
@@ -454,7 +454,7 @@ function Navbar() {
         </div>
         {/* Sidebar */}
 
-        <Drawer anchor="left" open={sidebarIsOpen} onClose={toggleSidebar}>
+        {/* <Drawer anchor="left" open={sidebarIsOpen} onClose={toggleSidebar}>
           <MuiList className="sidebar-list">
             {categories.map((category) => (
               <ListItem
@@ -469,7 +469,7 @@ function Navbar() {
               </ListItem>
             ))}
           </MuiList>
-        </Drawer>
+        </Drawer> */}
       </div>
       {notification && (
         <div className={`notification ${notification.type}`}>

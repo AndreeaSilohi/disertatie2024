@@ -16,6 +16,7 @@ export default function MessageBox(props) {
     display: "flex",
     justifyContent: "center",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", 
+    backgroundColor: "#eecc8d"
   };
 
   return (

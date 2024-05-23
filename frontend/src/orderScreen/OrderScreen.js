@@ -235,11 +235,11 @@ export default function OrderScreen() {
                   Informații client
                 </Typography>
                 <List>
-                  <ListItem>
+                  <ListItem style={{padding:"0px 0px 0px 16px"}}>
                     <strong>Nume: &nbsp;</strong>
                     <p>{order.shippingAddress.fullName}</p>
                   </ListItem>
-                  <ListItem>
+                  <ListItem style={{padding:"0px 0px 0px 16px"}}>
                     <strong>Adresă: </strong>
                     <p>
                       &nbsp;
@@ -249,7 +249,7 @@ export default function OrderScreen() {
                       {order.shippingAddress.country}
                     </p>
                   </ListItem>
-                  <ListItem>
+                  <ListItem style={{padding:"0px 0px 0px 16px"}}>
                     <strong>Telefon: </strong>
                     <p>
                       &nbsp;

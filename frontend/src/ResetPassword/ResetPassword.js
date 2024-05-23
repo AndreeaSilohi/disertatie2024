@@ -1,10 +1,10 @@
 import React from 'react';
-import { useState,useEffect,useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Store } from '../Store';
 import { getError } from '../utils';
 import axios from 'axios';
-import { Button } from '@mui/material';
+import { Eye } from 'phosphor-react';
 import './ResetPassword.css';
 
 export default function ResetPassword() {
@@ -13,7 +13,9 @@ export default function ResetPassword() {
   const { token } = useParams();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { state } = useContext(Store);
   const { userInfo } = state;
 
@@ -45,7 +47,6 @@ export default function ResetPassword() {
     }
   };
 
-  
   useEffect(() => {
     if (userInfo || !token) {
       navigate('/');
@@ -56,7 +57,7 @@ export default function ResetPassword() {
     <div className="background">
       <div className="container">
         <div className="forms">
-        <input type="checkbox" id="flip" />
+          <input type="checkbox" id="flip" />
           <div className="cover">
             <div className="front">
               <img
@@ -70,32 +71,55 @@ export default function ResetPassword() {
               <div className="title-reset">Resetează parola</div>
               <form onSubmit={submitHandler} action="#">
                 <div className="input-boxes-reset">
-                  <div className="input-box">
-                    <i className="fas fa-lock"></i>
-                    <input
-                      type="password"
-                      placeholder="Introdu parola nouă"
-                      required
-                      onChange={(e) => setPassword(e.target.value)}
-                      sx={{padding:"0px"}}
-                    />
-                  </div>
+                  <div className="inputs-reset">
+                    <div className="input-box">
+                      <div className="password-input">
+                        <i className="fas fa-lock"></i>
 
-                  <div className="input-box">
-                    <i className="fas fa-lock"></i>
-                    <input
-                      type="password"
-                      placeholder="Confirmă parola nouă"
-                      required
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      sx={{padding:"0px"}}
-                    />
-                  </div>
-                  {/* <Button type="submit">Resetează parola</Button> */}
-                  <div className="button-reset input-box">
-                      <input type="submit" value="Trimite" />
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder="Introdu parola nouă"
+                          required
+                          onChange={(e) => setPassword(e.target.value)}
+                          sx={{ padding: '0px' }}
+                        />
+                        <Eye
+                          size={26}
+                          onClick={() => setShowPassword(!showPassword)}
+                          style={{
+                            cursor: 'pointer',
+                            color: showPassword ? '#FFA500' : 'green',
+                          }}
+                        />
+                      </div>
                     </div>
-                </div>
+
+                    <div className="input-box">
+                      <div className="password-input">
+                        <i className="fas fa-lock"></i>
+                        <input
+                          type={showConfirmPassword ? 'text' : 'password'}
+                          placeholder="Confirmă parola nouă"
+                          required
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          sx={{ padding: '0px' }}
+                        />
+                        <Eye
+                          size={26}
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          style={{
+                            cursor: 'pointer',
+                            color: showConfirmPassword ? '#FFA500' : 'green',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                  <div className="button-reset input-box" style={{marginTop:"20px"}}>
+                    <input type="submit" value="Trimite" />
+                  </div>
+               
               </form>
             </div>
           </div>
