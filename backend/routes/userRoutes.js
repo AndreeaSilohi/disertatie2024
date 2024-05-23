@@ -2,7 +2,13 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import expressAsyncHandler from 'express-async-handler';
 import User from '../modelss/userModel.js';
-import { baseUrl, generateToken, isAdmin, isAuth ,mailgunResetPassword} from '../utils.js';
+import {
+  baseUrl,
+  generateToken,
+  isAdmin,
+  isAuth,
+  mailgunResetPassword,
+} from '../utils.js';
 import jwt from 'jsonwebtoken';
 
 const userRouter = express.Router();
@@ -23,17 +29,17 @@ userRouter.get(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const page = parseInt(req.query.page) || 1; 
-    const pageSize = 10; 
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 10;
 
-    const count = await User.countDocuments({}); 
-    const totalPages = Math.ceil(count / pageSize); 
+    const count = await User.countDocuments({});
+    const totalPages = Math.ceil(count / pageSize);
 
     const users = await User.find({})
-      .skip(pageSize * (page - 1)) 
+      .skip(pageSize * (page - 1))
       .limit(pageSize);
 
-    res.send({ users,pageSize, totalPages });
+    res.send({ users, pageSize, totalPages });
   })
 );
 
@@ -46,7 +52,7 @@ userRouter.get(
     if (user) {
       res.send(user);
     } else {
-      res.status(404).send({ message: 'User not found' });
+      res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
     }
   })
 );
@@ -60,7 +66,7 @@ userRouter.get(
     if (user) {
       res.send(user);
     } else {
-      res.status(404).send({ message: 'User not found' });
+      res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
     }
   })
 );
@@ -77,9 +83,9 @@ userRouter.put(
 
       user.isAdmin = Boolean(req.body.isAdmin);
       const updatedUser = await user.save();
-      res.send({ message: 'User Updated', user: updatedUser });
+      res.send({ message: 'Utilizator actualizat', user: updatedUser });
     } else {
-      res.status(404).send({ message: 'User not found' });
+      res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
     }
   })
 );
@@ -92,9 +98,9 @@ userRouter.put(
     if (user) {
       user.profilePhoto = req.body.profilePhoto || user.profilePhoto;
       const updatedUser = await user.save();
-      res.send({ message: 'Profile photo updated', user: updatedUser });
+      res.send({ message: 'Fotografie de profil actualizată', user: updatedUser });
     } else {
-      res.status(404).send({ message: 'User not found' });
+      res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
     }
   })
 );
@@ -107,13 +113,13 @@ userRouter.delete(
     const user = await User.findById(req.params.id);
     if (user) {
       if (user.email === 'admin@example.com') {
-        res.status(400).send({ message: 'You can not delete the Admin!' });
+        res.status(400).send({ message: 'Administratorul nu poate fi șters!' });
         return;
       }
       await user.deleteOne();
       res.send({ message: 'User deleted' });
     } else {
-      res.status(404).send({ message: 'User not found' });
+      res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
     }
   })
 );
@@ -210,7 +216,7 @@ userRouter.put(
         token: generateToken(updatedUser),
       });
     } else {
-      res.status(404).send({ message: 'User not found' });
+      res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
     }
   })
 );
@@ -223,7 +229,7 @@ userRouter.get(
     if (user) {
       res.send(user);
     } else {
-      res.status(404).send({ message: 'User not found' });
+      res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
     }
   })
 );
@@ -238,10 +244,9 @@ userRouter.post(
       });
       user.resetToken = token;
       await user.save();
-      console.log("token", token)
+      console.log('token', token);
       //reset link
       console.log(`${baseUrl()}/reset-password/${token}`);
-
 
       mailgunResetPassword()
         .messages()
@@ -256,13 +261,15 @@ userRouter.post(
            `,
           },
           (error, body) => {
-            console.log("error:",error);
-            console.log("body",body);
+            console.log('error:', error);
+            console.log('body', body);
           }
         );
-      res.send({ message: 'We sent reset password link to your email.' });
+      res.send({
+        message: 'Am trimis un link pe adresa dumneavoastră de mail.',
+      });
     } else {
-      res.status(404).send({ message: 'User not found' });
+      res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
     }
   })
 );
@@ -284,7 +291,7 @@ userRouter.post(
             });
           }
         } else {
-          res.status(404).send({ message: 'User not found' });
+          res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
         }
       }
     });

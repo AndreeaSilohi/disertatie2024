@@ -20,18 +20,15 @@ export default function ResetPassword() {
   const { userInfo } = state;
 
   const [notification, setNotification] = useState(null);
+  const [notificationWarning, setNotificationWarning] = useState(null);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      // window.alert('Parolele nu se potrivesc');
-      setNotification({
-        type: 'warning',
-        message: 'Parolele nu se potrivesc',
-      });
+      setNotificationWarning('Parolele nu se potrivesc');
       setTimeout(() => {
-        setNotification(null);
-      }, 3000);
+        setNotificationWarning(null);
+      }, 2000);
       return;
     }
 
@@ -40,8 +37,12 @@ export default function ResetPassword() {
         password,
         token,
       });
-      navigate('/signin');
-      window.alert('Parola schimbata cu succes!');
+
+      setNotification('Parola a fost schimbată cu succes!');
+      setTimeout(() => {
+        setNotification(null);
+        navigate('/signin');
+      }, 2000);
     } catch (err) {
       window.alert(getError(err));
     }
@@ -106,7 +107,9 @@ export default function ResetPassword() {
                         />
                         <Eye
                           size={26}
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
                           style={{
                             cursor: 'pointer',
                             color: showConfirmPassword ? '#FFA500' : 'green',
@@ -115,21 +118,21 @@ export default function ResetPassword() {
                       </div>
                     </div>
                   </div>
-                  </div>
-                  <div className="button-reset input-box" style={{marginTop:"20px"}}>
-                    <input type="submit" value="Trimite" />
-                  </div>
-               
+                </div>
+                <div
+                  className="button-reset input-box"
+                  style={{ marginTop: '20px' }}
+                >
+                  <input type="submit" value="Trimite" />
+                </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-      {notification && (
-        <div className={`notification ${notification.type}`}>
-          <span>{notification.message}</span>
-          {/* <button onClick={handleCloseNotification}>Close</button> */}
-        </div>
+      {notification && <div className="notification">{notification}</div>}
+      {notificationWarning && (
+        <div className="notificationWarning">{notificationWarning}</div>
       )}
     </div>
   );

@@ -12,6 +12,8 @@ export default function ForgotPassword() {
   const { state } = useContext(Store);
   const { userInfo } = state;
 
+  const [notification, setNotification] = useState(null);
+
   useEffect(() => {
     if (userInfo) {
       navigate('/');
@@ -25,7 +27,11 @@ export default function ForgotPassword() {
       const { data } = await axios.post('/api/users/forget-password', {
         email,
       });
-      window.alert(data.message);
+      setNotification('Un mail de resetare a parolei a fost trimis!');
+      setTimeout(() => {
+        setNotification(null);
+      }, 2000);
+      
     } catch (err) {
       window.alert(getError(err));
     }
@@ -67,6 +73,7 @@ export default function ForgotPassword() {
           </div>
         </div>
       </div>
+      {notification && <div className="notification">{notification}</div>}
     </div>
   );
 }
