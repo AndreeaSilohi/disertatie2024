@@ -10,6 +10,8 @@ import wishlistRouter from "./routes/wishlistRoutes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
 import emailRouter from "./routes/formEmail.js";
+import path from "path";
+
 
 
 dotenv.config();
