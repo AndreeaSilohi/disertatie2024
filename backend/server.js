@@ -40,6 +40,9 @@ app.use("/api/wishlist", wishlistRouter);
 app.use("/api/cart", cartRouter); // Use cart routes
 app.use("/api/email",emailRouter);
 
+app.get('/', function (req, res) {
+  res.render('index', {});
+});
 //this is like a middleware
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
