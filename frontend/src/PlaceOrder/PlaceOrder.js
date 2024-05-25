@@ -79,7 +79,6 @@ export default function PlaceOrder() {
           authorization: `Bearer ${userInfo.token}`,
         },
       });
-
       ctxDispatch({ type: 'CART_CLEAR' });
       dispatch({ type: 'CREATE_SUCCESS' });
       localStorage.removeItem('cartItems');
