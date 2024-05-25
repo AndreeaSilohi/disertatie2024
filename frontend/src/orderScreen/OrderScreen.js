@@ -217,9 +217,6 @@ export default function OrderScreen() {
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div className="container-order">
-      {/* <div className="navbar-place-order">
-        <Navbar />
-      </div> */}
       <div className="order-content">
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
@@ -269,7 +266,7 @@ export default function OrderScreen() {
               </CardContent>
             </Card>
 
-            <Card className="mb-3" style={{ marginTop: '40px' }}>
+            {/* <Card className="mb-3" style={{ marginTop: '40px' }}>
               <CardContent>
                 <Typography
                   variant="h6"
@@ -294,7 +291,7 @@ export default function OrderScreen() {
                   )}
                 </List>
               </CardContent>
-            </Card>
+            </Card> */}
 
             <Card className="mb-3" style={{ marginTop: '40px' }}>
               <CardContent>
@@ -400,7 +397,7 @@ export default function OrderScreen() {
                       </Grid>
                     </Grid>
                   </ListItem>
-                  {!order.isPaid && order.paymentMethod !== 'Cash' && (
+                  {/* {!order.isPaid && order.paymentMethod !== 'Cash' && (
                     <ListItem
                       style={{
                         display: 'flex',
@@ -421,7 +418,7 @@ export default function OrderScreen() {
                       )}
                       {loadingPay && <LoadingBox></LoadingBox>}
                     </ListItem>
-                  )}
+                  )} */}
 
                   {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                     <ListItem>
@@ -434,26 +431,7 @@ export default function OrderScreen() {
                     </ListItem>
                   )}
 
-                  {/* <ListItem>
-                  <Grid container justifyContent="center">
-                    <Button
-                      sx={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontSize: "15px",
-                        textTransform: "uppercase",
-                        color: "black",
-                        backgroundColor: "#d77e2b",
-                        width: "400px",
-                      }}
-                      type="button"
-                    //   onClick={placeOrderHandler}
-                    //   disabled={cart.cartItems.length === 0}
-                    >
-                      Place Order
-                    </Button>
-                  </Grid>
-                  {loading && <LoadingBox />}
-                </ListItem> */}
+    
                 </List>
               </CardContent>
             </Card>
