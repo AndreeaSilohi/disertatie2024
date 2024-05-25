@@ -170,7 +170,7 @@ export default function OrderScreen() {
           type: 'resetOptions',
           value: {
             'client-id': clientId,
-            // currency: 'EUR',
+            currency: 'EUR',
           },
         });
         paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
