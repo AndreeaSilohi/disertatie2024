@@ -61,6 +61,8 @@ export default function OrderHistory() {
     error: '',
   });
 
+  console.log(orders)
+
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
@@ -70,6 +72,7 @@ export default function OrderHistory() {
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (error) {
+        console.error('Error fetching orders:', getError(error)); // Log error
         dispatch({
           type: 'FETCH_FAIL',
           payload: getError(error),
@@ -92,7 +95,6 @@ export default function OrderHistory() {
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  {/* <TableCell>ID</TableCell> */}
                   <StyledTableCell align="center" className="table-cell">
                     DATA
                   </StyledTableCell>
@@ -113,7 +115,6 @@ export default function OrderHistory() {
               <TableBody>
                 {orders.map((order) => (
                   <StyledTableRow key={order._id}>
-                    {/* <TableCell>{order._id}</TableCell> */}
                     <StyledTableCell align="center" className="table-cell">
                       {String(order.createdAt).substring(0, 10)}
                     </StyledTableCell>
