@@ -266,7 +266,7 @@ export default function OrderScreen() {
               </CardContent>
             </Card>
 
-            {/* <Card className="mb-3" style={{ marginTop: '40px' }}>
+            <Card className="mb-3" style={{ marginTop: '40px' }}>
               <CardContent>
                 <Typography
                   variant="h6"
@@ -291,7 +291,7 @@ export default function OrderScreen() {
                   )}
                 </List>
               </CardContent>
-            </Card> */}
+            </Card>
 
             <Card className="mb-3" style={{ marginTop: '40px' }}>
               <CardContent>
@@ -397,7 +397,7 @@ export default function OrderScreen() {
                       </Grid>
                     </Grid>
                   </ListItem>
-                  {/* {!order.isPaid && order.paymentMethod !== 'Cash' && (
+                  {!order.isPaid && order.paymentMethod !== 'Cash' && (
                     <ListItem
                       style={{
                         display: 'flex',
@@ -418,7 +418,7 @@ export default function OrderScreen() {
                       )}
                       {loadingPay && <LoadingBox></LoadingBox>}
                     </ListItem>
-                  )} */}
+                  )}
 
                   {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                     <ListItem>
