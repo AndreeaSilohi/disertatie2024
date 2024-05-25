@@ -148,7 +148,7 @@ export default function OrderHistory() {
                           fontSize: '12px',
                         }}
                         onClick={() => {
-                          navigate('/signin');
+                          navigate(`/order/${order._id}`);
                         }}
                       >
                         Detalii
