@@ -4,13 +4,15 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import ProductDetails from '../ProductDetails/ProductDetails';
+import { Store } from '../Store';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import { Store } from '../Store';
-import { Wishlist } from '../W';
-import RatingComponent from '../Rating/RatingComponent';
 import './Product.css';
+import { Wishlist } from '../W';
+import { useNavigate } from 'react-router-dom';
+import RatingComponent from '../Rating/RatingComponent';
 
 function Product(props) {
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ function Product(props) {
   } = state;
 
   const fetchWishlistItems = async (token) => {
+    console.log(token);
     try {
       const { data } = await axios.get('/api/wishlist', {
         headers: {
@@ -49,6 +52,7 @@ function Product(props) {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
+    // Check if the product is in the wishlist when the component mounts
     setIsInWishlist(wishlistItems.some((item) => item.product === product._id));
   }, [wishlistItems, product._id]);
 
@@ -57,6 +61,9 @@ function Product(props) {
     event.stopPropagation();
 
     if (!userToken) {
+      // alert(
+      //   'Nu ești logat. Loghează-te pentru a adăuga produse în lista de favorite'
+      // );
       setNotificationWarning(
         'Nu ești logat. Loghează-te pentru a adăuga produse în coș'
       );
@@ -68,27 +75,30 @@ function Product(props) {
     }
 
     try {
+      // Check stock availability
       const { data } = await axios.get(`/api/products/${product._id}`);
       const existItem = cartItems.find((x) => x._id === product._id);
       const quantity = existItem ? existItem.quantity + 1 : 1;
       if (data.stoc < quantity) {
         setNotification('Produsul are stocul epuizat');
+
         setTimeout(() => {
           setNotification('');
         }, 3000);
+
         return;
       }
 
       const headers = userToken ? { Authorization: `Bearer ${userToken}` } : {};
 
       if (existItem) {
-        await axios.put(
+        const response = await axios.put(
           `/api/cart/${existItem._id}`,
           { quantity: quantity, stoc: product.stoc },
           { headers: headers }
         );
       } else {
-        await axios.post(
+        const response = await axios.post(
           '/api/cart',
           {
             quantity: quantity,
@@ -103,12 +113,14 @@ function Product(props) {
             headers: headers,
           }
         );
+        console.log(response);
       }
 
       ctxDispatch({
         type: 'CART_ADD_ITEM',
         payload: { ...product, quantity },
       });
+      ctxDispatchW({ type: 'CREATE_SUCCESS' });
       setNotification(`${product.name} a fost adăugat în coș`);
       setTimeout(() => {
         setNotification('');
@@ -161,6 +173,7 @@ function Product(props) {
         type: 'WISHLIST_ADD_ITEM',
         payload: { ...item },
       });
+      console.log(!isInWishlist);
       setIsInWishlist(true);
       ctxDispatchW({ type: 'CREATE_SUCCESS' });
       setNotification(`${item.name} a fost adăugat în lista de favorite`);
@@ -186,12 +199,12 @@ function Product(props) {
       await axios.delete(`/api/wishlist/${item._id}`, {
         headers: headers,
       });
-
+      console.log('Deleted from wishlist:', item._id);
       fetchWishlistItems(token);
       ctxDispatchW({ type: 'WISHLIST_REMOVE_ITEM', payload: item });
-      setIsInWishlist(false);
+      setIsInWishlist(false); // Set isInWishlist to false locally
       ctxDispatchW({ type: 'CREATE_SUCCESS' });
-      setNotification(`${item.name} a fost eliminat din lista de favorite`);
+      setNotification(`${item.name}a fost eliminat din lista de favorite`);
       setTimeout(() => {
         setNotification('');
       }, 3000);
@@ -217,6 +230,7 @@ function Product(props) {
         <div
           className="card"
           style={{
+            // backgroundColor: '#f3f3f3',
             paddingBottom: '25px',
           }}
           onClick={() => handleCardClick(product)}
@@ -247,7 +261,9 @@ function Product(props) {
             <RatingComponent
               rating={product.rating}
               numReviews={product.numReviews}
-            />
+            >
+              {' '}
+            </RatingComponent>
           </CardContent>
 
           <div className="actions-card">
@@ -258,6 +274,7 @@ function Product(props) {
                   : addToWishlist(product, event)
               }
               aria-label="Add to Wishlist"
+              // color={wishlistItems[product._id] ? "secondary" : "default"}
               color={isInWishlist ? 'secondary' : 'default'}
               sx={{ marginRight: '8px' }}
             >
