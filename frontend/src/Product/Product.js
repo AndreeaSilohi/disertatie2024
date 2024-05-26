@@ -80,8 +80,7 @@ function Product(props) {
       const existItem = cartItems.find((x) => x._id === product._id);
       const quantity = existItem ? existItem.quantity + 1 : 1;
       if (data.stoc < quantity) {
-        setNotification('Produsul are stocul epuizat');
-
+        setNotificationWarning('Produsul are stocul epuizat');
         setTimeout(() => {
           setNotification('');
         }, 3000);
@@ -280,7 +279,7 @@ function Product(props) {
             >
               <FavoriteIcon />
             </IconButton>
-            {product.stoc === 0 ? (
+            {product.stoc <= 0 ? (
               <Button variant="contained" disabled>
                 Epuizat
               </Button>
