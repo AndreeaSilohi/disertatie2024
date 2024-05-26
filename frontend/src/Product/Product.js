@@ -80,7 +80,7 @@ function Product(props) {
       const existItem = cartItems.find((x) => x._id === product._id);
       const quantity = existItem ? existItem.quantity + 1 : 1;
       if (data.stoc < quantity) {
-        setNotification('Produsul a fost adăugat în coș');
+        setNotification('Produsul are stocul epuizat');
 
         setTimeout(() => {
           setNotification('');
