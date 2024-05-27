@@ -254,10 +254,10 @@ userRouter.post(
           {
             from: 'honeyboutique@example.com',
             to: `${user.name} <${user.email}>`,
-            subject: `Reset Password`,
+            subject: `Resetare parolă`,
             html: ` 
-           <p>Please Click the following link to reset your password:</p> 
-           <a href="${baseUrl()}/reset-password/${token}"}>Reset Password</a>
+           <p>Dă click pe link-ul de mai jos pentru a-ți reseta parola:</p> 
+           <a href="${baseUrl()}/reset-password/${token}"}>Resetare parolă</a>
            `,
           },
           (error, body) => {

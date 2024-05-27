@@ -41,7 +41,7 @@ export default function PlaceOrder() {
     cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
 
-  cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
+  cart.shippingPrice = cart.itemsPrice >=100 ? round2(0) : round2(10);
 
   cart.taxPrice = round2(0.15 * cart.itemsPrice);
   cart.totalPrice = round2(cart.itemsPrice + cart.shippingPrice);

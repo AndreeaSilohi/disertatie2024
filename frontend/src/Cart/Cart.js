@@ -211,8 +211,7 @@ function Cart() {
               </p>
               <Divider />
               <p className="livrare">
-                <b>Livrare:</b>&nbsp; trebuie să treci la pasul următor pentru a
-                vedea metodele de livrare și costurile aferente acesteia.
+                <b>Livrare:</b>&nbsp; pentru comenzi de peste 100 de lei transportul este gratuit.
               </p>
               <div className="buttons-subtotal">
                 <button
