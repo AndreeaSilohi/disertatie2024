@@ -1,10 +1,10 @@
-import React, { useContext, useReducer, useState, useEffect } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import { Store } from '../Store';
 import { Typography, Button, Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import './ProfileScreen.css';
 import axios from 'axios';
- 
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'UPDATE_REQUEST':
@@ -13,28 +13,35 @@ const reducer = (state, action) => {
       return { ...state, loadingUpdate: false };
     case 'UPDATE_FAIL':
       return { ...state, loadingUpdate: false };
- 
+
     default:
       return state;
   }
 };
+
 export default function ProfileScreen() {
- 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
- 
+
   const [notification, setNotification] = useState(null);
+  const [notificationWarning, setNotificationWarning] = useState('');
   const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
- 
+
   const [{ loadingUpdate }, dispatch] = useReducer(reducer, {
     loadingUpdate: false,
   });
- 
+
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setNotificationWarning('Parolele nu se potrivesc');
+      return;
+    }
+
     dispatch({ type: 'UPDATE_REQUEST' });
     try {
       const config = {
@@ -42,7 +49,7 @@ export default function ProfileScreen() {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
- 
+
       const { data } = await axios.put(
         `/api/users/edit/${userInfo._id}`,
         {
@@ -52,6 +59,7 @@ export default function ProfileScreen() {
         },
         config
       );
+
       dispatch({ type: 'UPDATE_SUCCESS' });
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
@@ -61,20 +69,17 @@ export default function ProfileScreen() {
       }, 3000);
     } catch (error) {
       dispatch({ type: 'UPDATE_FAIL' });
-      console.error('Error updating user:', error);
+      setNotificationWarning(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : 'Eroare la actualizarea informațiilor'
+      );
     }
   };
- 
+
   return (
     <div className="general-div">
       <div className="container-profile-screen">
-        {/* <div className="div-profile-img">
-          <img
-            className="profile-image"
-            alt="text"
-            src="https://images.unsplash.com/photo-1628407252041-9304159534a5?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          ></img>
-        </div> */}
         <div className="form-profile">
           <Box
             sx={{
@@ -103,7 +108,7 @@ export default function ProfileScreen() {
                 align="center"
                 mb={2}
                 className="typografy"
-                sx={{padding:"20px"}}
+                sx={{ padding: "20px" }}
               >
                 Actualizare date personale
               </Typography>
@@ -117,7 +122,7 @@ export default function ProfileScreen() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
- 
+
                 <TextField
                   style={{ marginBottom: '35px', width: '70%' }}
                   label="Email"
@@ -127,7 +132,7 @@ export default function ProfileScreen() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
- 
+
                 <TextField
                   style={{ marginBottom: '35px', width: '70%' }}
                   label="Parolă nouă"
@@ -137,7 +142,7 @@ export default function ProfileScreen() {
                   required
                   onChange={(e) => setPassword(e.target.value)}
                 />
- 
+
                 <TextField
                   style={{ marginBottom: '35px', width: '70%' }}
                   label="Confirmă parolă nouă"
@@ -147,7 +152,7 @@ export default function ProfileScreen() {
                   required
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
- 
+
                 <div className="form-shipping-content-button">
                   <Button
                     variant="contained"
@@ -167,9 +172,11 @@ export default function ProfileScreen() {
             </Box>
           </Box>
           {notification && <div className="notification">{notification}</div>}
+          {notificationWarning && (
+        <div className="notificationWarning">{notificationWarning}</div>
+      )}
         </div>
       </div>
     </div>
   );
 }
- 
