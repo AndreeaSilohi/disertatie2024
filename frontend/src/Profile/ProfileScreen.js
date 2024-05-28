@@ -39,6 +39,9 @@ export default function ProfileScreen() {
 
     if (password !== confirmPassword) {
       setNotificationWarning('Parolele nu se potrivesc');
+      setTimeout(() => {
+        setNotificationWarning('');
+      }, 2000);
       return;
     }
 
@@ -74,6 +77,9 @@ export default function ProfileScreen() {
           ? error.response.data.message
           : 'Eroare la actualizarea informațiilor'
       );
+      setTimeout(() => {
+        setNotificationWarning('');
+      }, 2000);
     }
   };
 
