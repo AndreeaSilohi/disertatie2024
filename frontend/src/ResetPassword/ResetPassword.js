@@ -44,7 +44,17 @@ export default function ResetPassword() {
         navigate('/signin');
       }, 2000);
     } catch (err) {
-      window.alert(getError(err));
+     
+      
+       const errorMessage = getError(err);
+      if (errorMessage.includes('Noua parolă nu poate fi aceeași cu parola curentă')) {
+        setNotificationWarning(errorMessage);
+      } else {
+        setNotificationWarning('A apărut o eroare. Vă rugăm să încercați din nou.');
+      }
+      setTimeout(() => {
+        setNotificationWarning(null);
+      }, 2000);
     }
   };
 

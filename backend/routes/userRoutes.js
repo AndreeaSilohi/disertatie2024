@@ -98,7 +98,10 @@ userRouter.put(
     if (user) {
       user.profilePhoto = req.body.profilePhoto || user.profilePhoto;
       const updatedUser = await user.save();
-      res.send({ message: 'Fotografie de profil actualizată', user: updatedUser });
+      res.send({
+        message: 'Fotografie de profil actualizată',
+        user: updatedUser,
+      });
     } else {
       res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
     }
@@ -227,9 +230,16 @@ userRouter.put(
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
     if (user) {
-      const isSamePassword = bcrypt.compareSync(req.body.password, user.password);
+      const isSamePassword = bcrypt.compareSync(
+        req.body.password,
+        user.password
+      );
       if (isSamePassword) {
-        res.status(400).send({ message: 'Noua parolă nu poate fi aceeași cu parola curentă' });
+        res
+          .status(400)
+          .send({
+            message: 'Noua parolă nu poate fi aceeași cu parola curentă',
+          });
         return;
       }
 
@@ -253,8 +263,6 @@ userRouter.put(
     }
   })
 );
-
-
 
 // Add a new endpoint to fetch user by email
 userRouter.get(
@@ -310,27 +318,53 @@ userRouter.post(
   })
 );
 
+// userRouter.post(
+//   '/reset-password',
+//   expressAsyncHandler(async (req, res) => {
+//     jwt.verify(req.body.token, process.env.JWT_SECRET, async (err, decode) => {
+//       if (err) {
+//         req.status(401).send({ message: 'Invalid Token' });
+//       } else {
+//         const user = await User.findOne({ resetToken: req.body.token });
+//         if (user) {
+//           if (req.body.password) {
+//             user.password = bcrypt.hashSync(req.body.password, 8);
+//             await user.save();
+//             res.send({
+//               message: 'Password reseted successfully',
+//             });
+//           }
+//         } else {
+//           res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
+//         }
+//       }
+//     });
+//   })
+// );
+
 userRouter.post(
   '/reset-password',
   expressAsyncHandler(async (req, res) => {
-    jwt.verify(req.body.token, process.env.JWT_SECRET, async (err, decode) => {
-      if (err) {
-        req.status(401).send({ message: 'Invalid Token' });
-      } else {
-        const user = await User.findOne({ resetToken: req.body.token });
-        if (user) {
-          if (req.body.password) {
-            user.password = bcrypt.hashSync(req.body.password, 8);
-            await user.save();
-            res.send({
-              message: 'Password reseted successfully',
-            });
-          }
-        } else {
-          res.status(404).send({ message: 'Utilizatorul nu a fost găsit' });
-        }
-      }
-    });
+    const { token, password } = req.body;
+
+    // Validate token and find user (this is a simplified example)
+    const user = await User.findOne({ resetToken: token });
+    if (!user) {
+      return res.status(400).send({ message: 'Token invalid sau expirat' });
+    }
+
+    const isSamePassword = bcrypt.compareSync(password, user.password);
+    if (isSamePassword) {
+      return res
+        .status(400)
+        .send({ message: 'Noua parolă nu poate fi aceeași cu parola curentă' });
+    }
+
+    user.password = bcrypt.hashSync(password, 8);
+    user.resetToken = null; // Clear the reset token after successful reset
+    await user.save();
+
+    res.send({ message: 'Parola a fost schimbată cu succes' });
   })
 );
 

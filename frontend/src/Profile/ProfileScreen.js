@@ -2,8 +2,9 @@ import React, { useContext, useReducer, useState } from 'react';
 import { Store } from '../Store';
 import { Typography, Button, Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import './ProfileScreen.css';
 import axios from 'axios';
+import { Eye } from 'phosphor-react';
+import './ProfileScreen.css';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -13,7 +14,6 @@ const reducer = (state, action) => {
       return { ...state, loadingUpdate: false };
     case 'UPDATE_FAIL':
       return { ...state, loadingUpdate: false };
-
     default:
       return state;
   }
@@ -29,6 +29,8 @@ export default function ProfileScreen() {
   const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [{ loadingUpdate }, dispatch] = useReducer(reducer, {
     loadingUpdate: false,
@@ -114,7 +116,7 @@ export default function ProfileScreen() {
                 align="center"
                 mb={2}
                 className="typografy"
-                sx={{ padding: "20px" }}
+                sx={{ padding: '20px' }}
               >
                 Actualizare date personale
               </Typography>
@@ -138,31 +140,42 @@ export default function ProfileScreen() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-
-                <TextField
-                  style={{ marginBottom: '35px', width: '70%' }}
-                  label="Parolă nouă"
-                  variant="outlined"
-                  type="password"
-                  fullWidth
-                  required
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-
-                <TextField
-                  style={{ marginBottom: '35px', width: '70%' }}
-                  label="Confirmă parolă nouă"
-                  variant="outlined"
-                  type="password"
-                  fullWidth
-                  required
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
+                <div className="password-textfield">
+                  <TextField
+                    type={showPassword ? 'text' : 'password'}
+                    label="Parolă nouă"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <Eye
+                    size={26}
+                    onClick={() => setShowPassword(!showPassword)}
+                    className={`eye-icon ${showPassword ? 'show' : ''}`}
+                  />
+                </div>
+                <div className="password-textfield">
+                  <TextField
+                    label="Confirmă parolă nouă"
+                    variant="outlined"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    fullWidth
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  <Eye
+                    size={26}
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className={`eye-icon ${showConfirmPassword ? 'show' : ''}`}
+                  />
+                </div>
 
                 <div className="form-shipping-content-button">
                   <Button
                     variant="contained"
-                    className="button-actulizare"
                     type="submit"
                     style={{
                       backgroundColor: '#F08000',
@@ -179,8 +192,8 @@ export default function ProfileScreen() {
           </Box>
           {notification && <div className="notification">{notification}</div>}
           {notificationWarning && (
-        <div className="notificationWarning">{notificationWarning}</div>
-      )}
+            <div className="notificationWarning">{notificationWarning}</div>
+          )}
         </div>
       </div>
     </div>

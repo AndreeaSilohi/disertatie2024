@@ -57,3 +57,39 @@
   color:black;
 
 }
+.password-textfield {
+  position: relative;
+  width: 70%;
+  margin-bottom: 35px;
+}
+
+.password-textfield input {
+  width: 100%;
+  padding-right: 40px; /* Space for the eye icon */
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: green;
+}
+
+.eye-icon.show {
+  color: #FFA500;
+}
+
+/* .notification, .notificationWarning {
+  text-align: center;
+  margin-top: 10px;
+  color: red;
+} */
+
+/* .button-actulizare {
+  background-color: #F08000;
+  font-family: 'Montserrat, sans-serif';
+  font-size: 15px;
+  width: 200px;
+} */
