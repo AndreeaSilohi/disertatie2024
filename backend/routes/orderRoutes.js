@@ -101,14 +101,35 @@ orderRouter.get(
     res.send({ users, orders, dailyOrders, productCategories }); //aici se intorc ca si parametru catre frontend
   })
 );
+// orderRouter.get(
+//   "/mine",
+//   isAuth,
+//   expressAsyncHandler(async (req, res) => {
+//     const orders = await Order.find({ user: req.user._id });
+//     res.send(orders);
+//   })
+// );
+
+//get my orders cu paginare
 orderRouter.get(
   "/mine",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({ user: req.user._id });
-    res.send(orders);
+    const pageSize = Number(req.query.pageSize) || 10;
+    const page = Number(req.query.page) || 1;
+    const count = await Order.countDocuments({ user: req.user._id });
+    const orders = await Order.find({ user: req.user._id })
+      .skip(pageSize * (page - 1))
+      .limit(pageSize);
+    res.send({
+      orders,
+      page,
+      pages: Math.ceil(count / pageSize),
+    });
   })
 );
+
+
 
 orderRouter.get(
   "/:id",

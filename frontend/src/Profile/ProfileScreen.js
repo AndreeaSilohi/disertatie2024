@@ -4,6 +4,7 @@ import { Typography, Button, Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import './ProfileScreen.css';
 import axios from 'axios';
+import bcrypt from 'bcryptjs';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -18,23 +19,74 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
 export default function ProfileScreen() {
- 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
 
   const [notification, setNotification] = useState(null);
+  const [notificationWarning, setNotificationWarning] = useState('');
   const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [currentPasswordHash, setCurrentPasswordHash] = useState('');
 
   const [{ loadingUpdate }, dispatch] = useReducer(reducer, {
     loadingUpdate: false,
   });
 
+  useEffect(() => {
+    const fetchPasswordHash = async () => {
+      try {
+        const { data } = await axios.get(
+          `/api/users/password-hash/${userInfo._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+        setCurrentPasswordHash(data.passwordHash);
+      } catch (error) {
+        console.error('Error fetching password hash:', error);
+      }
+    };
+
+    fetchPasswordHash();
+  }, [userInfo]);
+
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    if (!password || !confirmPassword) {
+      setNotificationWarning('Parola și confirmarea parolei sunt necesare');
+      setTimeout(() => {
+        setNotificationWarning(null);
+      }, 2000);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setNotificationWarning('Parolele nu se potrivesc');
+      setTimeout(() => {
+        setNotificationWarning(null);
+      }, 2000);
+      return;
+    }
+
+    // Compare new password with the current password hash
+    const isSamePassword = bcrypt.compareSync(password, currentPasswordHash);
+    if (isSamePassword) {
+      setNotificationWarning(
+        'Noua parolă nu poate fi aceeași cu parola curentă'
+      );
+      setTimeout(() => {
+        setNotificationWarning(null);
+      }, 2000);
+      return;
+    }
+
     dispatch({ type: 'UPDATE_REQUEST' });
     try {
       const config = {
@@ -52,6 +104,7 @@ export default function ProfileScreen() {
         },
         config
       );
+
       dispatch({ type: 'UPDATE_SUCCESS' });
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
@@ -68,13 +121,6 @@ export default function ProfileScreen() {
   return (
     <div className="general-div">
       <div className="container-profile-screen">
-        {/* <div className="div-profile-img">
-          <img
-            className="profile-image"
-            alt="text"
-            src="https://images.unsplash.com/photo-1628407252041-9304159534a5?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          ></img>
-        </div> */}
         <div className="form-profile">
           <Box
             sx={{
@@ -103,7 +149,7 @@ export default function ProfileScreen() {
                 align="center"
                 mb={2}
                 className="typografy"
-                sx={{padding:"20px"}}
+                sx={{ padding: '20px' }}
               >
                 Actualizare date personale
               </Typography>
@@ -167,6 +213,9 @@ export default function ProfileScreen() {
             </Box>
           </Box>
           {notification && <div className="notification">{notification}</div>}
+          {notificationWarning && (
+            <div className="notificationWarning">{notificationWarning}</div>
+          )}
         </div>
       </div>
     </div>

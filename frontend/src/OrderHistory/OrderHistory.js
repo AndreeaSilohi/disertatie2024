@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import {
   Button,
   Table,
@@ -18,6 +18,7 @@ import axios from 'axios';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import './OrderHistory.css';
+import Pagination from '@mui/material/Pagination';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,7 +44,13 @@ const reducer = (state, action) => {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
     case 'FETCH_SUCCESS':
-      return { ...state, orders: action.payload, loading: false };
+      return {
+        ...state,
+        orders: action.payload.orders,
+        loading: false,
+        page: action.payload.page,
+        pages: action.payload.pages,
+      };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     default:
@@ -56,23 +63,26 @@ export default function OrderHistory() {
   const { state } = useContext(Store);
   const { userInfo } = state;
 
-  const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, orders, page, pages }, dispatch] = useReducer(reducer, {
     loading: true,
+    orders: [],
     error: '',
+    page: 1,
+    pages: 1,
   });
 
-  console.log(orders)
+  const pageSize = 10; 
 
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const { data } = await axios.get(`/api/orders/mine`, {
+        const { data } = await axios.get(`/api/orders/mine?page=${page}&pageSize=${pageSize}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (error) {
-        console.error('Error fetching orders:', getError(error)); // Log error
+        console.error('Error fetching orders:', getError(error)); 
         dispatch({
           type: 'FETCH_FAIL',
           payload: getError(error),
@@ -80,7 +90,12 @@ export default function OrderHistory() {
       }
     };
     fetchData();
-  }, [userInfo]);
+  }, [userInfo, page]);
+
+  const handlePageChange = (event, value) => {
+    dispatch({ type: 'FETCH_REQUEST' });
+    dispatch({ type: 'FETCH_SUCCESS', payload: { orders: [], page: value, pages } });
+  };
 
   return (
     <div className="container-order">
@@ -91,74 +106,82 @@ export default function OrderHistory() {
         ) : error ? (
           <MessageBox>{error}</MessageBox>
         ) : (
-          <TableContainer className="table-container" component={Paper}>
-            <Table sx={{ minWidth: 700 }}>
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center" className="table-cell">
-                    DATA
-                  </StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">
-                    TOTAL
-                  </StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">
-                    PLĂTITĂ
-                  </StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">
-                    LIVRATĂ
-                  </StyledTableCell>
-                  <StyledTableCell align="center" className="table-cell">
-                    ACȚIUNI
-                  </StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {orders.map((order) => (
-                  <StyledTableRow key={order._id}>
+          <>
+            <TableContainer className="table-container" component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
                     <StyledTableCell align="center" className="table-cell">
-                      {String(order.createdAt).substring(0, 10)}
+                      DATA
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
-                      {order.totalPrice}
+                      TOTAL
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
-                      {order.isPaid
-                        ? String(order.paidAt).substring(0, 10)
-                        : 'Nu'}
+                      PLĂTITĂ
                     </StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">
+                      LIVRATĂ
+                    </StyledTableCell>
+                    <StyledTableCell align="center" className="table-cell">
+                      ACȚIUNI
+                    </StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {orders.map((order) => (
+                    <StyledTableRow key={order._id}>
+                      <StyledTableCell align="center" className="table-cell">
+                        {String(order.createdAt).substring(0, 10)}
+                      </StyledTableCell>
+                      <StyledTableCell align="center" className="table-cell">
+                        {order.totalPrice}
+                      </StyledTableCell>
+                      <StyledTableCell align="center" className="table-cell">
+                        {order.isPaid
+                          ? String(order.paidAt).substring(0, 10)
+                          : 'Nu'}
+                      </StyledTableCell>
 
-                    <StyledTableCell align="center" className="table-cell">
-                      {order.isDelivered
-                        ? order.deliveredAt.substring(0, 10)
-                        : 'Nu'}
-                    </StyledTableCell>
-                    <StyledTableCell align="center" className="table-cell">
-                      <Button
-                        type="button"
-                        variant="outlined"
-                       
-                        sx={{
-                           fontFamily: 'Montserrat, sans-serif',
-                          fontSize: '15px',
-                          textTransform: 'uppercase',
-                          color: 'rgb(215, 126, 43)',
-                          borderColor: 'rgb(215, 126, 43)',
-                          padding: '5px',
-                          marginRight: '5px',
-                          fontSize: '12px',
-                        }}
-                        onClick={() => {
-                          navigate(`/order/${order._id}`);
-                        }}
-                      >
-                        Detalii
-                      </Button>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                      <StyledTableCell align="center" className="table-cell">
+                        {order.isDelivered
+                          ? order.deliveredAt.substring(0, 10)
+                          : 'Nu'}
+                      </StyledTableCell>
+                      <StyledTableCell align="center" className="table-cell">
+                        <Button
+                          type="button"
+                          variant="outlined"
+                          sx={{
+                            fontFamily: 'Montserrat, sans-serif',
+                            fontSize: '15px',
+                            textTransform: 'uppercase',
+                            color: 'rgb(215, 126, 43)',
+                            borderColor: 'rgb(215, 126, 43)',
+                            padding: '5px',
+                            marginRight: '5px',
+                            fontSize: '12px',
+                          }}
+                          onClick={() => {
+                            navigate(`/order/${order._id}`);
+                          }}
+                        >
+                          Detalii
+                        </Button>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Pagination
+              className="pagination-prd"
+              count={pages}
+              page={page}
+              onChange={handlePageChange}
+              sx={{ '& .Mui-selected': { color: '#FFA500' } }}
+            />
+          </>
         )}
       </div>
     </div>
