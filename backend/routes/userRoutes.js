@@ -222,19 +222,6 @@ userRouter.put(
 );
 
 
-//for veryfing the old password with the new one
-userRouter.get(
-  '/password-hash/:id',
-  isAuth,
-  expressAsyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-    if (user) {
-      res.send({ passwordHash: user.password });
-    } else {
-      res.status(404).send({ message: 'User not found' });
-    }
-  })
-);
 
 // Add a new endpoint to fetch user by email
 userRouter.get(
