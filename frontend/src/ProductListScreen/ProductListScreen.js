@@ -116,7 +116,7 @@ export default function ProductListScreen() {
   const page = sp.get('page') || 1;
   const { state } = useContext(Store);
   const { userInfo } = state;
-  const [notification, setNotification] = useState(null);
+  const [notification, setNotification] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -153,7 +153,7 @@ export default function ProductListScreen() {
       // window.alert('Product created successfully');
       setNotification({ type: 'success', message: 'Produs creat cu succes' });
       setTimeout(() => {
-        setNotification(null);
+        setNotification('');
       }, 3000);
       dispatch({ type: 'CREATE_SUCCESS' });
       dispatch({ type: 'ADD_PRODUCT', payload: data.product });
@@ -178,8 +178,8 @@ export default function ProductListScreen() {
       dispatch({ type: 'DELETE_SUCCESS' });
       setNotification('Produsul a fost șters cu succes');
       setTimeout(() => {
-        setNotification(null);
-      }, 3000);
+        setNotification('');
+      }, 2000);
     } catch (err) {
       window.alert(getError(err));
       dispatch({ type: 'DELETE_FAIL' });
@@ -287,18 +287,6 @@ export default function ProductListScreen() {
                   ))}
                 </TableBody>
               </Table>
-
-              {/* <div className="pagination">
-              {[...Array(pages).keys()].map((x) => (
-                <Link
-                  key={x + 1}
-                  className={x + 1 === Number(page) ? 'btn text-bold' : 'btn'}
-                  to={`/admin/products?page=${x + 1}`}
-                >
-                  {x + 1}
-                </Link>
-              ))}
-            </div> */}
             </TableContainer>
             {/* <Stack spacing={2} className="pagination"> */}
               <Pagination
