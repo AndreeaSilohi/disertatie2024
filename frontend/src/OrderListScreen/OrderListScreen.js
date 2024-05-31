@@ -279,9 +279,10 @@ export default function OrderListScreen() {
           title="Confirmare ștergere"
           message="Ești sigur că vrei să ștergi această comandă?"
         />
-        {notification && (
+        {/* {notification && (
           <div className="notification-delete-order">{notification}</div>
-        )}
+        )} */}
+          {notification && <div className="notification">{notification}</div>}
       </div>
     </div>
   );

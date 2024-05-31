@@ -299,9 +299,7 @@ export default function UserListScreen() {
           title="Confirmare ștergere"
           message="Ești sigur că vrei să ștergi acest utilizator?"
         />
-        {notification && (
-          <div className="notification-delete-user">{notification}</div>
-        )}
+         {notification && <div className="notification">{notification}</div>}
       </div>
     </div>
   );
