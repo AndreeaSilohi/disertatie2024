@@ -4,7 +4,7 @@ import { Store } from '../Store';
 import LoadingBox from '../LoadingBox';
 import MessageBox from '../MessageBox';
 import { useNavigate } from 'react-router-dom';
-import {  useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './ProductListScreen.css';
 import { getError } from '../utils';
 import CreateProduct from '../CreateProduct/CreateProduct';
@@ -150,14 +150,15 @@ export default function ProductListScreen() {
       const { data } = await axios.post('/api/products', productData, {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       });
-      // window.alert('Product created successfully');
-      setNotification({ type: 'success', message: 'Produs creat cu succes' });
-      setTimeout(() => {
-        setNotification('');
-      }, 3000);
+
       dispatch({ type: 'CREATE_SUCCESS' });
       dispatch({ type: 'ADD_PRODUCT', payload: data.product });
-      navigate(`/admin/products`);
+
+      setNotification('Produs creat cu succes');
+      setTimeout(() => {
+        setNotification('');
+        navigate(`/admin/products`);
+      }, 2000);
     } catch (err) {
       window.alert(getError(err));
       dispatch({ type: 'CREATE_FAIL' });
@@ -216,7 +217,7 @@ export default function ProductListScreen() {
         ) : error ? (
           <MessageBox>{error}</MessageBox>
         ) : (
-          <div className='pagination-total'>
+          <div className="pagination-total">
             <TableContainer className="table-container" component={Paper}>
               <Table sx={{ minWidth: 700 }}>
                 <TableHead>
@@ -289,13 +290,13 @@ export default function ProductListScreen() {
               </Table>
             </TableContainer>
             {/* <Stack spacing={2} className="pagination"> */}
-              <Pagination
+            <Pagination
               className="pagination-prd"
-                count={pages}
-                page={parseInt(page)}
-                onChange={handlePageChange}
-                sx={{ "& .Mui-selected": {color: "#FFA500" } }}
-              />
+              count={pages}
+              page={parseInt(page)}
+              onChange={handlePageChange}
+              sx={{ '& .Mui-selected': { color: '#FFA500' } }}
+            />
             {/* </Stack> */}
           </div>
         )}
@@ -318,9 +319,7 @@ export default function ProductListScreen() {
           message="Ești sigur că vrei să ștergi acest produs?"
         />
       </div>
-      {notification && (
-          <div className="notification-delete-order">{notification}</div>
-        )}
+      {notification && <div className="notification">{notification}</div>}
     </div>
   );
 }
