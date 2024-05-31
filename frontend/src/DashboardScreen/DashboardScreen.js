@@ -60,6 +60,14 @@ export default function DashboardScreen() {
     fetchData();
   }, [userInfo]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
+  };
+  
   return (
     <div className="container-dashboard">
       <p className="title-dashboard">Monitorizare vânzări</p>
@@ -120,7 +128,7 @@ export default function DashboardScreen() {
                 loader={<div>Loading chart...</div>}
                 data={[
                   ['Date', 'Vânzări'],
-                  ...summary.dailyOrders.map((x) => [x._id, x.sales]),
+                  ...summary.dailyOrders.map((x) => [formatDate(x._id), x.sales]),
                 ]}
                 options={{
                   title: 'Monitorizarea vânzărilor',
@@ -128,7 +136,21 @@ export default function DashboardScreen() {
                     fontSize: 20,
                     bold: true,
                     textAlign: 'center',
-                    margin: 50
+                    margin: 50,
+                  },
+                  hAxis: {
+                    title: 'Data',
+                    titleTextStyle: {
+                      fontSize: 16,
+                      bold: true,
+                    },
+                  },
+                  vAxis: {
+                    title: 'Vânzări în lei',
+                    titleTextStyle: {
+                      fontSize: 16,
+                      bold: true,
+                    },
                   },
                 }}
               ></Chart>
@@ -154,8 +176,7 @@ export default function DashboardScreen() {
                   titleTextStyle: {
                     fontSize: 20,
                     bold: true,
-                    textAlign:"center"
-                    
+                    textAlign: 'center',
                   },
                 }}
               ></Chart>
