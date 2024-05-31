@@ -176,6 +176,10 @@ export default function ProductListScreen() {
       });
       // window.alert('Product deleted successfully');
       dispatch({ type: 'DELETE_SUCCESS' });
+      setNotification('Produsul a fost șters cu succes');
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
     } catch (err) {
       window.alert(getError(err));
       dispatch({ type: 'DELETE_FAIL' });
@@ -327,10 +331,8 @@ export default function ProductListScreen() {
         />
       </div>
       {notification && (
-        <div className={`notification ${notification.type}`}>
-          <span>{notification.message}</span>
-        </div>
-      )}
+          <div className="notification-delete-order">{notification}</div>
+        )}
     </div>
   );
 }

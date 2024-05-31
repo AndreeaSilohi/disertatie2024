@@ -149,9 +149,9 @@ function ContactForm() {
               <h5 className="h5-contact-form">Adresă</h5>
             </div>
 
-            <p style={{ fontSize: '16px' }}>Strada Viscolului numărul 12 </p>
+            <p style={{ fontSize: '16px' }}>Strada Victoriei, nr. 160 </p>
             <p style={{ marginTop: '10px', fontSize: '16px' }}>
-              Sector 6, București{' '}
+            Curtea de Argeș{' '}
             </p>
             <hr style={{ marginTop: '30px' }}></hr>
             <div style={{ display: 'flex', alignItems: 'center' }}>

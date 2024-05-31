@@ -26,6 +26,9 @@ export default function ShippingAddress() {
   const [country, setCountry] = useState(shippingAddress.country || '');
   const [telephone, setTelephone] = useState(shippingAddress.telephone || '');
 
+  const [notificationWarning, setNotificationWarning] = useState('');
+  const [telephoneError, setTelephoneError] = useState('');
+
   useEffect(() => {
     if (!userInfo) {
       navigate('/signin?redirect=/shipping');
@@ -60,8 +63,16 @@ export default function ShippingAddress() {
     navigate('/payment');
   };
 
-  {
-  }
+  const handleTelephoneChange = (e) => {
+    const { value } = e.target;
+    if (/^\d*$/.test(value)) {
+      setTelephone(value);
+      setTelephoneError(''); // Clear any previous error
+    } else {
+      setTelephoneError('Pentru acest câmp poți introduce doar cifre');
+    }
+  };
+
   return (
     <div className="total">
       <div className="checkout-steps-shipping">
@@ -73,7 +84,7 @@ export default function ShippingAddress() {
         </div>
         <form onSubmit={submitHandler}>
           <FormLabel
-            sx={{ fontSize: '35px',padding:"40px 40px 40px 0px" }}
+            sx={{ fontSize: '35px', padding: '40px 40px 40px 0px' }}
             id="demo-controlled-radio-buttons-group"
             className="form-label"
           >
@@ -129,6 +140,16 @@ export default function ShippingAddress() {
             onChange={(e) => setCountry(e.target.value)}
           />
 
+          {/* <TextField
+            label="Telefon"
+            margin="normal"
+            fullWidth
+            required
+            value={telephone}
+            sx={{ width: '650px' }}
+            onChange={handleTelephoneChange}
+          /> */}
+
           <TextField
             label="Telefon"
             margin="normal"
@@ -136,12 +157,17 @@ export default function ShippingAddress() {
             required
             value={telephone}
             sx={{ width: '650px' }}
-            onChange={(e) => setTelephone(e.target.value)}
+            onChange={handleTelephoneChange}
+            error={!!telephoneError}
+            helperText={telephoneError}
           />
           <div className="div-button-continue">
             <button className="button-continue">Continuă</button>
           </div>
         </form>
+        {notificationWarning && (
+          <div className="notificationWarning">{notificationWarning}</div>
+        )}
       </div>
     </div>
   );

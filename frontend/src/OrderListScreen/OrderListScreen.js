@@ -163,6 +163,14 @@ export default function OrderListScreen() {
   const handlePageChange = (event, value) => {
     setPage(value);
   };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
   return (
     <div className="container-orders">
       <div className="order-history-content">
@@ -177,9 +185,6 @@ export default function OrderListScreen() {
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  {/* <StyledTableCell align="center" className="table-cell">
-                    ID
-                  </StyledTableCell> */}
                   <StyledTableCell align="center" className="table-cell">
                     UTILIZATOR
                   </StyledTableCell>
@@ -209,7 +214,8 @@ export default function OrderListScreen() {
                       {order.user ? order.user.name : 'DELETED USER'}
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
-                      {order.createdAt.substring(0, 10)}
+                      {/* {order.createdAt.substring(0, 10)} */}
+                      {formatDate(order.createdAt)}
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
                       {order.totalPrice}&nbsp;lei

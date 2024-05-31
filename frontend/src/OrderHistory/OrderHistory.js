@@ -97,6 +97,14 @@ export default function OrderHistory() {
     dispatch({ type: 'FETCH_SUCCESS', payload: { orders: [], page: value, pages } });
   };
 
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
   return (
     <div className="container-order">
       <div className="order-history-content">
@@ -132,7 +140,8 @@ export default function OrderHistory() {
                   {orders.map((order) => (
                     <StyledTableRow key={order._id}>
                       <StyledTableCell align="center" className="table-cell">
-                        {String(order.createdAt).substring(0, 10)}
+                        {/* {String(order.createdAt).substring(0, 10)} */}
+                        {formatDate(order.createdAt)}
                       </StyledTableCell>
                       <StyledTableCell align="center" className="table-cell">
                         {order.totalPrice}
