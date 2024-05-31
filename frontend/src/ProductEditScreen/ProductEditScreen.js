@@ -104,7 +104,7 @@ export default function ProductEditScreen() {
         {
           _id: productId,
           name,
-          slug,
+          // slug,
           price,
           image,
           category,
@@ -121,7 +121,7 @@ export default function ProductEditScreen() {
       });
       // window.alert('Product updated successfully');
       setToastSeverity('success');
-      setToastMessage('Product uploaded successfully');
+      setToastMessage('Produs încărcat cu succes');
       setOpenToast(true);
       setTimeout(() => {
         navigate('/admin/products');
@@ -208,7 +208,7 @@ export default function ProductEditScreen() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
-                  <TextField
+                  {/* <TextField
                     fullWidth
                     margin="normal"
                     className="input-field"
@@ -216,7 +216,7 @@ export default function ProductEditScreen() {
                     placeholder="Slug"
                     value={slug}
                     onChange={(e) => setSlug(e.target.value)}
-                  />
+                  /> */}
                   <label
                     htmlFor="imageFile"
                     style={{
@@ -314,7 +314,7 @@ export default function ProductEditScreen() {
                         },
                       }}
                     >
-                      {loading ? 'Sending...' : 'Submit'}
+                      {loading ? 'Se trimite...' : 'Trimite'}
                     </Button>
                   </div>
                 </form>

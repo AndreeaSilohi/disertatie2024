@@ -157,13 +157,23 @@ const ProductDetails = () => {
     handleClickAdditionalInfo('info'); //adaugat
   }, [slug, userInfo]);
 
-  // console.log(orders);
-  // console.log(slug);
+
+
+  
+  // const isProductInOrders = () => {
+  //   return orders.some((order) =>
+  //     order.orderItems.some((item) => item && item.slug === slug)
+  //   );
+  // };
+
   const isProductInOrders = () => {
-    return orders.some((order) =>
-      order.orderItems.some((item) => item && item.slug === slug)
-    );
+    // Access the 'orders' array directly from the state object
+    return orders && orders.orders && Array.isArray(orders.orders) &&
+      orders.orders.some((order) =>
+        order.orderItems.some((item) => item && item.slug === slug)
+      );
   };
+  
 
   // const cartItemAmount = cartItems[product.id];
   const [selectedTab, setSelectedTab] = useState('info');
