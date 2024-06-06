@@ -49,7 +49,7 @@ function Shop() {
       <header className="header-shop">
         <div className="background-container-shop">
           <div className="overlay-text-shop">
-            <h1 className="h1-title-shop">OUR SHOP</h1>
+            <h1 className="h1-title-shop">MAGAZINUL NOSTRU</h1>
           </div>
         </div>
       </header>

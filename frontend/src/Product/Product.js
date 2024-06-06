@@ -198,7 +198,7 @@ function Product(props) {
       await axios.delete(`/api/wishlist/${item._id}`, {
         headers: headers,
       });
-      console.log('Deleted from wishlist:', item._id);
+
       fetchWishlistItems(token);
       ctxDispatchW({ type: 'WISHLIST_REMOVE_ITEM', payload: item });
       setIsInWishlist(false); // Set isInWishlist to false locally
@@ -239,6 +239,7 @@ function Product(props) {
             component="img"
             image={product.image}
             alt={product.name}
+            sx={{objectFit:"contain"}}
           />
           <CardContent className="text-card">
             <Typography

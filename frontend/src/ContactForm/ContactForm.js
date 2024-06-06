@@ -1,11 +1,10 @@
-import Navbar from '../navbar/Navbar';
 import './ContactForm.css';
 import { useState } from 'react';
 import { TextField, Button, Typography, Box } from '@mui/material';
 import React from 'react';
 import axios from 'axios';
 import { MapPin, Phone, EnvelopeSimple, Clock } from 'phosphor-react';
-import sides from '../assets/sides.png';
+
 function ContactForm() {
   const [subject, setSubject] = useState('');
   const [email, setEmail] = useState('');
@@ -23,8 +22,11 @@ function ContactForm() {
         message,
       });
       setLoading(false);
-      setNotification({ type: 'success', message: "Email trimis cu succes"});
-      // window.alert(data.message);
+      setNotification('Email trimis cu succes!');
+      setTimeout(() => {
+        setNotification('');
+      }, 2000);
+
       setSubject('');
       setEmail('');
       setMessage('');
@@ -37,9 +39,7 @@ function ContactForm() {
       );
     }
   };
-  const handleCloseNotification = () => {
-    setNotification(null);
-  };
+
   return (
     <div className="container-contact-form">
       <div className="form-contact-info">
@@ -66,9 +66,7 @@ function ContactForm() {
                   maxWidth: 600,
                   mx: 'auto',
                   p: 2,
-                  // border: '1px solid   #0000004e',
                   borderRadius: '12px',
-                  // boxShadow: 1,
                 }}
               >
                 <Typography
@@ -151,7 +149,7 @@ function ContactForm() {
 
             <p style={{ fontSize: '16px' }}>Strada Victoriei, nr. 160 </p>
             <p style={{ marginTop: '10px', fontSize: '16px' }}>
-            Curtea de Argeș{' '}
+              Curtea de Argeș{' '}
             </p>
             <hr style={{ marginTop: '30px' }}></hr>
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -208,12 +206,12 @@ function ContactForm() {
           </div>
         </div>
       </div>
-      {notification && (
+      {/* {notification && (
         <div className={`notification ${notification.type}`}>
           <span>{notification.message}</span>
-          {/* <button onClick={handleCloseNotification}>Close</button> */}
         </div>
-      )}
+      )} */}
+      {notification && <div className="notification">{notification}</div>}
     </div>
   );
 }

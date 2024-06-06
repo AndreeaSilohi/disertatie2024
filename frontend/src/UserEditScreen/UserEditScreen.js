@@ -180,16 +180,7 @@ export default function UserEditScreen({ userId, onClose, updateUserList }) {
                       onChange={(e) => setIsAdmin(e.target.checked)}
                       id="isAdminCheckbox"
                     />
-                    {/* <span className="checkmark"></span> */}
                   </div>
-                  {/* <Button
-                    disbled={loadingUpdate}
-                    type="submit"
-                    // onClick={() => deleteHandler(order)}
-                  >
-                    Update
-                  </Button> */}
-
                   <div className="button-submit">
                     <Button
                       disabled={loadingUpdate}

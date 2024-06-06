@@ -211,7 +211,7 @@ export default function OrderListScreen() {
                   <StyledTableRow key={order._id}>
                     {/* <StyledTableCell>{order._id}</StyledTableCell> */}
                     <StyledTableCell align="center" className="table-cell">
-                      {order.user ? order.user.name : 'DELETED USER'}
+                      {order.user ? order.user.name : 'UTILIZATOR ȘTERS'}
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
                       {/* {order.createdAt.substring(0, 10)} */}
@@ -230,13 +230,13 @@ export default function OrderListScreen() {
                       <Button
                         className="button-actions"
                         type="button"
-                        variant="outlined"
                         style={{
-                          color: 'rgb(215, 126, 43)',
-                          borderColor: 'rgb(215, 126, 43)',
+                          backgroundColor: 'rgb(215, 126, 43)',
+                          color: 'white',
                           padding: '5px',
                           marginRight: '5px',
                           fontSize: '12px',
+                          boxShadow: 'none',
                         }}
                         onClick={() => navigate(`/order/${order._id}`)}
                       >

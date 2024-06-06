@@ -608,7 +608,6 @@ const ProductDetails = () => {
                             )}
                           </div>
                         ) : (
-                          // Show a message if the product is not in orders
                           <MessageBox>
                             {userInfo ? (
                               'Nu poți lăsa o recenzie, deoarece acest produs nu se află în comenzile plasate de tine.'

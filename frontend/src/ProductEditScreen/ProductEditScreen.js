@@ -314,7 +314,7 @@ export default function ProductEditScreen() {
                         },
                       }}
                     >
-                      {loading ? 'Se trimite...' : 'Trimite'}
+                      {loading ? 'Se salvează...' : 'Salvează'}
                     </Button>
                   </div>
                 </form>

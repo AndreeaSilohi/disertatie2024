@@ -110,7 +110,6 @@ export default function OrderScreen() {
           }
         );
         dispatch({ type: 'PAY_SUCCESS', payload: data });
-        // window.alert('Order is paid!');
         setNotification({
           type: 'success',
           message: 'Plată efectuată cu succes',
@@ -211,6 +210,15 @@ export default function OrderScreen() {
       dispatch({ type: 'DELIVER_FAIL' });
     }
   }
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+  
   return loading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (
@@ -284,7 +292,7 @@ export default function OrderScreen() {
                   </ListItem>
                   {order.isPaid ? (
                     <MessageBox variant="success">
-                      Plătită {order.paidAt}
+                      Plătită la data de {formatDate(order.paidAt.substring(0, 10))}
                     </MessageBox>
                   ) : (
                     <MessageBox variant="danger">Neplătită</MessageBox>

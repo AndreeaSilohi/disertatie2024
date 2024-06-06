@@ -208,7 +208,7 @@ export default function ProductListScreen() {
               padding: '5px',
             }}
           >
-            ADAUGĂ PRODUS NOU
+            ADAUGĂ PRODUS
           </Button>
         </div>
         {loadingDelete && <LoadingBox />}
@@ -252,14 +252,14 @@ export default function ProductListScreen() {
                       <StyledTableCell align="center" className="table-cell">
                         <Button
                           className="button-actions"
-                          variant="outlined"
                           type="button"
                           style={{
-                            color: 'rgb(215, 126, 43)',
-                            borderColor: 'rgb(215, 126, 43)',
+                            backgroundColor: 'rgb(215, 126, 43)',
+                            color: 'white',
                             padding: '5px',
                             marginRight: '5px',
                             fontSize: '12px',
+                            boxShadow: 'none', 
                           }}
                           onClick={() =>
                             navigate(`/admin/product/${product._id}`)
@@ -278,6 +278,7 @@ export default function ProductListScreen() {
                             padding: '5px',
                             marginRight: '5px',
                             fontSize: '12px',
+                            margin: '5px', 
                           }}
                           onClick={() => deleteHandler(product)}
                         >
