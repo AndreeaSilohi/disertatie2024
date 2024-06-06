@@ -316,7 +316,6 @@ export default function ProductListScreen() {
               deleteProduct(deletingProduct);
             }
           }}
-          title="Dialog de confirmare"
           message="Ești sigur că vrei să ștergi acest produs?"
         />
       </div>

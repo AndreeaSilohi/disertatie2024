@@ -221,10 +221,10 @@ export default function OrderListScreen() {
                       {order.totalPrice}&nbsp;lei
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
-                      {order.isPaid ? order.paidAt.substring(0, 10) : 'No'}
+                      {order.isPaid ? order.paidAt.substring(0, 10) : 'Nu'}
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
-                      {order.isDelivered ? order.deliveredAt : 'No'}
+                      {order.isDelivered ? order.deliveredAt : 'Nu'}
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
                       <Button
