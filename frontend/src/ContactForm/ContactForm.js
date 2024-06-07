@@ -160,9 +160,9 @@ function ContactForm() {
               <h5 className="h5-contact-form">Telefon</h5>
             </div>
 
-            <p style={{ fontSize: '16px' }}>+1 (949) 354-2574</p>
+            <p style={{ fontSize: '16px' }}>0725437645</p>
             <p style={{ marginTop: '10px', fontSize: '16px' }}>
-              +1 (949) 354-2575
+             0722337684
             </p>
 
             <hr style={{ marginTop: '30px' }}></hr>

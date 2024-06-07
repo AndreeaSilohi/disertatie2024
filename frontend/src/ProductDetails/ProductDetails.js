@@ -157,9 +157,6 @@ const ProductDetails = () => {
     handleClickAdditionalInfo('info'); //adaugat
   }, [slug, userInfo]);
 
-
-
-  
   // const isProductInOrders = () => {
   //   return orders.some((order) =>
   //     order.orderItems.some((item) => item && item.slug === slug)
@@ -168,12 +165,15 @@ const ProductDetails = () => {
 
   const isProductInOrders = () => {
     // Access the 'orders' array directly from the state object
-    return orders && orders.orders && Array.isArray(orders.orders) &&
+    return (
+      orders &&
+      orders.orders &&
+      Array.isArray(orders.orders) &&
       orders.orders.some((order) =>
         order.orderItems.some((item) => item && item.slug === slug)
-      );
+      )
+    );
   };
-  
 
   // const cartItemAmount = cartItems[product.id];
   const [selectedTab, setSelectedTab] = useState('info');
@@ -205,8 +205,7 @@ const ProductDetails = () => {
 
     if (!user) {
       setNotificationWarning(
-        'Nu ești logat. Loghează-te pentru a adăuga produse în coș',
-  
+        'Nu ești logat. Loghează-te pentru a adăuga produse în coș'
       );
       setTimeout(() => {
         setNotificationWarning(null);
@@ -297,7 +296,7 @@ const ProductDetails = () => {
         type: 'CREATE_SUCCESS',
       });
       // window.alert('Review submitted successfully!');
-      setNotification("Recenzie trimisa cu succes");
+      setNotification('Recenzie trimisa cu succes');
       setTimeout(() => {
         setNotification(null);
       }, 3000);
@@ -313,7 +312,6 @@ const ProductDetails = () => {
 
       setRating(0); // Assuming initial value for rating is 0
       setComment('');
-      
     } catch (error) {
       window.alert(getError(error));
       dispatch({ type: 'CREATE_FAIL' });
@@ -510,11 +508,11 @@ const ProductDetails = () => {
                               {/* {user.isAdmin ? (
                                 <UserCircle size={70} /> // Render icon for administrator
                               ) : ( */}
-                                <img
-                                  src={review.profilePhoto}
-                                  alt="User Avatar"
-                                  className="avatar-recenzie"
-                                />
+                              <img
+                                src={review.profilePhoto}
+                                alt="User Avatar"
+                                className="avatar-recenzie"
+                              />
                               {/* )} */}
                             </div>
                             <div>
@@ -593,7 +591,14 @@ const ProductDetails = () => {
                                   disabled={loadingCreateReview}
                                   type="submit"
                                   variant="contained"
-                                  sx={{ mt: 2, backgroundColor: '#FFA500' }}
+                                  sx={{
+                                    mt: 2,
+                                    backgroundColor: '#FFA500',
+                                    color: '#fff',
+                                    '&:hover': {
+                                      backgroundColor: '#52616B',
+                                    },
+                                  }}
                                 >
                                   Trimite
                                 </Button>
@@ -603,7 +608,8 @@ const ProductDetails = () => {
                               </form>
                             ) : (
                               <MessageBox>
-                               Te rugăm să te loghezi pentru a scrie o recenzie<Link to={'/signin'}>Sign In</Link>
+                                Te rugăm să te loghezi pentru a scrie o recenzie
+                                <Link to={'/signin'}>Sign In</Link>
                               </MessageBox>
                             )}
                           </div>
@@ -613,7 +619,8 @@ const ProductDetails = () => {
                               'Nu poți lăsa o recenzie, deoarece acest produs nu se află în comenzile plasate de tine.'
                             ) : (
                               <>
-                                Te rugăm să te loghezi pentru a scrie o recenzie <Link to={'/signin'}>Logare</Link> 
+                                Te rugăm să te loghezi pentru a scrie o recenzie{' '}
+                                <Link to={'/signin'}>Logare</Link>
                               </>
                             )}
                           </MessageBox>
@@ -627,8 +634,9 @@ const ProductDetails = () => {
           </div>
           {loading && <LoadingBox />}
           {notification && <div className="notification">{notification}</div>}
-          {notificationWarning && <div className="notificationWarning">{notificationWarning}</div>}
-
+          {notificationWarning && (
+            <div className="notificationWarning">{notificationWarning}</div>
+          )}
         </>
       )}
     </div>

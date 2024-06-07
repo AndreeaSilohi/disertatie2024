@@ -283,7 +283,7 @@ export default function UserListScreen() {
           open={confirmDelete}
           onClose={() => setConfirmDelete(false)}
           onConfirm={handleConfirmDelete}
-          title="Confirmare Ștergere"
+          title="Confirmare ștergere"
           message="Ești sigur că vrei să ștergi acest utilizator?"
         />
       </div>

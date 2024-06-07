@@ -232,13 +232,14 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
         <div className="dialog-actions">
           <DialogActions>
             <Button
+              className="button-actions"
               type="button"
               variant="outlined"
               onClick={onClose}
               sx={{
                 color: 'red',
-                borderColor: 'red',
                 padding: '5px',
+                border: '1px solid red',
                 marginRight: '5px',
                 fontSize: '15px',
               }}
@@ -252,7 +253,7 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
               onClick={handleSubmit}
               sx={{
                 color: '#2E7D32',
-                borderColor: '#2E7D32',
+                border: '1px solid #2E7D32',
                 padding: '5px',
                 marginRight: '5px',
                 fontSize: '15px',

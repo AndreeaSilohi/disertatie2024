@@ -28,6 +28,7 @@ export default function ShippingAddress() {
 
   const [notificationWarning, setNotificationWarning] = useState('');
   const [telephoneError, setTelephoneError] = useState('');
+  const [postalCodeError, setPostalCodeError] = useState('');
 
   useEffect(() => {
     if (!userInfo) {
@@ -63,15 +64,60 @@ export default function ShippingAddress() {
     navigate('/payment');
   };
 
+  // const handleTelephoneChange = (e) => {
+  //   const { value } = e.target;
+  //   if (/^\d*$/.test(value)) {
+  //     setTelephone(value);
+  //     setTelephoneError(''); // Clear any previous error
+  //   } else {
+  //     setTelephoneError('Pentru acest câmp poți introduce doar cifre');
+  //   }
+  // };
+
   const handleTelephoneChange = (e) => {
     const { value } = e.target;
+
     if (/^\d*$/.test(value)) {
       setTelephone(value);
-      setTelephoneError(''); // Clear any previous error
+
+      if (value.length === 10) {
+        setTelephoneError('');
+      } else {
+        setTelephoneError('Numărul de telefon trebuie să aibă exact 10 cifre');
+      }
     } else {
       setTelephoneError('Pentru acest câmp poți introduce doar cifre');
     }
   };
+
+  const handlePostalCodeChange = (e) => {
+    const { value } = e.target;
+  
+    if (/^\d*$/.test(value)) {
+   
+      setPostalCode(value);
+  
+      if (value.length === 6) {
+        setPostalCodeError(''); 
+      } else {
+        setPostalCodeError('Codul poștal trebuie să aibă exact 6 cifre!');
+      }
+    } else {
+      setPostalCodeError('Pentru acest câmp poți introduce doar cifre');
+    }
+  };
+  
+  // const handlePostalCodeChange = (e) => {
+  //   const { value } = e.target;
+  //   if (/^\d*$/.test(value) && value.length <= 6) {
+  //     setPostalCode(value);
+  //     setPostalCodeError(''); // Clear any previous error
+  //   } else if (value.length > 6) {
+  //     setPostalCodeError('Codul poștal trebuie să aibă 6 cifre!');
+  //   } else {
+  //     setPostalCodeError('Pentru acest câmp poți introduce doar cifre');
+  //   }
+  // };
 
   return (
     <div className="total">
@@ -120,7 +166,7 @@ export default function ShippingAddress() {
             onChange={(e) => setCity(e.target.value)}
           />
 
-          <TextField
+          {/* <TextField
             label="Cod poștal"
             margin="normal"
             fullWidth
@@ -128,8 +174,19 @@ export default function ShippingAddress() {
             value={postalCode}
             sx={{ width: '650px' }}
             onChange={(e) => setPostalCode(e.target.value)}
-          />
+          /> */}
 
+          <TextField
+            label="Cod poștal"
+            margin="normal"
+            fullWidth
+            required
+            value={postalCode}
+            sx={{ width: '650px' }}
+            onChange={handlePostalCodeChange}
+            error={!!postalCodeError}
+            helperText={postalCodeError}
+          />
           <TextField
             label="Țara"
             margin="normal"

@@ -13,7 +13,7 @@ function Footer() {
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={5} justifyContent="center" alignItems="center">
+        <Grid container spacing={5} >
           <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
             <Typography variant="h6" sx={{ width: '320px' }} gutterBottom>
               Despre noi
@@ -33,9 +33,9 @@ function Footer() {
             <Typography variant="body2">Email: info@example.com</Typography>
             <Typography variant="body2">Phone: +40725219542</Typography>
           </Grid>
-          <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
-            <Typography variant="h6" gutterBottom>
-              Urmărește-ne
+          <Grid item xs={12} md={4} sx={{ textAlign: 'center'}}>
+            <Typography variant="h6" gutterBottom sx={{ width: '320px'}}>
+              Urmărește-ne și pe social media
             </Typography>
             <Box
               sx={{
