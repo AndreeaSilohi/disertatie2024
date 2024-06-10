@@ -133,7 +133,7 @@ function Navbar() {
       // window.alert('Image uploaded successfully');
       setNotification({
         type: 'success',
-        message: 'Imagine încărcată cu succes',
+        message: 'Fotografie încărcată cu succes',
       });
       setTimeout(() => {
         setNotification(null);

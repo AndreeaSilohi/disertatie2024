@@ -200,7 +200,7 @@ export default function OrderScreen() {
       // window.alert('Order is delivered!');
       setNotification({
         type: 'success',
-        message: 'Comanda este livrată',
+        message: 'Status schimbat cu succes!',
       });
       setTimeout(() => {
         setNotification(null);

@@ -113,7 +113,7 @@ function SignUp() {
                         <div className="password-input-sign-up">
                           <i className="fas fa-lock"></i>
                           <input
-                             type={showPassword ? 'text' : 'password'}
+                             type={showConfirmPassword ? 'text' : 'password'}
                             placeholder="Confirmare parolă"
                             required
                             onChange={(e) => setConfirmPassword(e.target.value)}

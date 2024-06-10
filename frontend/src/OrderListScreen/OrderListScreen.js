@@ -209,7 +209,6 @@ export default function OrderListScreen() {
               <TableBody>
                 {orders.map((order) => (
                   <StyledTableRow key={order._id}>
-                    {/* <StyledTableCell>{order._id}</StyledTableCell> */}
                     <StyledTableCell align="center" className="table-cell">
                       {order.user ? order.user.name : 'UTILIZATOR ȘTERS'}
                     </StyledTableCell>
@@ -221,10 +220,10 @@ export default function OrderListScreen() {
                       {order.totalPrice}&nbsp;lei
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
-                      {order.isPaid ? order.paidAt.substring(0, 10) : 'Nu'}
+                      {order.isPaid ? formatDate(order.paidAt) : 'Nu'}
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
-                      {order.isDelivered ? order.deliveredAt : 'Nu'}
+                      {order.isDelivered ? formatDate(order.deliveredAt) : 'Nu'}
                     </StyledTableCell>
                     <StyledTableCell align="center" className="table-cell">
                       <Button
