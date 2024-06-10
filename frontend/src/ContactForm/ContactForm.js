@@ -128,7 +128,7 @@ function ContactForm() {
                         },
                       }}
                     >
-                      {loading ? 'Sending...' : 'Trimite'}
+                      {loading ? 'Se trimite...' : 'Trimite'}
                     </Button>
                   </div>
                 </form>

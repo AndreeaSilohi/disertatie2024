@@ -195,7 +195,7 @@ export default function UserEditScreen({ userId, onClose, updateUserList }) {
                         },
                       }}
                     >
-                      {loading ? 'Sending...' : 'Actualizare'}
+                      {loading ? 'Se trimite...' : 'Actualizare'}
                     </Button>
                   </div>
                   {loadingUpdate && <LoadingBox></LoadingBox>}

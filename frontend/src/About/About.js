@@ -77,13 +77,31 @@ function About() {
         </p>
         <div className="social-media">
           <div>
-            <FacebookLogo size={40} style={{ color: '#FFA500' }} />
+            <a
+              href="https://www.facebook.com/profile.php?id=61560901854505&is_tour_dismissed"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FacebookLogo size={40} style={{ color: '#FFA500' }} />
+            </a>
           </div>
           <div>
-            <InstagramLogo size={40} style={{ color: '#FFA500' }} />
+            <a
+              href="https://www.instagram.com/honey2024boutique/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <InstagramLogo size={40} style={{ color: '#FFA500' }} />
+            </a>
           </div>
           <div>
+          <a
+              href="https://www.tiktok.com/@honeyboutique2024?lang=en"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
             <TiktokLogo size={40} style={{ color: '#FFA500' }} />
+            </a>
           </div>
         </div>
       </div>

@@ -14,16 +14,16 @@ function Footer() {
     >
       <Container maxWidth="lg">
         <Grid container spacing={5} >
-          <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ width: '320px' }} gutterBottom>
+          <Grid item xs={12} md={4} sx={{ textAlign: 'center',width: '320px' }}>
+            <Typography variant="h6"  gutterBottom>
               Despre noi
             </Typography>
-            <Typography variant="body2" sx={{ width: '320px' }}>
+            <Typography variant="body2" >
               Noi suntem Honey Boutique și suntem dedicați pentru a oferi cele
               mai bune produse clienților noștri.
             </Typography>
           </Grid>
-          <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
+          <Grid item xs={12} md={4} sx={{ textAlign: 'center',width: '320px' }}>
             <Typography variant="h6" gutterBottom>
               Contactează-ne
             </Typography>
@@ -31,10 +31,10 @@ function Footer() {
               Strada Victoriei, nr. 160, Curtea de Argeș
             </Typography>
             <Typography variant="body2">Email: info@example.com</Typography>
-            <Typography variant="body2">Phone: +40725219542</Typography>
+            <Typography variant="body2">Phone: 0725219542</Typography>
           </Grid>
-          <Grid item xs={12} md={4} sx={{ textAlign: 'center'}}>
-            <Typography variant="h6" gutterBottom sx={{ width: '320px'}}>
+          <Grid item xs={12} md={4} sx={{ textAlign: 'center',width: '320px'}}>
+            <Typography variant="h6" >
               Urmărește-ne și pe social media
             </Typography>
             <Box
@@ -43,22 +43,26 @@ function Footer() {
                 justifyContent: 'center',
                 mt: 2,
                 margin: '0px',
+                textAlign:'center'
               }}
             >
               <IconButton
-                href="https://www.facebook.com/"
+              target="_blank"
+                href="https://www.facebook.com/profile.php?id=61560901854505&is_tour_dismissed"
                 sx={{ color: '#fff', mx: 1 }}
               >
                 <FacebookLogo />
               </IconButton>
               <IconButton
-                href="https://www.instagram.com/"
+              target="_blank"
+                href="https://www.instagram.com/honey2024boutique/"
                 sx={{ color: '#fff', mx: 1 }}
               >
                 <InstagramLogo />
               </IconButton>
               <IconButton
-                href="https://www.tiktok.com/"
+              target="_blank"
+                href="https://www.tiktok.com/@honeyboutique2024?lang=en"
                 sx={{ color: '#fff', mx: 1 }}
               >
                 <TiktokLogo />
