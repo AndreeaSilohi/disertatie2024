@@ -22,7 +22,7 @@
   width: 80%;
 }
 .detalii-card img {
-  width: 500px;
+  width: 450px;
 }
 
 .detalii-sus {
@@ -32,7 +32,8 @@
 }
 
 .card-media {
-  height: 600px;
+  height: 500px;
+ 
   background-color: white;
   border: none;
 }

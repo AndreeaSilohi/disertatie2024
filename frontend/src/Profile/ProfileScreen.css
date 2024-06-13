@@ -28,10 +28,11 @@
 
 .form-content-profile {
   width: 800px;
-  height: 450px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding:40px;
 }
 
 .typografy {
@@ -74,7 +75,7 @@
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: green;
+  /* color: green; */
 }
 
 .eye-icon.show {

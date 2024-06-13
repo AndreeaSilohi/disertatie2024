@@ -58,6 +58,7 @@ export default function UserEditScreen({ userId, onClose, updateUserList }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,7 +102,6 @@ export default function UserEditScreen({ userId, onClose, updateUserList }) {
       );
 
       dispatch({ type: 'UPDATE_SUCCESS' });
-
       updateUserList();
       onClose();
       navigate('/admin/users');
@@ -214,7 +214,7 @@ export default function UserEditScreen({ userId, onClose, updateUserList }) {
                   elevation={6}
                   variant="filled"
                   onClose={handleToastCloseUser}
-                  severity="success" // Set the severity to success for successful updates.
+                  severity="success" 
                 >
                   User updated successfully
                 </MuiAlert>
@@ -223,6 +223,7 @@ export default function UserEditScreen({ userId, onClose, updateUserList }) {
           </div>
         </div>
       )}
+      
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Store } from '../Store';
 import { getError } from '../utils';
 import axios from 'axios';
-import { Eye } from 'phosphor-react';
+import { Eye, EyeSlash } from 'phosphor-react';
 import './ResetPassword.css';
 
 export default function ResetPassword() {
@@ -44,13 +44,17 @@ export default function ResetPassword() {
         navigate('/signin');
       }, 2000);
     } catch (err) {
-     
-      
-       const errorMessage = getError(err);
-      if (errorMessage.includes('Noua parolă nu poate fi aceeași cu parola curentă')) {
+      const errorMessage = getError(err);
+      if (
+        errorMessage.includes(
+          'Noua parolă nu poate fi aceeași cu parola curentă'
+        )
+      ) {
         setNotificationWarning(errorMessage);
       } else {
-        setNotificationWarning('A apărut o eroare. Vă rugăm să încercați din nou.');
+        setNotificationWarning(
+          'A apărut o eroare. Vă rugăm să încercați din nou.'
+        );
       }
       setTimeout(() => {
         setNotificationWarning(null);
@@ -94,14 +98,28 @@ export default function ResetPassword() {
                           onChange={(e) => setPassword(e.target.value)}
                           sx={{ padding: '0px' }}
                         />
-                        <Eye
+                        {/* <Eye
                           size={26}
                           onClick={() => setShowPassword(!showPassword)}
                           style={{
                             cursor: 'pointer',
                             color: showPassword ? '#FFA500' : 'green',
                           }}
-                        />
+                        /> */}
+
+                        {showPassword ? (
+                          <EyeSlash
+                            size={26}
+                            onClick={() => setShowPassword(!showPassword)}
+                            // className="eye-icon"
+                          />
+                        ) : (
+                          <Eye
+                            size={26}
+                            onClick={() => setShowPassword(!showPassword)}
+                            // className="eye-icon"
+                          />
+                        )}
                       </div>
                     </div>
 
@@ -115,7 +133,24 @@ export default function ResetPassword() {
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           sx={{ padding: '0px' }}
                         />
-                        <Eye
+                        {showConfirmPassword ? (
+                          <EyeSlash
+                            size={26}
+                            onClick={() =>
+                              setShowConfirmPassword(!showConfirmPassword)
+                            }
+                            // className="eye-icon"
+                          />
+                        ) : (
+                          <Eye
+                            size={26}
+                            onClick={() =>
+                              setShowConfirmPassword(!showConfirmPassword)
+                            }
+                            // className="eye-icon"
+                          />
+                        )}
+                        {/* <Eye
                           size={26}
                           onClick={() =>
                             setShowConfirmPassword(!showConfirmPassword)
@@ -124,7 +159,7 @@ export default function ResetPassword() {
                             cursor: 'pointer',
                             color: showConfirmPassword ? '#FFA500' : 'green',
                           }}
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>

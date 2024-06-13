@@ -4,11 +4,12 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   TextField,
-  DialogContentText,
-  Typography,
-  Box,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel,
+ 
 } from '@mui/material';
 
 import { Upload } from 'phosphor-react';
@@ -57,9 +58,14 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
   });
 
   const [notification, setNotification] = useState(null);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProductData({ ...productData, [name]: value });
+  };
+
+  const handleCategoryChange = (event) => {
+    setProductData({ ...productData, category: event.target.value });
   };
 
   const handleSubmit = () => {
@@ -170,7 +176,7 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
               value={productData.price}
               onChange={handleChange}
             />
-            <TextField
+            {/* <TextField
               margin="dense"
               id="category"
               name="category"
@@ -178,7 +184,25 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
               fullWidth
               value={productData.category}
               onChange={handleChange}
-            />
+            /> */}
+             <FormControl fullWidth margin="dense">
+              <InputLabel id="category-label">Categorie</InputLabel>
+              <Select
+                labelId="category-label"
+                id="category"
+                name="category"
+                value={productData.category}
+                onChange={handleCategoryChange}
+                label="Categorie"
+                sx={{textAlign:"left"}}
+              >
+                <MenuItem value="Miere">Miere</MenuItem>
+                <MenuItem value="Propolis">Propolis</MenuItem>
+                <MenuItem value="Cremă">Cremă</MenuItem>
+              </Select>
+            </FormControl>
+
+
             <TextField
               margin="dense"
               id="stoc"

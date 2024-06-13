@@ -163,14 +163,14 @@ export default function OrderHistory() {
                             align="center"
                             className="table-cell"
                           >
-                            {order.totalPrice}
+                            {order.totalPrice} lei
                           </StyledTableCell>
                           <StyledTableCell
                             align="center"
                             className="table-cell"
                           >
                             {order.isPaid
-                              ? String(order.paidAt).substring(0, 10)
+                              ? formatDate(order.paidAt)
                               : 'Nu'}
                           </StyledTableCell>
 
@@ -179,7 +179,7 @@ export default function OrderHistory() {
                             className="table-cell"
                           >
                             {order.isDelivered
-                              ? order.deliveredAt.substring(0, 10)
+                              ? formatDate(order.deliveredAt)
                               : 'Nu'}
                           </StyledTableCell>
                           <StyledTableCell

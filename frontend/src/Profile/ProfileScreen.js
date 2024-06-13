@@ -3,7 +3,7 @@ import { Store } from '../Store';
 import { Typography, Button, Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
-import { Eye } from 'phosphor-react';
+import { Eye ,EyeSlash} from 'phosphor-react';
 import './ProfileScreen.css';
 
 const reducer = (state, action) => {
@@ -39,13 +39,13 @@ export default function ProfileScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
-      setNotificationWarning('Parolele nu se potrivesc');
-      setTimeout(() => {
-        setNotificationWarning('');
-      }, 2000);
-      return;
-    }
+    // if (password !== confirmPassword) {
+    //   setNotificationWarning('Parolele nu se potrivesc');
+    //   setTimeout(() => {
+    //     setNotificationWarning('');
+    //   }, 2000);
+    //   return;
+    // }
 
     dispatch({ type: 'UPDATE_REQUEST' });
     try {
@@ -143,20 +143,35 @@ export default function ProfileScreen() {
                 <div className="password-textfield">
                   <TextField
                     type={showPassword ? 'text' : 'password'}
-                    label="Parolă nouă"
+                    label="Parolă"
                     variant="outlined"
                     fullWidth
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <Eye
+                  {showPassword ? (
+                    <EyeSlash
+                      size={26}
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="eye-icon"
+                    />
+                  ) : (
+                    <Eye
+                      size={26}
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="eye-icon"
+                    />
+                  )}
+
+                  {/* <Eye
                     size={26}
                     onClick={() => setShowPassword(!showPassword)}
                     className={`eye-icon ${showPassword ? 'show' : ''}`}
-                  />
+                  /> */}
+
                 </div>
-                <div className="password-textfield">
+                {/* <div className="password-textfield">
                   <TextField
                     label="Confirmă parolă nouă"
                     variant="outlined"
@@ -171,7 +186,7 @@ export default function ProfileScreen() {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className={`eye-icon ${showConfirmPassword ? 'show' : ''}`}
                   />
-                </div>
+                </div> */}
 
                 <div className="form-shipping-content-button">
                   <Button

@@ -8,8 +8,18 @@ import { getError } from '../utils';
 import MessageBox from '../MessageBox';
 import LoadingBox from '../LoadingBox';
 import axios from 'axios';
-import { Button, TextField, Typography, Box } from '@mui/material';
+import {
+  Button,
+  TextField,
+  Typography,
+  Box,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel,
+} from '@mui/material';
 import { Upload } from 'phosphor-react';
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -153,6 +163,7 @@ export default function ProductEditScreen() {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
     }
   };
+
   return (
     <div className="edit-screen-container">
       <div className="div-image-left">
@@ -259,7 +270,7 @@ export default function ProductEditScreen() {
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                   />
-                  <TextField
+                  {/* <TextField
                     className="input-field"
                     name="category"
                     placeholder="Category"
@@ -267,7 +278,23 @@ export default function ProductEditScreen() {
                     margin="normal"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                  />
+                  /> */}
+
+                  <FormControl fullWidth margin="normal">
+                    <InputLabel id="category-label">Categorie</InputLabel>
+                    <Select
+                      labelId="category-label"
+                      id="category"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      label="Category"
+                    >
+                      <MenuItem value="Miere">Miere</MenuItem>
+                      <MenuItem value="Propolis">Propolis</MenuItem>
+                      <MenuItem value="Cremă">Cremă</MenuItem>
+                    </Select>
+                  </FormControl>
+
                   <TextField
                     className="input-field"
                     name="stoc"

@@ -234,11 +234,11 @@ userRouter.put(
         req.body.password,
         user.password
       );
-      if (isSamePassword) {
+      if (!isSamePassword) {
         res
           .status(400)
           .send({
-            message: 'Noua parolă nu poate fi aceeași cu parola curentă',
+            message: 'Parola nu este corectă',
           });
         return;
       }
@@ -264,7 +264,7 @@ userRouter.put(
   })
 );
 
-// Add a new endpoint to fetch user by email
+
 userRouter.get(
   '/currentById/:id',
   isAuth,

@@ -3,7 +3,7 @@ import Axios from 'axios';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
-import { Eye } from 'phosphor-react';
+import { Eye, EyeSlash } from 'phosphor-react';
 import './SignUp.css';
 
 function SignUp() {
@@ -98,14 +98,27 @@ function SignUp() {
                             onChange={(e) => setPassword(e.target.value)}
                             sx={{ padding: '0px', width: '500px' }}
                           />
-                          <Eye
+                          {/* <Eye
                             size={26}
                             onClick={() => setShowPassword(!showPassword)}
                             style={{
                               cursor: 'pointer',
                               color: showPassword ? '#FFA500' : 'green',
                             }}
-                          />
+                          /> */}
+                          {showPassword ? (
+                            <EyeSlash
+                              size={26}
+                              onClick={() => setShowPassword(!showPassword)}
+                              // className="eye-icon"
+                            />
+                          ) : (
+                            <Eye
+                              size={26}
+                              onClick={() => setShowPassword(!showPassword)}
+                              // className="eye-icon"
+                            />
+                          )}
                         </div>
                       </div>
 
@@ -113,12 +126,12 @@ function SignUp() {
                         <div className="password-input-sign-up">
                           <i className="fas fa-lock"></i>
                           <input
-                             type={showConfirmPassword ? 'text' : 'password'}
+                            type={showConfirmPassword ? 'text' : 'password'}
                             placeholder="Confirmare parolă"
                             required
                             onChange={(e) => setConfirmPassword(e.target.value)}
                           />
-                          <Eye
+                          {/* <Eye
                             size={26}
                             onClick={() =>
                               setShowConfirmPassword(!showConfirmPassword)
@@ -127,7 +140,21 @@ function SignUp() {
                               cursor: 'pointer',
                               color: showConfirmPassword ? '#FFA500' : 'green',
                             }}
-                          />
+                          /> */}
+
+                          {showConfirmPassword ? (
+                            <EyeSlash
+                              size={26}
+                              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                              // className="eye-icon"
+                            />
+                          ) : (
+                            <Eye
+                              size={26}
+                              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                              // className="eye-icon"
+                            />
+                          )}
                         </div>
                       </div>
                     </div>

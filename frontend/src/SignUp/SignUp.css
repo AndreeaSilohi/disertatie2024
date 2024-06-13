@@ -6,11 +6,11 @@
 
 .password-input-sign-up input {
   flex: 1;
-  padding-right: 40px; /* Adjust as needed */
+  padding-right: 40px; 
 }
 
 .password-input-sign-up svg {
-  margin-left: -25px; /* Adjust as needed */
+  margin-left: -25px;
   cursor: pointer;
 }
 
@@ -30,10 +30,10 @@
   background: #064420;
  
 }
-.forms .signup-form .title-inregistrare:before {
+/* .forms .signup-form .title-inregistrare:before {
   width: 20px;
  
-}
+} */
 
 
 .inputs-inregistrare{

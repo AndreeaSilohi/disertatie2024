@@ -5,7 +5,7 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
 import { Wishlist } from '../W';
-import { Eye } from 'phosphor-react'; 
+import { Eye, EyeSlash } from 'phosphor-react';
 
 function Profile() {
   const navigate = useNavigate();
@@ -129,41 +129,53 @@ function Profile() {
                 <form onSubmit={submitHandler} action="#">
                   <div className="title-logare">Logare</div>
                   <div className="input-boxes">
-                  <div className='inputs'>
-                    <div className="input-box">
-                      <i className="fas fa-envelope"></i>
-                      <div className="email-input">
-                        <input
-                          type="email"
-                          placeholder="Introdu email"
-                          required
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
+                    <div className="inputs">
+                      <div className="input-box">
+                        <i className="fas fa-envelope"></i>
+                        <div className="email-input">
+                          <input
+                            type="email"
+                            placeholder="Introdu email"
+                            required
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="input-box">
-                      <div className="password-input">
-                        <i className="fas fa-lock"></i>
+                      <div className="input-box">
+                        <div className="password-input">
+                          <i className="fas fa-lock"></i>
 
-                        <input
-                          type={showPassword ? 'text' : 'password'}
-                          value={password}
-                          placeholder="Introdu parola"
-                          required
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <Eye
+                          <input
+                            type={showPassword ? 'text' : 'password'}
+                            value={password}
+                            placeholder="Introdu parola"
+                            required
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
+                          {/* <Eye
                           size={26}
                           onClick={() => setShowPassword(!showPassword)}
                           style={{ cursor: 'pointer', color: showPassword ? '#FFA500' : 'green' }}
-                        />
+                        /> */}
+                          {showPassword ? (
+                            <EyeSlash
+                              size={26}
+                              onClick={() => setShowPassword(!showPassword)}
+                              // className="eye-icon"
+                            />
+                          ) : (
+                            <Eye
+                              size={26}
+                              onClick={() => setShowPassword(!showPassword)}
+                              // className="eye-icon"
+                            />
+                          )}
+                        </div>
                       </div>
                     </div>
-
-                   </div>
                     <div className="text-password">
                       Ți-ai uitat parola? &nbsp;
-                      <Link to={`/forget-password`}>Resetează parola</Link>
+                      <Link to={`/forget-password`}style={{textDecoration:"none"}}>Resetează parola</Link>
                     </div>
                     <div className="button input-box">
                       <input type="submit" value="Logare" />
