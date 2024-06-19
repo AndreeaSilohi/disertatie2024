@@ -1,9 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 .product-link {
   text-decoration: none;
+
 }
 
+.card-content {
+  height: 400px;
+  width: 100px;
+
+ 
+}
 .card {
   flex-basis: calc(33.33% - 20px);
   margin-bottom: 20px;
@@ -11,62 +18,51 @@
   margin-right: 61px;
   margin-left: 62px;
 }
-.card-content {
-  height: 400px;
-  width: 100%;
-  padding: 40px;
 
-}
 .typografy-name {
-  font-family: "Montserrat", sans-serif;
-
-  color:black;
+  font-family: 'Montserrat', sans-serif;
+  color: black;
   font-weight: 300;
   font-size: 16px;
-
 }
 
 .typografy-price {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  color: black;
+  font-weight: 300;
+  font-size: 16px;
+}
 
-    color:black;
-    font-weight: 300;
-    font-size: 16px;
-  
-  }
+.actions-card {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
 
-  .actions-card{
-    padding:20px;
-    display: flex;
-    justify-content: center;
-  }
+.text-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .text-card{
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #5cb85c;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 9999;
+}
 
-  .notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #5cb85c; 
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    z-index: 9999;
-  }
-
-  .notificationWarning {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    z-index: 9999;
-    background-color: #f4d2a5; 
-    color:black;
-  
-  }
+.notificationWarning {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 9999;
+  background-color: #f4d2a5;
+  color: black;
+}

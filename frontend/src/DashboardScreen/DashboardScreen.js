@@ -106,7 +106,8 @@ export default function DashboardScreen() {
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {summary.orders && summary.users[0]
-                    ? summary.orders[0].totalSales.toFixed(2)
+                    // ? summary.orders[0].totalSales.toFixed(2)
+                    ? summary.orders[0].totalSales
                     : 0}{' '}
                   lei
                 </Typography>

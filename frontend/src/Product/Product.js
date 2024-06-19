@@ -231,6 +231,10 @@ function Product(props) {
           style={{
             // backgroundColor: '#f3f3f3',
             paddingBottom: '25px',
+            display: 'flex',
+            flexDirection:"column",
+            justifyContent: 'center',
+            alignItems:'center',
           }}
           onClick={() => handleCardClick(product)}
         >
@@ -239,7 +243,13 @@ function Product(props) {
             component="img"
             image={product.image}
             alt={product.name}
-            sx={{objectFit:"contain"}}
+            sx={{
+              objectFit: 'contain',
+              width: '350px',
+              height: '400px',
+
+           
+            }}
           />
           <CardContent className="text-card">
             <Typography

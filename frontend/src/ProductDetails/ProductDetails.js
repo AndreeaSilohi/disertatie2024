@@ -440,6 +440,7 @@ const ProductDetails = () => {
                         sx={{
                           fontSize: '15px',
                           fontFamily: 'Montserrat, sans-serif',
+                          textAlign: 'justify',
                         }}
                       >
                         {product.description}

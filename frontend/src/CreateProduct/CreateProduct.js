@@ -199,6 +199,7 @@ const CreateProduct = ({ open, onClose, onSubmit }) => {
                 <MenuItem value="Miere">Miere</MenuItem>
                 <MenuItem value="Propolis">Propolis</MenuItem>
                 <MenuItem value="Cremă">Cremă</MenuItem>
+                <MenuItem value="Polen">Polen</MenuItem>
               </Select>
             </FormControl>
 

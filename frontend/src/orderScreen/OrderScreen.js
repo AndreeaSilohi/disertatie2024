@@ -263,11 +263,11 @@ export default function OrderScreen() {
                   </ListItem>
                   {order.isDelivered ? (
                     <MessageBox variant="success">
-                      Livrat la data de {order.deliveredAt}
+                      Livrat la data de {formatDate(order.deliveredAt.substring(0, 10))}.
                     </MessageBox>
                   ) : (
                     <MessageBox variant="danger">
-                      Comanda nu este încă livrată
+                      Comanda nu este încă livrată.
                     </MessageBox>
                   )}
                 </List>
@@ -292,7 +292,7 @@ export default function OrderScreen() {
                   </ListItem>
                   {order.isPaid ? (
                     <MessageBox variant="success">
-                      Plătită la data de {formatDate(order.paidAt.substring(0, 10))}
+                      Plătită la data de {formatDate(order.paidAt.substring(0, 10))}.
                     </MessageBox>
                   ) : (
                     <MessageBox variant="danger">Neplătită</MessageBox>

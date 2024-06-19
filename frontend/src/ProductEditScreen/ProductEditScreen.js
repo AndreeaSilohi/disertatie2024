@@ -131,7 +131,7 @@ export default function ProductEditScreen() {
       });
       // window.alert('Product updated successfully');
       setToastSeverity('success');
-      setToastMessage('Produs încărcat cu succes');
+      setToastMessage('Produs editat cu succes');
       setOpenToast(true);
       setTimeout(() => {
         navigate('/admin/products');
@@ -292,6 +292,7 @@ export default function ProductEditScreen() {
                       <MenuItem value="Miere">Miere</MenuItem>
                       <MenuItem value="Propolis">Propolis</MenuItem>
                       <MenuItem value="Cremă">Cremă</MenuItem>
+                      <MenuItem value="Polen">Polen</MenuItem>
                     </Select>
                   </FormControl>
 

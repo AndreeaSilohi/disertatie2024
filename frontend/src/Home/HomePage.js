@@ -35,9 +35,10 @@ function HomePage() {
       <div className="about-products">
         <div className="grid-container">
           <div className="grid-item">
-            Stupul este un adevărat depozit de medicamente naturale. Produsele apicole sunt esențiale
-            pentru menținerea sănătății umane, pentru a preveni bolile, dar și
-            pentru stimularea metabolismului, aducând vitalitate și prospețime.
+            Stupul este un adevărat depozit de medicamente naturale. Produsele
+            apicole sunt esențiale pentru menținerea sănătății umane, pentru a
+            preveni bolile, dar și pentru stimularea metabolismului, aducând
+            vitalitate și prospețime.
           </div>
         </div>
         {/* <Animation /> */}
@@ -64,12 +65,17 @@ function HomePage() {
           <div className="inside-text">
             <h4>Noutăți</h4>
             <h6>5 august 2024</h6>
-            <h5>Propolis crud in curand disponibil</h5>
-            <p>
+            {/* <h5>Propolis crud in curand disponibil</h5> */}
+            <h5>Mierea de Manuka în curand disponibilă!</h5>
+            {/* <p>
               Propolisul crud va fi disponibil incepand cu data de 5 august
               2024!{' '}
+            </p> */}
+            <p>
+              Mierea de Manuka va fi disponibilă incepand cu data de 5 august
+              2024!{' '}
             </p>
-            <hr style={{marginTop:"20px"}}></hr>
+            <hr style={{ marginTop: '20px' }}></hr>
             <h6>20 septembrie 2024</h6>
             <h5>Crema cu lăptișor de matcă va fi disponibilă</h5>
             <p>
@@ -77,7 +83,7 @@ function HomePage() {
               cu lăptișor de matcă va face parte din gama noastră de produse.
             </p>
 
-            <hr style={{marginTop:"20px"}}></hr>
+            <hr style={{ marginTop: '20px' }}></hr>
             <h6>10 decembrie 2024</h6>
             <h5>Oțetul de mere cu miere va fi introdus</h5>
             <p>
