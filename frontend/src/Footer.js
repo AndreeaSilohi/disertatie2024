@@ -30,7 +30,7 @@ function Footer() {
             <Typography variant="body2">
               Strada Victoriei, nr. 160, Curtea de Argeș
             </Typography>
-            <Typography variant="body2">Email: info@example.com</Typography>
+            <Typography variant="body2">Email: honeyboutique@example.com</Typography>
             <Typography variant="body2">Phone: 0725219542</Typography>
           </Grid>
           <Grid item xs={12} md={4} sx={{ textAlign: 'center',width: '320px'}}>

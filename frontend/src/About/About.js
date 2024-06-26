@@ -107,46 +107,46 @@ function About() {
       </div>
 
       <div className="hexagon-container">
-        <div class="hexagon">
+        <div className="hexagon">
           <img
             src="https://plus.unsplash.com/premium_photo-1663047719705-22009ac7b1d4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Your Photo"
           />
         </div>
-        <div class="hexagon">
+        <div className="hexagon">
           <img
             src="https://images.unsplash.com/photo-1585326844796-f0b3ca5ca0b1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Your Photo"
           />
         </div>
-        <div class="hexagon">
+        <div className="hexagon">
           <img
             src="https://plus.unsplash.com/premium_photo-1681506275565-bee309349726?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Your Photo"
           />
         </div>
-        <div class="hexagon">
+        <div className="hexagon">
           <img
             src="https://images.unsplash.com/photo-1651282462432-2e33bec6b206?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Your Photo"
           />
         </div>
 
-        <div class="hexagon">
+        <div className="hexagon">
           <img
             src="https://images.unsplash.com/photo-1586779161010-e38df9288a27?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Your Photo"
           />
         </div>
 
-        <div class="hexagon">
+        <div className="hexagon">
           <img
             src="https://images.unsplash.com/photo-1647951165970-6089cc393ae2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Your Photo"
           />
         </div>
 
-        <div class="hexagon">
+        <div className="hexagon">
           <img
             src="https://images.unsplash.com/photo-1586616780827-13166a8d449b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Your Photo"
